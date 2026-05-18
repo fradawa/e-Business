@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Quelque <span>chose</span></div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="scrollTo(0,0)">Accueil</a></li>
+      <li><a href="#produits">Produits</a></li>
+      <li><a href="#avantages">Avantages</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-icons">
+      <button class="nav-icon" onclick="openCart()" title="Panier" style="position:relative">
+        🛒<span class="cart-badge" id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <span class="hero-label">✦ Collection Bien-être & Beauté</span>
+      <h1 class="hero-title">Prenez soin<br>de <em>vous</em>,<br>chaque jour.</h1>
+      <p class="hero-sub">Produits d'hygiène et de beauté soigneusement sélectionnés pour votre quotidien. Qualité
+        garantie, prix accessibles.</p>
+      <button class="btn-primary" onclick="document.getElementById('produits').scrollIntoView({behavior:'smooth'})">
+        Découvrir les produits →
+      </button>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <span class="hero-emoji" id="hero-emoji">🌸</span>
+        <span class="hero-badge">Livraison rapide</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <!-- <div class="stats">
+    <div class="stat">
+      <div class="stat-n">200+</div>
+      <div class="stat-l">Produits</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">4.9★</div>
+      <div class="stat-l">Note clients</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">24h</div>
+      <div class="stat-l">Livraison</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">100%</div>
+      <div class="stat-l">Satisfaction</div>
+    </div>
+  </div> -->
+
+  <!-- CATEGORIES -->
+  <section class="section" style="padding-bottom:2rem">
+    <div class="section-header">
+      <div class="section-label">Nos catégories</div>
+      <h2 class="section-title">Tout pour votre bien-être</h2>
+    </div>
+    <div class="categories" id="cat-bar">
+      <div class="cat-card active" onclick="filterCat('all',this)"><span class="cat-icon">🛍️</span>
+        <div class="cat-name">Tout</div>
+        <div class="cat-count">20 produits</div>
+      </div>
+      <div class="cat-card" onclick="filterCat('hygiene',this)"><span class="cat-icon">🪥</span>
+        <div class="cat-name">Hygiène</div>
+        <div class="cat-count">8 produits</div>
+      </div>
+      <div class="cat-card" onclick="filterCat('soin',this)"><span class="cat-icon">🧴</span>
+        <div class="cat-name">Soins</div>
+        <div class="cat-count">6 produits</div>
+      </div>
+      <div class="cat-card" onclick="filterCat('parfum',this)"><span class="cat-icon">🌹</span>
+        <div class="cat-name">Parfums</div>
+        <div class="cat-count">6 produits</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="section" id="produits" style="padding-top:2rem">
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" onclick="filterTag('all',this)">Tous</button>
+      <button class="filter-btn" onclick="filterTag('promo',this)">Promotions</button>
+      <button class="filter-btn" onclick="filterTag('new',this)">Nouveautés</button>
+      <button class="filter-btn" onclick="filterTag('bestseller',this)">Meilleures ventes</button>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <div class="promo" id="avantages">
+    <div>
+      <div class="promo-tag">✦ Pourquoi nous choisir</div>
+      <h2 class="promo-title">La qualité<br>à votre<br>portée.</h2>
+      <p class="promo-text">Chez Quelque chose, chaque produit est sélectionné avec soin pour vous offrir le meilleur rapport
+        qualité-prix. Votre satisfaction est notre priorité.</p>
+    </div>
+    <div class="promo-right">
+      <div class="promo-item"><span class="promo-item-icon">🚚</span>
+        <div>
+          <div class="promo-item-title">Livraison rapide</div>
+          <div class="promo-item-desc">Recevez vos commandes en 24 à 48h</div>
+        </div>
+      </div>
+      <div class="promo-item"><span class="promo-item-icon">✅</span>
+        <div>
+          <div class="promo-item-title">Produits authentiques</div>
+          <div class="promo-item-desc">100% originaux, jamais de contrefaçon</div>
+        </div>
+      </div>
+      <div class="promo-item"><span class="promo-item-icon">💬</span>
+        <div>
+          <div class="promo-item-title">Support client</div>
+          <div class="promo-item-desc">WhatsApp disponible 7j/7 de 8h à 20h</div>
+        </div>
+      </div>
+      <div class="promo-item"><span class="promo-item-icon">🔄</span>
+        <div>
+          <div class="promo-item-title">Retours faciles</div>
+          <div class="promo-item-desc">Satisfait ou remboursé sous 7 jours</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="newsletter" id="contact">
+    <div class="section-label">Restez informé</div>
+    <h2 class="nl-title">Offres exclusives & nouveautés</h2>
+    <p class="nl-sub">Inscrivez-vous pour recevoir nos meilleures offres directement sur WhatsApp.</p>
+    <div class="nl-form">
+      <input class="nl-input" type="tel" placeholder="Votre numéro WhatsApp" id="nl-input">
+      <button class="nl-btn" onclick="subscribe()">S'inscrire</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Quelque chose</div>
+    <div class="footer-links">
+      <a href="#">Accueil</a>
+      <a href="#produits">Produits</a>
+      <a href="#avantages">À propos</a>
+      <a href="#contact">Contact</a>
+      <a href="#">Politique de confidentialité</a>
+    </div>
+    <div style="font-size:0.78rem">© 2026 Quelque chose. Tous droits réservés.</div>
+  </footer>
+
+  <!-- CART MODAL -->
+  <div class="cart-modal" id="cart-modal" onclick="e=>e.target===this&&closeCart()">
+    <div class="cart-panel">
+      <div class="cart-title">Mon panier <button class="close-btn" onclick="closeCart()">✕</button></div>
+      <div id="cart-content"></div>
+      <div class="cart-total" id="cart-total" style="display:none">
+        <div class="cart-total-row"><span>Sous-total</span><span id="subtotal-val"></span></div>
+        <div class="cart-total-row"><span>Livraison</span><span>Gratuite</span></div>
+        <div class="cart-total-main"><span>Total</span><span id="total-val"></span></div>
+        <button class="btn-checkout" onclick="checkout()">Commander via WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const products = [
+      { id: 1, name: 'Brosse à dents Premium', cat: 'hygiene', emoji: '🪥', desc: 'Poils ultra-doux, manche ergonomique. Protège l\'émail.', price: 1500, oldPrice: null, tag: 'bestseller' },
+      { id: 2, name: 'Savon artisanal au karité', cat: 'hygiene', emoji: '🧼', desc: 'Surgras 10%, peaux sensibles. Senteur naturelle de karité.', price: 2000, oldPrice: 2800, tag: 'promo' },
+      { id: 3, name: 'Parfum Fleur de Nuit', cat: 'parfum', emoji: '🌹', desc: 'Eau de parfum longue tenue. Notes florales et musquées.', price: 8500, oldPrice: null, tag: 'new' },
+      { id: 4, name: 'Crème hydratante visage', cat: 'soin', emoji: '🧴', desc: 'Hydratation 24h, SPF 15 intégré. Pour tous types de peau.', price: 5500, oldPrice: 7000, tag: 'promo' },
+      { id: 5, name: 'Parfum Bois Précieux', cat: 'parfum', emoji: '🪵', desc: 'Fragrance masculine, notes de santal et ambre.', price: 9000, oldPrice: null, tag: 'bestseller' },
+      { id: 6, name: 'Kit brosse à dents x4', cat: 'hygiene', emoji: '🦷', desc: 'Pack familial 4 brosses, couleurs assorties.', price: 4500, oldPrice: 6000, tag: 'promo' },
+      { id: 7, name: 'Savon noir beldi', cat: 'hygiene', emoji: '⬛', desc: '100% naturel, purifiant en profondeur. Tradition hammam.', price: 3000, oldPrice: null, tag: 'new' },
+      { id: 8, name: 'Sérum éclat visage', cat: 'soin', emoji: '✨', desc: 'Vitamine C concentrée. Illumine et unifie le teint.', price: 7500, oldPrice: null, tag: 'new' },
+      { id: 9, name: 'Parfum Rose d\'Orient', cat: 'parfum', emoji: '🌷', desc: 'Floral délicat, longue tenue. Idéal au quotidien.', price: 6500, oldPrice: 8000, tag: 'promo' },
+    ];
+
+    let cart = [];
+    let activeTag = 'all';
+    let activeCat = 'all';
+
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      let filtered = products.filter(p => {
+        const catOk = activeCat === 'all' || p.cat === activeCat;
+        const tagOk = activeTag === 'all' || p.tag === activeTag;
+        return catOk && tagOk;
+      });
+      if (filtered.length === 0) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">Aucun produit dans cette catégorie.</div>'; return; }
+      grid.innerHTML = filtered.map(p => `
+    <div class="product-card" onclick="">
+      ${p.tag === 'promo' ? '<span class="product-badge">Promo</span>' : ''}
+      ${p.tag === 'new' ? '<span class="product-badge new">Nouveau</span>' : ''}
+      <div class="product-img">${p.emoji}</div>
+      <div class="product-info">
+        <div class="product-cat">${{ hygiene: 'Hygiène', soin: 'Soin', parfum: 'Parfum' }[p.cat]}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="product-price">
+            ${p.oldPrice ? `<span class="old">${p.oldPrice.toLocaleString()} F</span>` : ''}
+            ${p.price.toLocaleString()} F CFA
+          </div>
+          <button class="add-btn" onclick="addToCart(${p.id},event)">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    function filterCat(cat, el) {
+      activeCat = cat;
+      document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      renderProducts();
+      // emoji change
+      const emojis = { all: '🌸', hygiene: '🪥', soin: '🧴', parfum: '🌹' };
+      document.getElementById('hero-emoji').textContent = emojis[cat] || '🌸';
+    }
+
+    function filterTag(tag, el) {
+      activeTag = tag;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      renderProducts();
+    }
+
+    function addToCart(id, e) {
+      e.stopPropagation();
+      const p = products.find(x => x.id === id);
+      const existing = cart.find(x => x.id === id);
+      if (existing) existing.qty++;
+      else cart.push({ ...p, qty: 1 });
+      updateCartCount();
+      showToast(`"${p.name}" ajouté au panier ✓`);
+    }
+
+    function updateCartCount() {
+      const total = cart.reduce((s, x) => s + x.qty, 0);
+      document.getElementById('cart-count').textContent = total;
+    }
+
+    function openCart() {
+      document.getElementById('cart-modal').style.display = 'block';
+      renderCart();
+    }
+
+    function closeCart() {
+      document.getElementById('cart-modal').style.display = 'none';
+    }
+
+    function renderCart() {
+      const content = document.getElementById('cart-content');
+      const totalEl = document.getElementById('cart-total');
+      if (cart.length === 0) {
+        content.innerHTML = '<div class="empty-cart"><span class="empty-icon">🛒</span><p>Votre panier est vide</p></div>';
+        totalEl.style.display = 'none'; return;
+      }
+      content.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-icon">${item.emoji}</div>
+      <div>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">${item.price.toLocaleString()} F CFA</div>
+        <div class="cart-item-qty">Qté: ${item.qty}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+    </div>
+  `).join('');
+      const sub = cart.reduce((s, x) => s + (x.price * x.qty), 0);
+      document.getElementById('subtotal-val').textContent = sub.toLocaleString() + ' F CFA';
+      document.getElementById('total-val').textContent = sub.toLocaleString() + ' F CFA';
+      totalEl.style.display = 'block';
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(x => x.id !== id);
+      updateCartCount();
+      renderCart();
+    }
+
+    function checkout() {
+      const lines = cart.map(x => `- ${x.name} x${x.qty} = ${(x.price * x.qty).toLocaleString()} F CFA`).join('\n');
+      const total = cart.reduce((s, x) => s + (x.price * x.qty), 0);
+      const msg = encodeURIComponent(`Bonjour, je voudrais commander :\n${lines}\n\nTotal : ${total.toLocaleString()} F CFA`);
+      window.open(`https://wa.me/221700000000?text=${msg}`, '_blank');
+    }
+
+    function subscribe() {
+      const v = document.getElementById('nl-input').value.trim();
+      if (!v) { showToast('Veuillez entrer votre numéro.'); return; }
+      showToast('Inscription réussie ! Bienvenue 🎉');
+      document.getElementById('nl-input').value = '';
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // Click outside cart modal
+    document.getElementById('cart-modal').addEventListener('click', function (e) {
+      if (e.target === this) closeCart();
+    });
+
+    renderProducts();
+  </script>
+</body>
+
+</html>
