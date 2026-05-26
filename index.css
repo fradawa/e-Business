@@ -99,6 +99,16 @@
      vertical-align: top
  }
 
+ .cart-badge.bump {
+     animation: badgeBump 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+ }
+
+ @keyframes badgeBump {
+     0% { transform: scale(1); }
+     50% { transform: scale(1.6); background: var(--dark); }
+     100% { transform: scale(1); background: var(--accent); }
+ }
+
  /* HERO */
  .hero {
      display: grid;
@@ -223,8 +233,23 @@
      animation: float 4s ease-in-out infinite
  }
 
- @keyframes float {
+ .hero-logo-3d {
+     height: 180px;
+     width: auto;
+     display: block;
+     margin: 0 auto 1.5rem auto;
+     filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.2));
+     animation: rotate3d 8s ease-in-out infinite;
+     transform-style: preserve-3d;
+ }
 
+ @keyframes rotate3d {
+     0% { transform: perspective(800px) rotateY(0deg) translateY(0); }
+     50% { transform: perspective(800px) rotateY(180deg) translateY(-20px); }
+     100% { transform: perspective(800px) rotateY(360deg) translateY(0); }
+ }
+
+ @keyframes float {
      0%,
      100% {
          transform: translateY(0)
@@ -632,7 +657,12 @@
      position: fixed;
      inset: 0;
      z-index: 200;
-     background: rgba(26, 23, 20, 0.7)
+     background: rgba(26, 23, 20, 0.7);
+     animation: fadeIn 0.3s ease-out forwards;
+ }
+
+ .cart-modal.closing {
+     animation: fadeOut 0.3s ease-in forwards;
  }
 
  .cart-panel {
@@ -645,7 +675,32 @@
      padding: 2rem;
      overflow-y: auto;
      display: flex;
-     flex-direction: column
+     flex-direction: column;
+     animation: slideInRight 0.3s ease-out forwards;
+ }
+
+ .cart-modal.closing .cart-panel {
+     animation: slideOutRight 0.3s ease-in forwards;
+ }
+
+ @keyframes fadeIn {
+     from { opacity: 0; }
+     to { opacity: 1; }
+ }
+
+ @keyframes fadeOut {
+     from { opacity: 1; }
+     to { opacity: 0; }
+ }
+
+ @keyframes slideInRight {
+     from { transform: translateX(100%); }
+     to { transform: translateX(0); }
+ }
+
+ @keyframes slideOutRight {
+     from { transform: translateX(0); }
+     to { transform: translateX(100%); }
  }
 
  .cart-title {

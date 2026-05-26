@@ -14,7 +14,10 @@
 
   <!-- NAV -->
   <nav>
-    <div class="logo">Quelque <span>chose</span></div>
+    <div class="logo" style="display: flex; align-items: center; gap: 0.8rem;">
+      <img src="logo.png" alt="Logo" style="height: 48px;">
+      <div>THIA<span>flow</span></div>
+    </div>
     <ul class="nav-links">
       <li><a href="#" onclick="scrollTo(0,0)">Accueil</a></li>
       <li><a href="#produits">Produits</a></li>
@@ -41,7 +44,7 @@
     </div>
     <div class="hero-right">
       <div class="hero-visual">
-        <span class="hero-emoji" id="hero-emoji">🌸</span>
+        <img src="logo.png" class="hero-logo-3d" id="hero-emoji" alt="THIAflow Logo">
         <span class="hero-badge">Livraison rapide</span>
       </div>
     </div>
@@ -109,16 +112,12 @@
     <div>
       <div class="promo-tag">✦ Pourquoi nous choisir</div>
       <h2 class="promo-title">La qualité<br>à votre<br>portée.</h2>
-      <p class="promo-text">Chez Quelque chose, chaque produit est sélectionné avec soin pour vous offrir le meilleur rapport
+      <p class="promo-text">Chez THIAflow, chaque produit est sélectionné avec soin pour vous offrir le meilleur
+        rapport
         qualité-prix. Votre satisfaction est notre priorité.</p>
     </div>
     <div class="promo-right">
-      <div class="promo-item"><span class="promo-item-icon">🚚</span>
-        <div>
-          <div class="promo-item-title">Livraison rapide</div>
-          <div class="promo-item-desc">Recevez vos commandes en 24 à 48h</div>
-        </div>
-      </div>
+
       <div class="promo-item"><span class="promo-item-icon">✅</span>
         <div>
           <div class="promo-item-title">Produits authentiques</div>
@@ -128,15 +127,10 @@
       <div class="promo-item"><span class="promo-item-icon">💬</span>
         <div>
           <div class="promo-item-title">Support client</div>
-          <div class="promo-item-desc">WhatsApp disponible 7j/7 de 8h à 20h</div>
+          <div class="promo-item-desc">WhatsApp disponible</div>
         </div>
       </div>
-      <div class="promo-item"><span class="promo-item-icon">🔄</span>
-        <div>
-          <div class="promo-item-title">Retours faciles</div>
-          <div class="promo-item-desc">Satisfait ou remboursé sous 7 jours</div>
-        </div>
-      </div>
+
     </div>
   </div>
 
@@ -153,7 +147,10 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Quelque chose</div>
+    <div class="footer-logo" style="display: flex; align-items: center; gap: 0.8rem;">
+      <img src="logo.png" alt="Logo" style="height: 48px;">
+      <div>THIAflow</div>
+    </div>
     <div class="footer-links">
       <a href="#">Accueil</a>
       <a href="#produits">Produits</a>
@@ -161,7 +158,7 @@
       <a href="#contact">Contact</a>
       <a href="#">Politique de confidentialité</a>
     </div>
-    <div style="font-size:0.78rem">© 2026 Quelque chose. Tous droits réservés.</div>
+    <div style="font-size:0.78rem">© 2026 THIAflow. Tous droits réservés.</div>
   </footer>
 
   <!-- CART MODAL -->
@@ -233,8 +230,13 @@
       el.classList.add('active');
       renderProducts();
       // emoji change
-      const emojis = { all: '🌸', hygiene: '🪥', soin: '🧴', parfum: '🌹' };
-      document.getElementById('hero-emoji').textContent = emojis[cat] || '🌸';
+      const emojis = { all: 'logo.png', hygiene: 'logo.png', soin: 'logo.png', parfum: 'logo.png' };
+      const heroEl = document.getElementById('hero-emoji');
+      if (heroEl.tagName.toLowerCase() === 'img') {
+        heroEl.src = emojis[cat] || 'logo.png';
+      } else {
+        heroEl.textContent = emojis[cat] || '🌸';
+      }
     }
 
     function filterTag(tag, el) {
@@ -251,21 +253,42 @@
       if (existing) existing.qty++;
       else cart.push({ ...p, qty: 1 });
       updateCartCount();
+      
+      const btn = e.target;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '✓ Ajouté';
+      btn.style.background = 'var(--accent2)';
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+      }, 1000);
+      
       showToast(`"${p.name}" ajouté au panier ✓`);
     }
 
     function updateCartCount() {
       const total = cart.reduce((s, x) => s + x.qty, 0);
-      document.getElementById('cart-count').textContent = total;
+      const badge = document.getElementById('cart-count');
+      badge.textContent = total;
+      badge.classList.remove('bump');
+      void badge.offsetWidth; // trigger reflow
+      badge.classList.add('bump');
     }
 
     function openCart() {
-      document.getElementById('cart-modal').style.display = 'block';
+      const modal = document.getElementById('cart-modal');
+      modal.classList.remove('closing');
+      modal.style.display = 'block';
       renderCart();
     }
 
     function closeCart() {
-      document.getElementById('cart-modal').style.display = 'none';
+      const modal = document.getElementById('cart-modal');
+      modal.classList.add('closing');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        modal.classList.remove('closing');
+      }, 290);
     }
 
     function renderCart() {
@@ -302,7 +325,7 @@
       const lines = cart.map(x => `- ${x.name} x${x.qty} = ${(x.price * x.qty).toLocaleString()} F CFA`).join('\n');
       const total = cart.reduce((s, x) => s + (x.price * x.qty), 0);
       const msg = encodeURIComponent(`Bonjour, je voudrais commander :\n${lines}\n\nTotal : ${total.toLocaleString()} F CFA`);
-      window.open(`https://wa.me/221700000000?text=${msg}`, '_blank');
+      window.open(`https://wa.me/221771302297?text=${msg}`, '_blank');
     }
 
     function subscribe() {
