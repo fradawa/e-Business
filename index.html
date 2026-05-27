@@ -86,15 +86,15 @@
         <div class="cat-name">Tout</div>
         <div class="cat-count">20 produits</div>
       </div>
-      <div class="cat-card" onclick="filterCat('hygiene',this)"><span class="cat-icon">🪥</span>
+      <div class="cat-card" onclick="filterCat('Hygiène',this)"><span class="cat-icon">🪥</span>
         <div class="cat-name">Hygiène</div>
         <div class="cat-count">8 produits</div>
       </div>
-      <div class="cat-card" onclick="filterCat('soin',this)"><span class="cat-icon">🧴</span>
+      <div class="cat-card" onclick="filterCat('Soins',this)"><span class="cat-icon">🧴</span>
         <div class="cat-name">Soins</div>
         <div class="cat-count">6 produits</div>
       </div>
-      <div class="cat-card" onclick="filterCat('parfum',this)"><span class="cat-icon">🌹</span>
+      <div class="cat-card" onclick="filterCat('Parfums',this)"><span class="cat-icon">🌹</span>
         <div class="cat-name">Parfums</div>
         <div class="cat-count">6 produits</div>
       </div>
@@ -267,12 +267,12 @@
       });
       if (filtered.length === 0) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">Aucun produit dans cette catégorie.</div>'; return; }
       grid.innerHTML = filtered.map(p => `
-    <div class="product-card" onclick="openPreview(${p.id})">
+    <div class="product-card" onclick="openPreview('${p.id}')">
       ${p.tag === 'promo' ? '<span class="product-badge">Promo</span>' : ''}
       ${p.tag === 'new' ? '<span class="product-badge new">Nouveau</span>' : ''}
       <div class="product-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:140px;height:140px;object-fit:cover;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.1);border:4px solid #fff;">' : (p.emoji || '📦')}</div>
       <div class="product-info">
-        <div class="product-cat">${{ hygiene: 'Hygiène', soin: 'Soin', parfum: 'Parfum' }[p.cat]}</div>
+        <div class="product-cat">${p.cat || ''}</div>
         <div class="product-name">${p.name}</div>
         <div class="product-desc">${p.desc}</div>
         <div class="product-footer">
@@ -280,7 +280,7 @@
             ${p.oldPrice ? `<span class="old">${p.oldPrice.toLocaleString()} F</span>` : ''}
             ${p.price.toLocaleString()} F CFA
           </div>
-          <button class="add-btn" onclick="addToCart(${p.id},event)">+ Ajouter</button>
+          <button class="add-btn" onclick="addToCart('${p.id}',event)">+ Ajouter</button>
         </div>
       </div>
     </div>
@@ -362,14 +362,14 @@
         <div class="preview-body">
           <div class="preview-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:140px;height:140px;object-fit:cover;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.1);border:4px solid #fff;">' : (p.emoji || '📦')}</div>
           <div class="preview-info">
-            <div class="preview-cat">${{ hygiene: 'Hygiène', soin: 'Soin', parfum: 'Parfum' }[p.cat]}</div>
+            <div class="preview-cat">${p.cat || ''}</div>
             <h2 class="preview-title">${p.name}</h2>
             <div class="preview-desc">${p.desc}</div>
             <div class="preview-price">
               ${p.oldPrice ? `<span class="old">${p.oldPrice.toLocaleString()} F</span>` : ''}
               ${p.price.toLocaleString()} F CFA
             </div>
-            <button class="preview-add-btn" onclick="addToCart(${p.id}, event); closePreview()">+ Ajouter au panier</button>
+            <button class="preview-add-btn" onclick="addToCart('${p.id}', event); closePreview()">+ Ajouter au panier</button>
           </div>
         </div>
       `;
@@ -402,7 +402,7 @@
         <div class="cart-item-price">${item.price.toLocaleString()} F CFA</div>
         <div class="cart-item-qty">Qté: ${item.qty}</div>
       </div>
-      <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">✕</button>
     </div>
   `).join('');
       const sub = cart.reduce((s, x) => s + (x.price * x.qty), 0);
