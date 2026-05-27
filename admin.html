@@ -428,6 +428,7 @@
             color: var(--text-light);
         }
 
+
         /* Category Selector */
         .category-pills {
             display: flex;
@@ -566,9 +567,19 @@
             </div>
 
             <!-- Liste des produits -->
-            <div class="panel">
-                <h3 class="text-gradient">Produits existants (<span id="product-count">0</span>)</h3>
-                <div id="product-list" class="product-list">
+            <div class="panel" style="min-width:0;">
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+                    <h3 class="text-gradient" style="margin-bottom:0;">Produits (<span id="product-count">0</span>)</h3>
+                    <input type="text" id="admin-search" class="form-control" placeholder="🔍 Rechercher..." style="max-width:200px; padding:8px 12px; font-size:0.85rem;" oninput="filterAdminList()">
+                </div>
+                <!-- Onglets catégories -->
+                <div class="admin-tabs" id="admin-tabs">
+                    <button class="admin-tab active" data-cat="" onclick="setAdminTab(this)">Tous</button>
+                    <button class="admin-tab" data-cat="Hygiène" onclick="setAdminTab(this)">🪶 Hygiène</button>
+                    <button class="admin-tab" data-cat="Soins" onclick="setAdminTab(this)">✨ Soins</button>
+                    <button class="admin-tab" data-cat="Parfums" onclick="setAdminTab(this)">🌸 Parfums</button>
+                </div>
+                <div id="product-list">
                     <!-- Les produits seront injectés ici dynamiquement -->
                 </div>
             </div>
@@ -861,81 +872,90 @@
         const productListEl = document.getElementById('product-list');
         const productCountEl = document.getElementById('product-count');
         let unsubscribeSnapshot = null;
+        let allProducts = []; // cache local de tous les produits
+        let adminCatFilter = ''; // catégorie active dans les onglets
 
         function loadProducts() {
-            // Éviter de multiplier les listeners
             if (unsubscribeSnapshot) unsubscribeSnapshot();
-
-            // Écoute des changements en temps réel sur la collection
             unsubscribeSnapshot = onSnapshot(produitsCol, (snapshot) => {
-                productListEl.innerHTML = "";
-                productCountEl.textContent = snapshot.size;
-                
-                // Conversion en tableau pour tri client
-                const produits = [];
+                allProducts = [];
                 snapshot.forEach(docSnap => {
-                    produits.push({ id: docSnap.id, ...docSnap.data() });
+                    allProducts.push({ id: docSnap.id, ...docSnap.data() });
                 });
-
                 // Tri par date de création (les plus récents en premier)
-                produits.sort((a, b) => {
+                allProducts.sort((a, b) => {
                     const timeA = a.createdAt ? a.createdAt.toMillis() : 0;
                     const timeB = b.createdAt ? b.createdAt.toMillis() : 0;
                     return timeB - timeA;
                 });
-
-                produits.forEach(data => {
-                    renderProductCard(data.id, data);
-                });
+                renderAdminList();
             }, (error) => {
-                console.error("Erreur lecture produits:", error);
+                console.error('Erreur lecture produits:', error);
             });
         }
 
-        function renderProductCard(id, data) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            
-            // Gestion du badge HTML
-            let badgeHtml = "";
-            if (data.badge) {
-                const badgeClass = data.badge === 'PROMO' ? 'badge-promo' : 'badge-new';
-                badgeHtml = `<div class="product-badge ${badgeClass}">${data.badge}</div>`;
-            }
+        function renderAdminList() {
+            const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
+            let filtered = allProducts.filter(p => {
+                const catOk = !adminCatFilter || p.categorie === adminCatFilter;
+                const searchOk = !search || (p.nom || '').toLowerCase().includes(search);
+                return catOk && searchOk;
+            });
 
-            // Gestion de l'affichage du prix
-            let priceHtml = `<span>${data.prix.toLocaleString('fr-FR')} F CFA</span>`;
-            if (data.promo && data.ancienPrix) {
-                priceHtml = `<span class="product-old-price">${data.ancienPrix.toLocaleString('fr-FR')} F CFA</span> <span>${data.prix.toLocaleString('fr-FR')} F CFA</span>`;
-            }
+            productCountEl.textContent = allProducts.length;
+            productListEl.innerHTML = '';
 
-            card.innerHTML = `
-                <div class="product-img-wrapper">
-                    ${badgeHtml}
-                    <img src="${data.imageUrl}" alt="${data.nom}" class="product-img" loading="lazy">
-                </div>
-                <div class="product-info">
-                    <div class="product-category">${data.categorie}</div>
-                    <div class="product-title">${data.nom}</div>
-                    <div class="product-price">${priceHtml}</div>
-                    
-                    <div class="product-actions">
-                        <div class="promo-toggle-container">
-                            <label>En Promo ?</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="toggle-${id}" ${data.promo ? 'checked' : ''} onchange="togglePromo('${id}', this.checked, ${data.prix})">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="action-row">
-                            <button class="btn btn-outline" onclick="editProduit('${id}')" style="background:rgba(94,23,235,0.15);">✏️ Éditer</button>
-                            <button class="btn btn-danger" onclick="supprimerProduit('${id}')">Supprimer</button>
-                        </div>
+            if (filtered.length === 0) {
+                productListEl.innerHTML = '<div class="empty-admin">📦 Aucun produit trouvé.</div>';
+                return;
+            }
+            filtered.forEach(p => renderProductRow(p.id, p));
+        }
+
+        function renderProductRow(id, data) {
+            const row = document.createElement('div');
+            row.className = 'prod-row';
+
+            let badgeHtml = '';
+            if (data.badge === 'PROMO') badgeHtml = '<span class="row-badge promo">PROMO</span>';
+            else if (data.badge === 'NEW') badgeHtml = '<span class="row-badge new">NEW</span>';
+
+            const price = data.promo && data.ancienPrix
+                ? `<span style="text-decoration:line-through;color:var(--text-muted);font-size:0.75rem;">${data.ancienPrix.toLocaleString('fr-FR')}</span> ${data.prix.toLocaleString('fr-FR')} F CFA`
+                : `${data.prix.toLocaleString('fr-FR')} F CFA`;
+
+            row.innerHTML = `
+                <img class="prod-row-thumb" src="${data.imageUrl || ''}" alt="${data.nom}" loading="lazy">
+                <div class="prod-row-info">
+                    <div class="prod-row-name">${data.nom}</div>
+                    <div class="prod-row-meta">
+                        <span>${data.categorie || '—'}</span>
+                        ${badgeHtml}
+                        <span>Stock: ${data.stock ?? '—'}</span>
                     </div>
                 </div>
+                <div class="prod-row-price">${price}</div>
+                <div class="prod-row-actions">
+                    <label class="toggle-switch" title="Promo">
+                        <input type="checkbox" id="toggle-${id}" ${data.promo ? 'checked' : ''}
+                            onchange="togglePromo('${id}', this.checked, ${data.prix})">
+                        <span class="slider"></span>
+                    </label>
+                    <button class="btn btn-outline" onclick="editProduit('${id}')" style="background:rgba(94,23,235,0.15);">✏️</button>
+                    <button class="btn btn-danger" onclick="supprimerProduit('${id}')">🗑️</button>
+                </div>
             `;
-            productListEl.appendChild(card);
+            productListEl.appendChild(row);
         }
+
+        // Expose au window pour les onglets et la recherche
+        window.setAdminTab = (el) => {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            adminCatFilter = el.dataset.cat;
+            renderAdminList();
+        };
+        window.filterAdminList = renderAdminList;
 
         // ==========================================
         // 6. ACTIONS SUR LES PRODUITS (Exposées à window)
