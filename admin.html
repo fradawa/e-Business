@@ -585,6 +585,86 @@
             font-size: 0.9rem;
         }
 
+        /* ════════════════════
+           RESPONSIVE MOBILE
+        ════════════════════ */
+        @media (max-width: 767px) {
+
+            .container { padding: 12px; }
+
+            #dashboard { padding-top: 16px; }
+
+            .header {
+                margin-bottom: 16px;
+                padding-bottom: 14px;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .header h2 { font-size: 1.2rem; }
+
+            /* FAB pour ouvrir le formulaire sur mobile */
+            #mobile-form-fab {
+                display: flex;
+            }
+
+            /* Formulaire caché par défaut sur mobile */
+            #form-panel-wrapper {
+                display: none;
+            }
+
+            #form-panel-wrapper.open {
+                display: block;
+            }
+
+            .grid { gap: 16px; }
+
+            .panel { padding: 16px; border-radius: 12px; }
+
+            .panel h3 { font-size: 1rem; }
+
+            /* Tabs horizontaux scrollables */
+            .admin-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding-bottom: 4px;
+                gap: 6px;
+            }
+            .admin-tabs::-webkit-scrollbar { display: none; }
+            .admin-tab { white-space: nowrap; }
+
+            /* Ligne produit : réduire sur petit écran */
+            .prod-row { padding: 8px 6px; gap: 8px; }
+
+            .prod-row-thumb { width: 44px; height: 44px; }
+
+            .prod-row-name { font-size: 0.82rem; }
+
+            .prod-row-price { font-size: 0.78rem; }
+
+            .prod-row-actions { gap: 5px; }
+
+            .prod-row-actions button { padding: 5px 7px; font-size: 0.8rem; }
+
+            /* Recherche pleine largeur */
+            #admin-search { max-width: 100% !important; }
+
+            /* Pills catégorie */
+            .category-pills { gap: 6px; }
+            .cat-pill { font-size: 0.78rem; padding: 8px 6px; }
+
+            /* Image preview plus petite */
+            #image-preview { height: 150px; }
+
+            /* Bouton submit */
+            #form-submit-btn { font-size: 0.9rem; padding: 10px 14px; }
+        }
+
+        /* FAB caché sur desktop */
+        #mobile-form-fab { display: none; }
+
     </style>
 </head>
 <body>
@@ -625,12 +705,18 @@
     <div id="dashboard" class="hidden container">
         <div class="header">
             <h2 class="text-gradient">Panel Admin</h2>
-            <button id="logout-btn" class="btn btn-outline">Déconnexion</button>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <!-- Bouton visible uniquement sur mobile pour ouvrir/fermer le formulaire -->
+                <button id="mobile-form-fab" class="btn" style="padding:8px 14px; font-size:0.85rem;" onclick="toggleMobileForm()">
+                    &#43; Ajouter
+                </button>
+                <button id="logout-btn" class="btn btn-outline">Déconnexion</button>
+            </div>
         </div>
 
         <div class="grid">
-            <!-- Formulaire d'ajout de produit -->
-            <div class="panel">
+            <!-- Formulaire d'ajout de produit (wrapper pour toggle mobile) -->
+            <div id="form-panel-wrapper" class="panel">
                 <h3 class="text-gradient" id="form-panel-title">Ajouter un Produit</h3>
                 <form id="add-product-form">
                     <!-- Widget Cloudinary -->
@@ -682,7 +768,7 @@
                         <button type="button" id="cancel-edit-btn" class="btn btn-outline hidden" style="flex:0 0 auto;" onclick="cancelEdit()">Annuler</button>
                     </div>
                 </form>
-            </div>
+            </div><!-- /form-panel-wrapper -->
 
             <!-- Liste des produits -->
             <div class="panel" style="min-width:0;">
@@ -916,6 +1002,11 @@
             formPanelTitle.textContent = 'Ajouter un Produit';
             formSubmitBtn.textContent = 'Ajouter le Produit';
             cancelEditBtn.classList.add('hidden');
+            // Sur mobile : refermer le formulaire
+            const wrapper = document.getElementById('form-panel-wrapper');
+            const fab = document.getElementById('mobile-form-fab');
+            if (wrapper) wrapper.classList.remove('open');
+            if (fab) fab.textContent = '+ Ajouter';
         }
 
         window.cancelEdit = resetForm;
@@ -1075,6 +1166,15 @@
         };
         window.filterAdminList = renderAdminList;
 
+        // Toggle formulaire sur mobile
+        window.toggleMobileForm = () => {
+            const wrapper = document.getElementById('form-panel-wrapper');
+            const fab = document.getElementById('mobile-form-fab');
+            const isOpen = wrapper.classList.toggle('open');
+            fab.textContent = isOpen ? '✕ Fermer' : '+ Ajouter';
+            if (isOpen) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
         // ==========================================
         // 6. ACTIONS SUR LES PRODUITS (Exposées à window)
         // ==========================================
@@ -1195,6 +1295,14 @@
                     uploadWidgetBtn.textContent = 'Changer l\'image';
                     uploadWidgetBtn.style.borderColor = 'var(--success)';
                     uploadWidgetBtn.style.color = 'var(--success)';
+                }
+
+                // Sur mobile : ouvrir le formulaire automatiquement
+                const wrapper = document.getElementById('form-panel-wrapper');
+                const fab = document.getElementById('mobile-form-fab');
+                if (wrapper && !wrapper.classList.contains('open')) {
+                    wrapper.classList.add('open');
+                    if (fab) fab.textContent = '✕ Fermer';
                 }
 
                 // Scroll vers le formulaire
