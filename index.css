@@ -281,6 +281,10 @@
      transform-style: preserve-3d;
  }
 
+ .hero-logo-mobile {
+     display: none;
+ }
+
  @keyframes rotate3d {
      0% { transform: perspective(800px) rotateY(0deg) translateY(0); }
      50% { transform: perspective(800px) rotateY(180deg) translateY(-20px); }
@@ -1116,7 +1120,16 @@
      body { padding-bottom: 60px; }
      
      .hero { grid-template-columns: 1fr; min-height: auto; }
-     .hero-right { min-height: 250px; }
+     .hero-right { display: none; }
+     .hero-logo-mobile {
+         display: inline-block;
+         height: 55px;
+         vertical-align: middle;
+         margin-left: 8px;
+         margin-bottom: 8px;
+         animation: rotate3d 8s ease-in-out infinite;
+         transform-style: preserve-3d;
+     }
      .hero-title { font-size: 2.8rem; }
      .hero-left { padding: 3rem 1.5rem; }
      
