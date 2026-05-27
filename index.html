@@ -8,6 +8,7 @@
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="index.css">
+  <title>THIAflow</title>
 </head>
 
 <body>
@@ -24,7 +25,11 @@
       <li><a href="#avantages">Avantages</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <div class="nav-icons">
+    <div class="nav-icons" style="gap: 1.5rem;">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" class="search-input" placeholder="" oninput="handleSearch(this.value)">
+      </div>
       <button class="nav-icon" onclick="openCart()" title="Panier" style="position:relative">
         🛒<span class="cart-badge" id="cart-count">0</span>
       </button>
@@ -175,39 +180,97 @@
     </div>
   </div>
 
+  <!-- PREVIEW MODAL -->
+  <div class="cart-modal" id="preview-modal" style="display: none;">
+    <div class="preview-panel">
+      <button class="preview-close" onclick="closePreview()">✕</button>
+      <div id="preview-content"></div>
+    </div>
+  </div>
+
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
-  <script>
-    const products = [
-      { id: 1, name: 'Brosse à dents Premium', cat: 'hygiene', emoji: '🪥', desc: 'Poils ultra-doux, manche ergonomique. Protège l\'émail.', price: 1500, oldPrice: null, tag: 'bestseller' },
-      { id: 2, name: 'Savon artisanal au karité', cat: 'hygiene', emoji: '🧼', desc: 'Surgras 10%, peaux sensibles. Senteur naturelle de karité.', price: 2000, oldPrice: 2800, tag: 'promo' },
-      { id: 3, name: 'Parfum Fleur de Nuit', cat: 'parfum', emoji: '🌹', desc: 'Eau de parfum longue tenue. Notes florales et musquées.', price: 8500, oldPrice: null, tag: 'new' },
-      { id: 4, name: 'Crème hydratante visage', cat: 'soin', emoji: '🧴', desc: 'Hydratation 24h, SPF 15 intégré. Pour tous types de peau.', price: 5500, oldPrice: 7000, tag: 'promo' },
-      { id: 5, name: 'Parfum Bois Précieux', cat: 'parfum', emoji: '🪵', desc: 'Fragrance masculine, notes de santal et ambre.', price: 9000, oldPrice: null, tag: 'bestseller' },
-      { id: 6, name: 'Kit brosse à dents x4', cat: 'hygiene', emoji: '🦷', desc: 'Pack familial 4 brosses, couleurs assorties.', price: 4500, oldPrice: 6000, tag: 'promo' },
-      { id: 7, name: 'Savon noir beldi', cat: 'hygiene', emoji: '⬛', desc: '100% naturel, purifiant en profondeur. Tradition hammam.', price: 3000, oldPrice: null, tag: 'new' },
-      { id: 8, name: 'Sérum éclat visage', cat: 'soin', emoji: '✨', desc: 'Vitamine C concentrée. Illumine et unifie le teint.', price: 7500, oldPrice: null, tag: 'new' },
-      { id: 9, name: 'Parfum Rose d\'Orient', cat: 'parfum', emoji: '🌷', desc: 'Floral délicat, longue tenue. Idéal au quotidien.', price: 6500, oldPrice: 8000, tag: 'promo' },
-    ];
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    import { ENV } from './env.js';
+
+    const firebaseConfig = {
+      apiKey: ENV.FIREBASE_API_KEY,
+      authDomain: ENV.FIREBASE_AUTH_DOMAIN,
+      projectId: ENV.FIREBASE_PROJECT_ID,
+      storageBucket: ENV.FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: ENV.FIREBASE_MESSAGING_SENDER_ID,
+      appId: ENV.FIREBASE_APP_ID,
+      measurementId: ENV.FIREBASE_MEASUREMENT_ID
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const produitsCol = collection(db, 'produits');
+
+    let products = [];
 
     let cart = [];
     let activeTag = 'all';
     let activeCat = 'all';
+    let searchQuery = '';
+
+    const searchPlaceholders = ["Brosse à dents...", "Savon artisanal...", "Parfum...", "Crème visage...", "Sérum éclat..."];
+    let placeholderIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+
+    function typeWriter() {
+      const input = document.getElementById('search-input');
+      if (!input) return;
+
+      const currentText = searchPlaceholders[placeholderIdx];
+
+      if (isDeleting) {
+        input.placeholder = currentText.substring(0, charIdx - 1);
+        charIdx--;
+      } else {
+        input.placeholder = currentText.substring(0, charIdx + 1);
+        charIdx++;
+      }
+
+      let speed = isDeleting ? 40 : 120;
+
+      if (!isDeleting && charIdx === currentText.length) {
+        speed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIdx === 0) {
+        isDeleting = false;
+        placeholderIdx = (placeholderIdx + 1) % searchPlaceholders.length;
+        speed = 500;
+      }
+
+      setTimeout(typeWriter, speed);
+    }
+
+    setTimeout(typeWriter, 1000);
+
+    function handleSearch(val) {
+      searchQuery = val.trim();
+      renderProducts();
+    }
 
     function renderProducts() {
       const grid = document.getElementById('products-grid');
       let filtered = products.filter(p => {
         const catOk = activeCat === 'all' || p.cat === activeCat;
         const tagOk = activeTag === 'all' || p.tag === activeTag;
-        return catOk && tagOk;
+        const searchOk = searchQuery === '' || p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.desc.toLowerCase().includes(searchQuery.toLowerCase());
+        return catOk && tagOk && searchOk;
       });
       if (filtered.length === 0) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">Aucun produit dans cette catégorie.</div>'; return; }
       grid.innerHTML = filtered.map(p => `
-    <div class="product-card" onclick="">
+    <div class="product-card" onclick="openPreview(${p.id})">
       ${p.tag === 'promo' ? '<span class="product-badge">Promo</span>' : ''}
       ${p.tag === 'new' ? '<span class="product-badge new">Nouveau</span>' : ''}
-      <div class="product-img">${p.emoji}</div>
+      <div class="product-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:140px;height:140px;object-fit:cover;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.1);border:4px solid #fff;">' : (p.emoji || '📦')}</div>
       <div class="product-info">
         <div class="product-cat">${{ hygiene: 'Hygiène', soin: 'Soin', parfum: 'Parfum' }[p.cat]}</div>
         <div class="product-name">${p.name}</div>
@@ -253,7 +316,7 @@
       if (existing) existing.qty++;
       else cart.push({ ...p, qty: 1 });
       updateCartCount();
-      
+
       const btn = e.target;
       const originalText = btn.innerHTML;
       btn.innerHTML = '✓ Ajouté';
@@ -262,7 +325,7 @@
         btn.innerHTML = originalText;
         btn.style.background = '';
       }, 1000);
-      
+
       showToast(`"${p.name}" ajouté au panier ✓`);
     }
 
@@ -291,6 +354,39 @@
       }, 290);
     }
 
+    function openPreview(id) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+      const content = document.getElementById('preview-content');
+      content.innerHTML = `
+        <div class="preview-body">
+          <div class="preview-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:140px;height:140px;object-fit:cover;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.1);border:4px solid #fff;">' : (p.emoji || '📦')}</div>
+          <div class="preview-info">
+            <div class="preview-cat">${{ hygiene: 'Hygiène', soin: 'Soin', parfum: 'Parfum' }[p.cat]}</div>
+            <h2 class="preview-title">${p.name}</h2>
+            <div class="preview-desc">${p.desc}</div>
+            <div class="preview-price">
+              ${p.oldPrice ? `<span class="old">${p.oldPrice.toLocaleString()} F</span>` : ''}
+              ${p.price.toLocaleString()} F CFA
+            </div>
+            <button class="preview-add-btn" onclick="addToCart(${p.id}, event); closePreview()">+ Ajouter au panier</button>
+          </div>
+        </div>
+      `;
+      const modal = document.getElementById('preview-modal');
+      modal.classList.remove('closing');
+      modal.style.display = 'block';
+    }
+
+    function closePreview() {
+      const modal = document.getElementById('preview-modal');
+      modal.classList.add('closing');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        modal.classList.remove('closing');
+      }, 290);
+    }
+
     function renderCart() {
       const content = document.getElementById('cart-content');
       const totalEl = document.getElementById('cart-total');
@@ -299,8 +395,8 @@
         totalEl.style.display = 'none'; return;
       }
       content.innerHTML = cart.map(item => `
-    <div class="cart-item">
-      <div class="cart-item-icon">${item.emoji}</div>
+    <div class="cart-item" id="cart-item-${item.id}">
+      <div class="cart-item-icon">${item.imageUrl ? '<img src="' + item.imageUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">' : (item.emoji || '📦')}</div>
       <div>
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-price">${item.price.toLocaleString()} F CFA</div>
@@ -316,9 +412,19 @@
     }
 
     function removeFromCart(id) {
-      cart = cart.filter(x => x.id !== id);
-      updateCartCount();
-      renderCart();
+      const itemEl = document.getElementById(`cart-item-${id}`);
+      if (itemEl) {
+        itemEl.classList.add('removing');
+        setTimeout(() => {
+          cart = cart.filter(x => x.id !== id);
+          updateCartCount();
+          renderCart();
+        }, 300);
+      } else {
+        cart = cart.filter(x => x.id !== id);
+        updateCartCount();
+        renderCart();
+      }
     }
 
     function checkout() {
@@ -346,7 +452,75 @@
       if (e.target === this) closeCart();
     });
 
-    renderProducts();
+    // Click outside preview modal
+    document.getElementById('preview-modal').addEventListener('click', function (e) {
+      if (e.target === this) closePreview();
+    });
+
+    // Code secret : Taper "admin" n'importe où sur la page redirige vers le panel
+    let adminKeys = [];
+    const secretCode = "admin";
+
+    document.addEventListener('keydown', (e) => {
+      // On ignore si l'utilisateur tape dans la barre de recherche
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      adminKeys.push(e.key.toLowerCase());
+
+      // On garde uniquement les 5 dernières touches
+      if (adminKeys.length > secretCode.length) {
+        adminKeys.shift();
+      }
+
+      // Si la séquence est complète
+      if (adminKeys.join('') === secretCode) {
+        adminKeys = []; // On réinitialise
+        window.location.href = "admin.html"; // Redirection vers la page qui demande le mot de passe
+      }
+    });
+
+    // Exposer les fonctions au window pour les événements inline HTML
+    window.handleSearch = handleSearch;
+    window.filterCat = filterCat;
+    window.filterTag = filterTag;
+    window.addToCart = addToCart;
+    window.openCart = openCart;
+    window.closeCart = closeCart;
+    window.openPreview = openPreview;
+    window.closePreview = closePreview;
+    window.removeFromCart = removeFromCart;
+    window.checkout = checkout;
+    window.subscribe = subscribe;
+
+    // Charger les produits depuis Firestore en temps réel
+    onSnapshot(produitsCol, (snapshot) => {
+      products = [];
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        products.push({ 
+          id: docSnap.id, 
+          name: data.nom || "Produit",
+          cat: data.categorie || "all",
+          desc: data.description || "", // L'admin n'a pas encore de description
+          price: data.prix || 0,
+          oldPrice: data.ancienPrix || null,
+          tag: data.badge ? data.badge.toLowerCase() : '',
+          imageUrl: data.imageUrl || null,
+          ...data 
+        });
+      });
+
+      // Tri par date de création
+      products.sort((a, b) => {
+        const timeA = a.createdAt ? a.createdAt.toMillis() : 0;
+        const timeB = b.createdAt ? b.createdAt.toMillis() : 0;
+        return timeB - timeA;
+      });
+
+      renderProducts();
+    }, (error) => {
+      console.error("Erreur de chargement des produits:", error);
+    });
   </script>
 </body>
 
