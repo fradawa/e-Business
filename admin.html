@@ -512,7 +512,7 @@
         <div class="grid">
             <!-- Formulaire d'ajout de produit -->
             <div class="panel">
-                <h3 class="text-gradient">Ajouter un Produit</h3>
+                <h3 class="text-gradient" id="form-panel-title">Ajouter un Produit</h3>
                 <form id="add-product-form">
                     <!-- Widget Cloudinary -->
                     <div id="image-preview">
@@ -558,7 +558,10 @@
                         <label>Stock</label>
                         <input type="number" id="prod-stock" class="form-control" value="10" required>
                     </div>
-                    <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Ajouter le Produit</button>
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <button type="submit" id="form-submit-btn" class="btn" style="flex:1;">Ajouter le Produit</button>
+                        <button type="button" id="cancel-edit-btn" class="btn btn-outline hidden" style="flex:0 0 auto;" onclick="cancelEdit()">Annuler</button>
+                    </div>
                 </form>
             </div>
 
@@ -762,15 +765,37 @@
         });
 
         // ==========================================
-        // 4. AJOUT DE PRODUIT
+        // 4. AJOUT / MODIFICATION DE PRODUIT
         // ==========================================
         const addProductForm = document.getElementById('add-product-form');
+        const formPanelTitle = document.getElementById('form-panel-title');
+        const formSubmitBtn = document.getElementById('form-submit-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        let editingId = null; // null = mode ajout, sinon ID du produit en cours d'édition
+
+        // Fonction utilitaire : réinitialise le formulaire et revient en mode ajout
+        function resetForm() {
+            editingId = null;
+            addProductForm.reset();
+            categoryPills.forEach(p => p.classList.remove('selected'));
+            imagePreview.innerHTML = `<span>Aucune image</span>`;
+            prodImgUrlInput.value = '';
+            prodCloudIdInput.value = '';
+            uploadWidgetBtn.textContent = 'Upload Image (Cloudinary)';
+            uploadWidgetBtn.style.borderColor = 'var(--primary)';
+            uploadWidgetBtn.style.color = 'var(--text-light)';
+            formPanelTitle.textContent = 'Ajouter un Produit';
+            formSubmitBtn.textContent = 'Ajouter le Produit';
+            cancelEditBtn.classList.add('hidden');
+        }
+
+        window.cancelEdit = resetForm;
 
         addProductForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = addProductForm.querySelector('button[type="submit"]');
+            const btn = formSubmitBtn;
             btn.disabled = true;
-            btn.textContent = "Ajout en cours...";
+            btn.textContent = editingId ? 'Mise à jour...' : 'Ajout en cours...';
 
             try {
                 const nom = document.getElementById('prod-name').value;
@@ -782,45 +807,51 @@
                 const imageUrl = document.getElementById('prod-img-url').value;
                 const cloudinaryId = document.getElementById('prod-cloud-id').value;
 
-                // Validation de l'image
                 if (!imageUrl) {
-                    alert("Veuillez uploader une image pour le produit via Cloudinary.");
+                    alert('Veuillez uploader une image pour le produit via Cloudinary.');
                     btn.disabled = false;
-                    btn.textContent = "Ajouter le Produit";
+                    btn.textContent = editingId ? 'Mettre à jour' : 'Ajouter le Produit';
                     return;
                 }
 
-                // Insertion dans Firestore
-                await addDoc(produitsCol, {
-                    nom,
-                    categorie,
-                    description,
-                    prix,
-                    ancienPrix: null,
-                    promo: badge === "PROMO", // Si le badge est PROMO, le booléen est true
-                    badge: badge || null, // null si vide
-                    imageUrl,
-                    cloudinaryId,
-                    stock,
-                    createdAt: serverTimestamp()
-                });
+                if (editingId) {
+                    // ── MODE ÉDITION : updateDoc ──
+                    await updateDoc(doc(db, 'produits', editingId), {
+                        nom,
+                        categorie,
+                        description,
+                        prix,
+                        badge: badge || null,
+                        promo: badge === 'PROMO',
+                        imageUrl,
+                        cloudinaryId,
+                        stock
+                    });
+                } else {
+                    // ── MODE AJOUT : addDoc ──
+                    await addDoc(produitsCol, {
+                        nom,
+                        categorie,
+                        description,
+                        prix,
+                        ancienPrix: null,
+                        promo: badge === 'PROMO',
+                        badge: badge || null,
+                        imageUrl,
+                        cloudinaryId,
+                        stock,
+                        createdAt: serverTimestamp()
+                    });
+                }
 
-                // Réinitialisation du formulaire
-                addProductForm.reset();
-                categoryPills.forEach(p => p.classList.remove('selected'));
-                imagePreview.innerHTML = `<span>Aucune image</span>`;
-                prodImgUrlInput.value = "";
-                prodCloudIdInput.value = "";
-                uploadWidgetBtn.textContent = "Upload Image (Cloudinary)";
-                uploadWidgetBtn.style.borderColor = "var(--primary)";
-                uploadWidgetBtn.style.color = "var(--text-light)";
-                
+                resetForm();
+
             } catch (error) {
-                console.error("Erreur lors de l'ajout:", error);
-                alert("Erreur lors de l'ajout du produit.");
+                console.error('Erreur lors de la sauvegarde:', error);
+                alert('Erreur lors de la sauvegarde du produit.');
             } finally {
                 btn.disabled = false;
-                btn.textContent = "Ajouter le Produit";
+                btn.textContent = editingId ? 'Mettre à jour' : 'Ajouter le Produit';
             }
         });
 
@@ -897,7 +928,7 @@
                             </label>
                         </div>
                         <div class="action-row">
-                            <button class="btn btn-outline" onclick="modifierPrix('${id}', ${data.prix})">Modif Prix</button>
+                            <button class="btn btn-outline" onclick="editProduit('${id}')" style="background:rgba(94,23,235,0.15);">✏️ Éditer</button>
                             <button class="btn btn-danger" onclick="supprimerProduit('${id}')">Supprimer</button>
                         </div>
                     </div>
@@ -951,11 +982,9 @@
 
             try {
                 if (isPromo) {
-                    // Passage en promotion
-                    const prixPromoStr = prompt(`Le produit passe en promo.\nPrix actuel: ${prixActuel} €.\n\nEntrez le nouveau PRIX RÉDUIT en € :`);
+                    const prixPromoStr = prompt(`Le produit passe en promo.\nPrix actuel: ${prixActuel.toLocaleString('fr-FR')} F CFA.\n\nEntrez le nouveau PRIX RÉDUIT en F CFA :`);
                     
                     if (prixPromoStr === null) {
-                        // Annulation de l'utilisateur : on remet le toggle à l'état précédent
                         toggleElement.checked = false;
                         return;
                     }
@@ -967,7 +996,6 @@
                         return;
                     }
                     
-                    // Mise à jour : promo true, on stocke l'ancien prix, on met le nouveau prix et le badge PROMO
                     await updateDoc(docRef, {
                         promo: true,
                         ancienPrix: prixActuel,
@@ -976,14 +1004,10 @@
                     });
                     
                 } else {
-                    // Retrait de la promotion
-                    // On récupère le document pour retrouver l'ancien prix
                     const snap = await getDoc(docRef);
                     if(snap.exists()) {
                         const data = snap.data();
-                        const prixInitial = data.ancienPrix || data.prix; // Sécurité si ancienPrix est null
-                        
-                        // Restauration du prix initial, retrait du badge
+                        const prixInitial = data.ancienPrix || data.prix;
                         await updateDoc(docRef, {
                             promo: false,
                             ancienPrix: null,
@@ -995,8 +1019,52 @@
             } catch (error) {
                 console.error("Erreur toggle promo:", error);
                 alert("Erreur lors de la modification de la promotion.");
-                // En cas d'erreur on annule le changement visuel du toggle
                 toggleElement.checked = !isPromo;
+            }
+        };
+
+        // ── ÉDITION D'UN PRODUIT ──
+        window.editProduit = async (id) => {
+            try {
+                const snap = await getDoc(doc(db, 'produits', id));
+                if (!snap.exists()) { alert('Produit introuvable.'); return; }
+                const d = snap.data();
+
+                // Passer en mode édition
+                editingId = id;
+                formPanelTitle.textContent = '✏️ Modifier le Produit';
+                formSubmitBtn.textContent = 'Mettre à jour';
+                cancelEditBtn.classList.remove('hidden');
+
+                // Pré-remplir les champs
+                document.getElementById('prod-name').value = d.nom || '';
+                document.getElementById('prod-desc').value = d.description || '';
+                document.getElementById('prod-price').value = d.prix || '';
+                document.getElementById('prod-stock').value = d.stock || 0;
+                document.getElementById('prod-badge').value = d.badge || '';
+
+                // Catégorie : sélectionner le bon pill
+                categoryPills.forEach(p => {
+                    p.classList.toggle('selected', p.dataset.value === d.categorie);
+                });
+                document.getElementById('prod-cat').value = d.categorie || '';
+
+                // Image
+                if (d.imageUrl) {
+                    imagePreview.innerHTML = `<img src="${d.imageUrl}" alt="Aperçu">`;
+                    prodImgUrlInput.value = d.imageUrl;
+                    prodCloudIdInput.value = d.cloudinaryId || '';
+                    uploadWidgetBtn.textContent = 'Changer l\'image';
+                    uploadWidgetBtn.style.borderColor = 'var(--success)';
+                    uploadWidgetBtn.style.color = 'var(--success)';
+                }
+
+                // Scroll vers le formulaire
+                document.getElementById('add-product-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            } catch (error) {
+                console.error('Erreur chargement produit:', error);
+                alert('Impossible de charger ce produit.');
             }
         };
     </script>
