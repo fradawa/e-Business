@@ -543,8 +543,8 @@
                         <textarea id="prod-desc" class="form-control" placeholder="Description courte du produit..." rows="2" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Prix (€)</label>
-                        <input type="number" step="0.01" id="prod-price" class="form-control" placeholder="29.99" required>
+                        <label>Prix (F CFA)</label>
+                        <input type="number" step="1" id="prod-price" class="form-control" placeholder="Ex: 5000" required>
                     </div>
                     <div class="form-group">
                         <label>Badge</label>
@@ -873,9 +873,9 @@
             }
 
             // Gestion de l'affichage du prix
-            let priceHtml = `<span>${data.prix.toFixed(2)} €</span>`;
+            let priceHtml = `<span>${data.prix.toLocaleString('fr-FR')} F CFA</span>`;
             if (data.promo && data.ancienPrix) {
-                priceHtml = `<span class="product-old-price">${data.ancienPrix.toFixed(2)} €</span> <span>${data.prix.toFixed(2)} €</span>`;
+                priceHtml = `<span class="product-old-price">${data.ancienPrix.toLocaleString('fr-FR')} F CFA</span> <span>${data.prix.toLocaleString('fr-FR')} F CFA</span>`;
             }
 
             card.innerHTML = `
