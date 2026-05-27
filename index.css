@@ -68,6 +68,10 @@
      color: var(--dark)
  }
 
+ .bottom-nav {
+     display: none;
+ }
+
  .nav-icons {
      display: flex;
      gap: 1rem;
@@ -1070,8 +1074,39 @@
  }
 
  @media(max-width: 768px) {
-     nav { height: auto; flex-wrap: wrap; padding: 1rem 1.5rem; }
-     .nav-links { order: 3; width: 100%; justify-content: center; gap: 1.5rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+     nav { height: auto; padding: 1rem 1.5rem; flex-wrap: nowrap; justify-content: space-between; }
+     .nav-links { display: none; }
+     
+     .bottom-nav {
+         display: flex;
+         position: fixed;
+         bottom: 0;
+         left: 0;
+         right: 0;
+         background: var(--cream);
+         border-top: 1px solid var(--border);
+         justify-content: space-around;
+         align-items: center;
+         padding: 0.5rem 0;
+         z-index: 1000;
+         box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+     }
+     
+     .bottom-nav-item {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         text-decoration: none;
+         color: var(--muted);
+         font-size: 0.75rem;
+         font-family: 'DM Sans', sans-serif;
+         gap: 4px;
+     }
+     
+     .bottom-nav-item .icon { font-size: 1.2rem; }
+     .bottom-nav-item:hover, .bottom-nav-item.active { color: var(--accent); }
+     
+     body { padding-bottom: 60px; }
      
      .hero { grid-template-columns: 1fr; min-height: auto; }
      .hero-right { min-height: 250px; }
@@ -1081,14 +1116,19 @@
      .section { padding: 3rem 1rem; }
      .section-title { font-size: 2.2rem; }
      
-     .categories { grid-template-columns: repeat(2, 1fr); margin: 0; }
-     .cat-card { padding: 1.5rem 1rem; }
+     .categories { grid-template-columns: repeat(4, 1fr); margin: 0; }
+     .cat-card { padding: 0.8rem 0.5rem; }
+     .cat-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+     .cat-name { font-size: 0.65rem; }
+     .cat-count { display: none; } /* Hide count to save space on mobile */
      
      .filter-bar { gap: 0.5rem; }
      .filter-btn { font-size: 0.75rem; padding: 0.4rem 0.8rem; }
      
-     .search-input { width: 140px; }
-     .search-input:focus { width: 180px; }
+     .nav-icons { display: flex; align-items: center; gap: 0.8rem; }
+     .search-wrapper { display: flex; align-items: center; }
+     .search-input { width: 120px; padding: 0.4rem 0.8rem; padding-left: 28px; }
+     .search-input:focus { width: 150px; }
      
      .promo { grid-template-columns: 1fr; margin: 1.5rem 0; padding: 3rem 1.5rem; }
      .promo-right { gap: 1rem; }
@@ -1110,7 +1150,7 @@
      .hero-emoji { font-size: 5rem; }
      .hero-logo-3d { height: 120px; }
      
-     .categories { grid-template-columns: 1fr; }
+     .categories { grid-template-columns: repeat(4, 1fr); }
      
      .nl-form { flex-direction: column; gap: 0.5rem; }
      .nl-input { border: 1px solid var(--border); }
