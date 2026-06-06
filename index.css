@@ -1183,7 +1183,7 @@
      
      .nav-links { gap: 1rem; font-size: 0.75rem; flex-wrap: wrap; }
      
-     .cart-panel { padding: 1.5rem; }
+     .cart-panel { padding: 1.5rem; padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px) + 1.5rem); }
      .cart-item { flex-wrap: wrap; }
      .cart-item-remove { margin-left: auto; margin-top: 0.5rem; }
      

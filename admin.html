@@ -178,6 +178,11 @@
             font-weight: 700;
         }
 
+        .desktop-actions {
+            display: flex;
+            gap: 10px;
+        }
+
         /* Stats Bar */
         .stats-bar {
             display: grid;
@@ -607,7 +612,7 @@
             }
 
             .desktop-actions {
-                display: none;
+                display: none !important;
             }
 
             .stats-bar {
@@ -682,6 +687,22 @@
             .prod-row-actions {
                 order: 5;
                 margin-left: auto;
+                gap: 5px;
+            }
+
+            .prod-row-actions .btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+
+            .toggle-switch {
+                transform: scale(0.85);
+                margin-right: -5px;
+            }
+
+            #admin-search {
+                max-width: 100% !important;
+                width: 100%;
             }
 
             /* Bottom Nav Admin */
@@ -855,7 +876,7 @@
             <img src="logo.png" alt="THIAflow" style="height: 32px;">
             <span class="text-gradient">THIAflow Admin</span>
         </div>
-        <div class="desktop-actions" style="display:flex; gap:10px;">
+        <div class="desktop-actions">
             <button class="btn" onclick="openDrawer()">&#43; Ajouter Produit</button>
             <a href="index.html" class="btn btn-outline">🏠 Accueil</a>
             <button id="logout-btn" class="btn btn-outline">Déconnexion</button>
