@@ -1,25 +1,46 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin - E-commerce</title>
+    <!-- Social Preview Meta Tags -->
+    <meta property="og:title" content="THIAflow Admin">
+    <meta property="og:description" content="Panel d'administration THIAflow.">
+    <meta property="og:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+    <meta property="og:url" content="https://thiaflow-a8c10.web.app/admin.html">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="THIAflow Admin">
+    <meta name="twitter:description" content="Panel d'administration THIAflow.">
+    <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
     <!-- Font Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
     <!-- Cloudinary Upload Widget Script -->
     <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
     <style>
         /* CSS reset & variables */
         :root {
-            --primary: #5E17EB; /* Violet */
-            --secondary: #FF0D8D; /* Magenta */
+            --primary: #5E17EB;
+            /* Violet */
+            --secondary: #FF0D8D;
+            /* Magenta */
             --bg-dark: #121212;
             --bg-panel: #1E1E1E;
+            --bg-surface: #252525;
+            --glass-bg: rgba(30, 30, 30, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
             --text-light: #F5F5F5;
             --text-muted: #A0A0A0;
             --border-color: #333;
             --danger: #FF3B30;
             --success: #34C759;
+            --warning: #FF9F0A;
             --font-family: 'Poppins', sans-serif;
         }
 
@@ -34,6 +55,7 @@
             background-color: var(--bg-dark);
             color: var(--text-light);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* Layout & Utility */
@@ -63,18 +85,26 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: opacity 0.3s, transform 0.2s;
-            display: inline-block;
-            text-align: center;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
         }
 
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(94, 23, 235, 0.4);
         }
 
         .btn-danger {
             background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 4px 15px rgba(255, 59, 48, 0.4);
         }
 
         .btn-outline {
@@ -86,6 +116,7 @@
         .btn-outline:hover {
             background: var(--primary);
             color: white;
+            box-shadow: 0 4px 15px rgba(94, 23, 235, 0.2);
         }
 
         /* Forms */
@@ -115,251 +146,367 @@
             border-color: var(--primary);
         }
 
-        /* Login Screen */
-        #login-screen {
+        /* Dashboard Layout */
+        #dashboard {
+            padding-top: 100px;
+            /* space for sticky header */
+        }
+
+        /* Header Sticky Glassmorphism */
+        .header-sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 100;
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            justify-content: space-between;
+            padding: 0 20px;
         }
 
-        .login-box {
-            background-color: var(--bg-panel);
-            padding: 40px;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid var(--border-color);
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
-        .login-box h2 {
-            text-align: center;
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
             margin-bottom: 25px;
         }
 
-        /* Bouton Google */
-        .btn-google {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 12px 20px;
-            background: #fff;
-            color: #3c4043;
-            border: 1px solid #dadce0;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, box-shadow 0.2s;
-            margin-bottom: 16px;
-        }
-
-        .btn-google:hover {
-            background: #f8f8f8;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        /* Séparateur ou */
-        .login-divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .login-divider::before,
-        .login-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-color);
-        }
-
-        /* Dashboard */
-        #dashboard {
-            padding-top: 30px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-
-        /* Tablet & Desktop Layout */
-        @media (min-width: 992px) {
-            .grid {
-                grid-template-columns: 350px 1fr;
-            }
-        }
-
-        /* Panel */
-        .panel {
-            background-color: var(--bg-panel);
-            padding: 25px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            height: fit-content;
-        }
-
-        .panel h3 {
-            margin-bottom: 20px;
-            color: var(--text-light);
-            font-size: 1.25rem;
-        }
-
-        /* Image Preview */
-        #image-preview {
-            width: 100%;
-            height: 200px;
-            border: 2px dashed var(--border-color);
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-            overflow: hidden;
-            background-color: var(--bg-dark);
-            color: var(--text-muted);
-        }
-
-        #image-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Product List */
-        .product-list {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .product-list {
-                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            }
-        }
-
-        .product-card {
-            background-color: var(--bg-dark);
+        .stat-card {
+            background: var(--bg-panel);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s, border-color 0.3s;
+            padding: 15px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 5px;
         }
 
-        .product-img-wrapper {
-            height: 180px;
-            position: relative;
-            background: #000;
+        .stat-card.stat-rupture .value {
+            color: var(--danger);
         }
 
-        .product-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
+        .stat-card.stat-promo .value {
+            color: var(--secondary);
+        }
+
+        .stat-card .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Drawer Overlay & Panel */
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
             transition: opacity 0.3s;
         }
-        
-        .product-card:hover .product-img {
+
+        .drawer-overlay.active {
+            display: block;
             opacity: 1;
         }
 
-        .product-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            color: white;
-            z-index: 1;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .badge-promo { background-color: var(--secondary); }
-        .badge-new { background-color: var(--primary); }
-
-        .product-info {
-            padding: 15px;
-            flex-grow: 1;
+        .drawer-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--bg-panel);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            transition: right 0.3s ease-in-out;
             display: flex;
             flex-direction: column;
         }
 
-        .product-title {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-            font-weight: 600;
+        .drawer-panel.open {
+            right: 0;
         }
 
-        .product-category {
+        .drawer-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .drawer-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* Category Pills */
+        .category-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .cat-pill {
+            flex: 1;
+            min-width: 70px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .cat-pill:hover {
+            border-color: var(--primary);
+            color: var(--text-light);
+        }
+
+        .cat-pill.selected {
+            background: var(--primary);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(94, 23, 235, 0.3);
+        }
+
+        /* Admin Tabs */
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .admin-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
             color: var(--text-muted);
             font-size: 0.85rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .product-price {
-            font-size: 1.25rem;
+        .admin-tab:hover {
+            border-color: var(--primary);
+            color: var(--text-light);
+        }
+
+        .admin-tab.active {
+            background: var(--primary);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        /* Prod Row Enhancements */
+        .prod-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+            margin-bottom: 10px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .prod-row:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .prod-row-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #222;
+        }
+
+        .prod-row-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .prod-row-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .prod-row-meta {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .prod-row-price {
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        .prod-row-actions {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .product-old-price {
-            text-decoration: line-through;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-weight: normal;
+        .row-badge {
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
         }
 
-        .product-actions {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .row-badge.promo {
+            background: var(--secondary);
         }
 
-        .action-row {
-            display: flex;
-            gap: 10px;
+        .row-badge.new {
+            background: var(--primary);
         }
-        
-        .action-row button {
-            flex: 1;
-            padding: 8px;
+
+        .stock-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .stock-badge.ok {
+            background: rgba(52, 199, 89, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(52, 199, 89, 0.35);
+        }
+
+        .stock-badge.low {
+            background: rgba(255, 159, 10, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(255, 159, 10, 0.35);
+        }
+
+        .stock-badge.rupture {
+            background: rgba(255, 59, 48, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(255, 59, 48, 0.35);
+        }
+
+        .stock-stepper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stock-stepper button {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .stock-stepper button:hover {
+            border-color: var(--primary);
+            background: rgba(94, 23, 235, 0.2);
+        }
+
+        .stock-stepper button.minus:hover {
+            border-color: var(--danger);
+            background: rgba(255, 59, 48, 0.2);
+        }
+
+        .stock-val {
+            min-width: 25px;
+            text-align: center;
             font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        #stock-alert-banner {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 59, 48, 0.12);
+            border: 1px solid rgba(255, 59, 48, 0.4);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--danger);
+            animation: pulse-border 2s infinite;
+        }
+
+        #stock-alert-banner.visible {
+            display: flex;
+        }
+
+        #stock-alert-banner .alert-link {
+            margin-left: auto;
+            background: rgba(255, 59, 48, 0.2);
+            border: 1px solid rgba(255, 59, 48, 0.5);
+            color: var(--danger);
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-weight: 700;
+            cursor: pointer;
         }
 
         /* Toggle Switch */
@@ -401,291 +548,291 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: var(--primary);
             border-color: var(--primary);
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             transform: translateX(22px);
             background-color: white;
         }
 
-        .promo-toggle-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255,255,255,0.03);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 5px;
-            border: 1px solid var(--border-color);
-        }
-
-        .promo-toggle-container label {
-            font-size: 0.85rem;
-            margin-bottom: 0;
-            color: var(--text-light);
-        }
-
-
-        /* Category Selector */
-        .category-pills {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .cat-pill {
-            flex: 1;
-            min-width: 80px;
-            padding: 10px 8px;
-            border-radius: 10px;
-            border: 2px solid var(--border-color);
-            background: transparent;
-            color: var(--text-muted);
-            font-family: var(--font-family);
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            letter-spacing: 0.5px;
-            transition: border-color 0.25s, background 0.25s, color 0.25s, transform 0.2s;
-        }
-
-        .cat-pill:hover {
-            border-color: var(--primary);
-            color: var(--text-light);
-            transform: translateY(-2px);
-        }
-
-        .cat-pill.selected {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-color: transparent;
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(94, 23, 235, 0.35);
-            transform: translateY(-2px);
-        }
-
-        /* ── Admin Tabs ── */
-        .admin-tabs {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 14px;
-        }
-
-        .admin-tab {
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            background: transparent;
-            color: var(--text-muted);
-            font-family: var(--font-family);
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s, border-color 0.2s;
-        }
-
-        .admin-tab:hover {
-            border-color: var(--primary);
-            color: var(--text-light);
-        }
-
-        .admin-tab.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-color: transparent;
-            color: #fff;
-        }
-
-        /* ── Compact product rows ── */
-        .prod-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 8px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-dark);
-            margin-bottom: 8px;
-            transition: border-color 0.2s;
-        }
-
-        .prod-row:hover { border-color: var(--primary); }
-
-        .prod-row-thumb {
-            width: 52px;
-            height: 52px;
-            border-radius: 8px;
-            object-fit: cover;
-            flex-shrink: 0;
-            background: #222;
-        }
-
-        .prod-row-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .prod-row-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .prod-row-meta {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-top: 2px;
-        }
-
-        .prod-row-price {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 0.85rem;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .prod-row-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-
-        .prod-row-actions button {
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            border-radius: 6px;
-        }
-
-        .row-badge {
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            color: white;
-        }
-
-        .row-badge.promo { background: var(--secondary); }
-        .row-badge.new   { background: var(--primary); }
-
         .empty-admin {
             text-align: center;
-            padding: 2.5rem;
+            padding: 3rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 1rem;
+        }
+
+        #image-preview {
+            width: 100%;
+            height: 180px;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+            background: var(--bg-dark);
+            color: var(--text-muted);
+        }
+
+        #image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* ════════════════════
            RESPONSIVE MOBILE
         ════════════════════ */
+        .bottom-nav-admin {
+            display: none;
+        }
+
         @media (max-width: 767px) {
+            #dashboard {
+                padding-top: 80px;
+                padding-bottom: 80px;
+            }
 
-            .container { padding: 12px; }
+            .header-sticky {
+                height: 60px;
+            }
 
-            #dashboard { padding-top: 16px; }
+            .header-brand {
+                font-size: 1.2rem;
+            }
 
-            .header {
-                margin-bottom: 16px;
-                padding-bottom: 14px;
+            .desktop-actions {
+                display: none;
+            }
+
+            .stats-bar {
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .stat-card {
+                padding: 10px;
+            }
+
+            .stat-card .value {
+                font-size: 1.5rem;
+            }
+
+            .stat-card .label {
+                font-size: 0.65rem;
+            }
+
+            .admin-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 5px;
+                scrollbar-width: none;
+            }
+
+            .admin-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .admin-tab {
+                white-space: nowrap;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .prod-row {
+                padding: 10px;
                 gap: 10px;
                 flex-wrap: wrap;
             }
 
-            .header h2 { font-size: 1.2rem; }
-
-            /* FAB pour ouvrir le formulaire sur mobile */
-            #mobile-form-fab {
-                display: flex;
+            .prod-row-thumb {
+                width: 50px;
+                height: 50px;
             }
 
-            /* Formulaire caché par défaut sur mobile */
-            #form-panel-wrapper {
-                display: none;
+            .prod-row-info {
+                width: calc(100% - 70px);
             }
 
-            #form-panel-wrapper.open {
-                display: block;
+            .prod-row-name {
+                font-size: 0.9rem;
             }
 
-            .grid { gap: 16px; }
-
-            .panel { padding: 16px; border-radius: 12px; }
-
-            .panel h3 { font-size: 1rem; }
-
-            /* Tabs horizontaux scrollables */
-            .admin-tabs {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                padding-bottom: 4px;
+            .prod-row-meta {
+                font-size: 0.75rem;
                 gap: 6px;
             }
-            .admin-tabs::-webkit-scrollbar { display: none; }
-            .admin-tab { white-space: nowrap; }
 
-            /* Ligne produit : réduire sur petit écran */
-            .prod-row { padding: 8px 6px; gap: 8px; }
+            .prod-row-price {
+                width: 100%;
+                text-align: left;
+                font-size: 1rem;
+                order: 3;
+            }
 
-            .prod-row-thumb { width: 44px; height: 44px; }
+            .stock-stepper {
+                order: 4;
+            }
 
-            .prod-row-name { font-size: 0.82rem; }
+            .prod-row-actions {
+                order: 5;
+                margin-left: auto;
+            }
 
-            .prod-row-price { font-size: 0.78rem; }
+            /* Bottom Nav Admin */
+            .bottom-nav-admin {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 65px;
+                background: var(--glass-bg);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-top: 1px solid var(--glass-border);
+                justify-content: space-around;
+                align-items: center;
+                z-index: 100;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
 
-            .prod-row-actions { gap: 5px; }
+            .b-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+                color: var(--text-muted);
+                text-decoration: none;
+                font-size: 0.7rem;
+                font-weight: 500;
+                cursor: pointer;
+            }
 
-            .prod-row-actions button { padding: 5px 7px; font-size: 0.8rem; }
+            .b-nav-item.active {
+                color: var(--primary);
+            }
 
-            /* Recherche pleine largeur */
-            #admin-search { max-width: 100% !important; }
+            .b-nav-icon {
+                font-size: 1.2rem;
+            }
 
-            /* Pills catégorie */
-            .category-pills { gap: 6px; }
-            .cat-pill { font-size: 0.78rem; padding: 8px 6px; }
+            .b-nav-fab {
+                background: linear-gradient(135deg, var(--primary), var(--secondary));
+                width: 50px;
+                height: 50px;
+                border-radius: 25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1.5rem;
+                margin-top: -25px;
+                box-shadow: 0 4px 15px rgba(94, 23, 235, 0.4);
+                border: none;
+                cursor: pointer;
+            }
 
-            /* Image preview plus petite */
-            #image-preview { height: 150px; }
+            /* Drawer Mobile */
+            .drawer-panel {
+                right: 0;
+                top: 100%;
+                height: 90vh;
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+                transition: top 0.3s ease-in-out;
+            }
 
-            /* Bouton submit */
-            #form-submit-btn { font-size: 0.9rem; padding: 10px 14px; }
+            .drawer-panel.open {
+                top: 10vh;
+            }
         }
 
-        /* FAB caché sur desktop */
-        #mobile-form-fab { display: none; }
+        /* Login */
+        #login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
+        .login-box {
+            background-color: var(--bg-panel);
+            padding: 40px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .btn-google {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: #fff;
+            color: #3c4043;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+
+        .login-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .login-divider::before,
+        .login-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
     </style>
 </head>
+
 <body>
+
     <!-- Ecran de connexion -->
     <div id="login-screen">
         <div class="login-box">
             <h2 class="text-gradient">Admin Login</h2>
-
-            <!-- Bouton Google -->
             <button id="google-login-btn" type="button" class="btn-google">
                 <svg width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#EA4335" d="M24 9.5c3.1 0 5.8 1.1 8 2.9l5.9-5.9C34.5 3.5 29.6 1.5 24 1.5 14.8 1.5 7 7.3 3.7 15.2l6.9 5.4C12.3 14.2 17.6 9.5 24 9.5z"/>
-                    <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.4 5.8c4.3-4 6.8-9.9 6.8-17z"/>
-                    <path fill="#FBBC05" d="M10.6 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.1.8-4.6l-6.9-5.4A22.5 22.5 0 0 0 1.5 24c0 3.6.9 7 2.4 10l6.7-5.4z"/>
-                    <path fill="#34A853" d="M24 46.5c5.5 0 10.2-1.8 13.6-4.9l-7.4-5.8c-1.8 1.2-4.1 2-6.2 2-6.4 0-11.7-4.7-13.4-11l-6.7 5.4C7 40.7 14.8 46.5 24 46.5z"/>
+                    <path fill="#EA4335"
+                        d="M24 9.5c3.1 0 5.8 1.1 8 2.9l5.9-5.9C34.5 3.5 29.6 1.5 24 1.5 14.8 1.5 7 7.3 3.7 15.2l6.9 5.4C12.3 14.2 17.6 9.5 24 9.5z" />
+                    <path fill="#4285F4"
+                        d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.4 5.8c4.3-4 6.8-9.9 6.8-17z" />
+                    <path fill="#FBBC05"
+                        d="M10.6 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.1.8-4.6l-6.9-5.4A22.5 22.5 0 0 0 1.5 24c0 3.6.9 7 2.4 10l6.7-5.4z" />
+                    <path fill="#34A853"
+                        d="M24 46.5c5.5 0 10.2-1.8 13.6-4.9l-7.4-5.8c-1.8 1.2-4.1 2-6.2 2-6.4 0-11.7-4.7-13.4-11l-6.7 5.4C7 40.7 14.8 46.5 24 46.5z" />
                 </svg>
                 Se connecter avec Google
             </button>
-
             <div class="login-divider"><span>ou</span></div>
-
             <form id="login-form">
                 <div class="form-group">
                     <label>Email</label>
@@ -695,98 +842,147 @@
                     <label>Mot de passe</label>
                     <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
                 </div>
-                <p id="login-error" style="color: var(--danger); font-size: 0.85rem; display: none; margin-bottom: 10px;"></p>
+                <p id="login-error"
+                    style="color: var(--danger); font-size: 0.85rem; display: none; margin-bottom: 10px;"></p>
                 <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
             </form>
         </div>
     </div>
 
+    <!-- Header Sticky (Desktop & Mobile) -->
+    <header id="admin-header" class="header-sticky hidden">
+        <div class="header-brand">
+            <img src="logo.png" alt="THIAflow" style="height: 32px;">
+            <span class="text-gradient">THIAflow Admin</span>
+        </div>
+        <div class="desktop-actions" style="display:flex; gap:10px;">
+            <button class="btn" onclick="openDrawer()">&#43; Ajouter Produit</button>
+            <a href="index.html" class="btn btn-outline">🏠 Accueil</a>
+            <button id="logout-btn" class="btn btn-outline">Déconnexion</button>
+        </div>
+    </header>
+
     <!-- Dashboard Principal -->
     <div id="dashboard" class="hidden container">
-        <div class="header">
-            <h2 class="text-gradient">Panel Admin</h2>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <!-- Bouton visible uniquement sur mobile pour ouvrir/fermer le formulaire -->
-                <button id="mobile-form-fab" class="btn" style="padding:8px 14px; font-size:0.85rem;" onclick="toggleMobileForm()">
-                    &#43; Ajouter
-                </button>
-                <button id="logout-btn" class="btn btn-outline">Déconnexion</button>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="value" id="stat-total">0</div>
+                <div class="label">Produits</div>
+            </div>
+            <div class="stat-card stat-rupture" onclick="filterByRupture()" style="cursor:pointer;">
+                <div class="value" id="stat-rupture">0</div>
+                <div class="label">Ruptures</div>
+            </div>
+            <div class="stat-card stat-promo">
+                <div class="value" id="stat-promo">0</div>
+                <div class="label">Promotions</div>
             </div>
         </div>
 
-        <div class="grid">
-            <!-- Formulaire d'ajout de produit (wrapper pour toggle mobile) -->
-            <div id="form-panel-wrapper" class="panel">
-                <h3 class="text-gradient" id="form-panel-title">Ajouter un Produit</h3>
-                <form id="add-product-form">
-                    <!-- Widget Cloudinary -->
-                    <div id="image-preview">
-                        <span>Aucune image</span>
-                    </div>
-                    <button type="button" id="upload-widget-btn" class="btn btn-outline" style="width: 100%; margin-bottom: 15px;">
-                        Upload Image (Cloudinary)
-                    </button>
-                    <!-- Champs cachés pour stocker les infos de l'image -->
-                    <input type="hidden" id="prod-img-url">
-                    <input type="hidden" id="prod-cloud-id">
+        <!-- Alerte rupture -->
+        <div id="stock-alert-banner">
+            <span>🔴</span>
+            <span><strong id="stock-alert-count">0</strong> produit(s) en rupture de stock !</span>
+            <button class="alert-link" onclick="filterByRupture()">Voir →</button>
+        </div>
 
-                    <div class="form-group">
-                        <label>Nom du produit</label>
-                        <input type="text" id="prod-name" class="form-control" placeholder="Ex: T-Shirt Vintage" required>
+        <div
+            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; gap:15px; flex-wrap:wrap;">
+            <div class="admin-tabs" id="admin-tabs" style="margin-bottom:0; flex:1;">
+                <button class="admin-tab active" data-cat="" onclick="setAdminTab(this)">Tous</button>
+                <button class="admin-tab" data-cat="Hygiène" onclick="setAdminTab(this)">🪶 Hygiène</button>
+                <button class="admin-tab" data-cat="Soins" onclick="setAdminTab(this)">✨ Soins</button>
+                <button class="admin-tab" data-cat="Parfums" onclick="setAdminTab(this)">🌸 Parfums</button>
+                <button class="admin-tab" data-cat="__rupture__" id="tab-rupture" onclick="setAdminTab(this)">🔴
+                    Rupture</button>
+            </div>
+            <input type="text" id="admin-search" class="form-control" placeholder="🔍 Rechercher..."
+                style="max-width:250px; padding:10px 15px;" oninput="filterAdminList()">
+        </div>
+
+        <div id="product-list">
+            <!-- Injecté via JS -->
+        </div>
+    </div>
+
+    <!-- Bottom Nav (Mobile) -->
+    <nav id="bottom-nav-admin" class="bottom-nav-admin hidden">
+        <a href="index.html" class="b-nav-item">
+            <span class="b-nav-icon">🏠</span>
+            <span>Store</span>
+        </a>
+        <div class="b-nav-item active" onclick="setAdminTab(document.querySelector('.admin-tab[data-cat=\'\']'))">
+            <span class="b-nav-icon">📦</span>
+            <span>Produits</span>
+        </div>
+        <button class="b-nav-fab" onclick="openDrawer()">&#43;</button>
+        <div class="b-nav-item" onclick="filterByRupture()">
+            <span class="b-nav-icon">🔴</span>
+            <span>Ruptures</span>
+        </div>
+        <div class="b-nav-item" id="logout-btn-mobile">
+            <span class="b-nav-icon">🚪</span>
+            <span>Quitter</span>
+        </div>
+    </nav>
+
+    <!-- Drawer Formulaire -->
+    <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+    <div class="drawer-panel" id="drawer-panel">
+        <div class="drawer-header">
+            <h3 class="text-gradient" id="form-panel-title" style="margin:0; font-size:1.2rem;">Ajouter un Produit</h3>
+            <button class="btn-outline" style="border:none; padding:5px 10px;" onclick="closeDrawer()">✕</button>
+        </div>
+        <div class="drawer-body">
+            <form id="add-product-form">
+                <div id="image-preview"><span>Aucune image</span></div>
+                <button type="button" id="upload-widget-btn" class="btn btn-outline"
+                    style="width:100%; margin-bottom:20px;">
+                    Upload Image (Cloudinary)
+                </button>
+                <input type="hidden" id="prod-img-url">
+                <input type="hidden" id="prod-cloud-id">
+
+                <div class="form-group">
+                    <label>Nom du produit</label>
+                    <input type="text" id="prod-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Catégorie</label>
+                    <div class="category-pills" id="category-pills">
+                        <button type="button" class="cat-pill" data-value="Hygiène">🧴 Hygiène</button>
+                        <button type="button" class="cat-pill" data-value="Soins">✨ Soins</button>
+                        <button type="button" class="cat-pill" data-value="Parfums">🌸 Parfums</button>
                     </div>
-                    <div class="form-group">
-                        <label>Catégorie</label>
-                        <div class="category-pills" id="category-pills">
-                            <button type="button" class="cat-pill" data-value="Hygiène">🧴 Hygiène</button>
-                            <button type="button" class="cat-pill" data-value="Soins">✨ Soins</button>
-                            <button type="button" class="cat-pill" data-value="Parfums">🌸 Parfums</button>
-                        </div>
-                        <input type="hidden" id="prod-cat" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="prod-desc" class="form-control" placeholder="Description courte du produit..." rows="2" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Prix (F CFA)</label>
-                        <input type="number" step="1" id="prod-price" class="form-control" placeholder="Ex: 5000" required>
-                    </div>
-                    <div class="form-group">
+                    <input type="hidden" id="prod-cat" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="prod-desc" class="form-control" rows="2" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Prix (F CFA)</label>
+                    <input type="number" step="1" id="prod-price" class="form-control" required>
+                </div>
+                <div class="form-group" style="display:flex; gap:15px;">
+                    <div style="flex:1;">
                         <label>Badge</label>
                         <select id="prod-badge" class="form-control">
                             <option value="">Aucun</option>
-                            <option value="NEW">Nouveau (NEW)</option>
-                            <option value="PROMO">Promotion (PROMO)</option>
+                            <option value="NEW">NEW</option>
+                            <option value="PROMO">PROMO</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div style="flex:1;">
                         <label>Stock</label>
                         <input type="number" id="prod-stock" class="form-control" value="10" required>
                     </div>
-                    <div style="display:flex; gap:10px; margin-top:10px;">
-                        <button type="submit" id="form-submit-btn" class="btn" style="flex:1;">Ajouter le Produit</button>
-                        <button type="button" id="cancel-edit-btn" class="btn btn-outline hidden" style="flex:0 0 auto;" onclick="cancelEdit()">Annuler</button>
-                    </div>
-                </form>
-            </div><!-- /form-panel-wrapper -->
-
-            <!-- Liste des produits -->
-            <div class="panel" style="min-width:0;">
-                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
-                    <h3 class="text-gradient" style="margin-bottom:0;">Produits (<span id="product-count">0</span>)</h3>
-                    <input type="text" id="admin-search" class="form-control" placeholder="🔍 Rechercher..." style="max-width:200px; padding:8px 12px; font-size:0.85rem;" oninput="filterAdminList()">
                 </div>
-                <!-- Onglets catégories -->
-                <div class="admin-tabs" id="admin-tabs">
-                    <button class="admin-tab active" data-cat="" onclick="setAdminTab(this)">Tous</button>
-                    <button class="admin-tab" data-cat="Hygiène" onclick="setAdminTab(this)">🪶 Hygiène</button>
-                    <button class="admin-tab" data-cat="Soins" onclick="setAdminTab(this)">✨ Soins</button>
-                    <button class="admin-tab" data-cat="Parfums" onclick="setAdminTab(this)">🌸 Parfums</button>
-                </div>
-                <div id="product-list">
-                    <!-- Les produits seront injectés ici dynamiquement -->
-                </div>
-            </div>
+                <button type="submit" id="form-submit-btn" class="btn" style="width:100%; margin-top:10px;">Ajouter le
+                    Produit</button>
+            </form>
         </div>
     </div>
 
@@ -828,6 +1024,8 @@
         const loginForm = document.getElementById('login-form');
         const loginError = document.getElementById('login-error');
         const logoutBtn = document.getElementById('logout-btn');
+        const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+        if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', () => signOut(auth));
 
         // Écouteur d'état de connexion
         // Seuls les emails de la whitelist (définie dans env.js) ont accès
@@ -842,11 +1040,11 @@
                     return;
                 }
                 loginScreen.classList.add('hidden');
-                dashboard.classList.remove('hidden');
+                dashboard.classList.remove('hidden'); document.getElementById('admin-header').classList.remove('hidden'); document.getElementById('bottom-nav-admin').classList.remove('hidden');
                 loadProducts();
             } else {
                 loginScreen.classList.remove('hidden');
-                dashboard.classList.add('hidden');
+                dashboard.classList.add('hidden'); document.getElementById('admin-header').classList.add('hidden'); document.getElementById('bottom-nav-admin').classList.add('hidden');
             }
         });
 
@@ -855,15 +1053,15 @@
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            
+
             try {
                 const btn = loginForm.querySelector('button');
                 btn.textContent = "Connexion...";
                 btn.disabled = true;
-                
+
                 await signInWithEmailAndPassword(auth, email, password);
                 loginError.style.display = 'none';
-                
+
                 btn.textContent = "Se connecter";
                 btn.disabled = false;
             } catch (error) {
@@ -959,14 +1157,14 @@
             if (!error && result && result.event === "success") {
                 const url = result.info.secure_url;
                 const publicId = result.info.public_id;
-                
+
                 // Sauvegarde des données dans les champs cachés
                 prodImgUrlInput.value = url;
                 prodCloudIdInput.value = publicId;
-                
+
                 // Affichage de l'aperçu
                 imagePreview.innerHTML = `<img src="${url}" alt="Aperçu du produit">`;
-                
+
                 // Feedback visuel sur le bouton
                 uploadWidgetBtn.textContent = "Image Ajoutée ✓";
                 uploadWidgetBtn.style.borderColor = "var(--success)";
@@ -1002,11 +1200,7 @@
             formPanelTitle.textContent = 'Ajouter un Produit';
             formSubmitBtn.textContent = 'Ajouter le Produit';
             cancelEditBtn.classList.add('hidden');
-            // Sur mobile : refermer le formulaire
-            const wrapper = document.getElementById('form-panel-wrapper');
-            const fab = document.getElementById('mobile-form-fab');
-            if (wrapper) wrapper.classList.remove('open');
-            if (fab) fab.textContent = '+ Ajouter';
+            window.closeDrawer();
         }
 
         window.cancelEdit = resetForm;
@@ -1079,7 +1273,6 @@
         // 5. LECTURE & GESTION DES PRODUITS (Temps Réel)
         // ==========================================
         const productListEl = document.getElementById('product-list');
-        const productCountEl = document.getElementById('product-count');
         let unsubscribeSnapshot = null;
         let allProducts = []; // cache local de tous les produits
         let adminCatFilter = ''; // catégorie active dans les onglets
@@ -1106,13 +1299,33 @@
         function renderAdminList() {
             const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
             let filtered = allProducts.filter(p => {
-                const catOk = !adminCatFilter || p.categorie === adminCatFilter;
+                const isRuptureTab = adminCatFilter === '__rupture__';
+                const catOk = !adminCatFilter || isRuptureTab || p.categorie === adminCatFilter;
+                const rupOk = !isRuptureTab || (p.stock ?? 0) <= 0;
                 const searchOk = !search || (p.nom || '').toLowerCase().includes(search);
-                return catOk && searchOk;
+                return catOk && rupOk && searchOk;
             });
 
-            productCountEl.textContent = allProducts.length;
             productListEl.innerHTML = '';
+
+            // Mise à jour des stats
+            document.getElementById('stat-total').textContent = allProducts.length;
+            const ruptureCount = allProducts.filter(p => (p.stock ?? 0) <= 0).length;
+            document.getElementById('stat-rupture').textContent = ruptureCount;
+            document.getElementById('stat-promo').textContent = allProducts.filter(p => p.promo).length;
+
+            // Mise à jour de l'alerte rupture
+            const alertBanner = document.getElementById('stock-alert-banner');
+            const alertCount = document.getElementById('stock-alert-count');
+            const ruptureTab = document.getElementById('tab-rupture');
+            if (ruptureCount > 0) {
+                alertBanner.classList.add('visible');
+                alertCount.textContent = ruptureCount;
+                ruptureTab.textContent = `🔴 Rupture (${ruptureCount})`;
+            } else {
+                alertBanner.classList.remove('visible');
+                ruptureTab.textContent = '🔴 Rupture';
+            }
 
             if (filtered.length === 0) {
                 productListEl.innerHTML = '<div class="empty-admin">📦 Aucun produit trouvé.</div>';
@@ -1121,9 +1334,17 @@
             filtered.forEach(p => renderProductRow(p.id, p));
         }
 
+        function getStockBadge(stock) {
+            const s = stock ?? 0;
+            if (s <= 0) return `<span class="stock-badge rupture">🔴 Rupture</span>`;
+            if (s <= 5) return `<span class="stock-badge low">🟡 ${s} restant${s > 1 ? 's' : ''}</span>`;
+            return `<span class="stock-badge ok">🟢 ${s} en stock</span>`;
+        }
+
         function renderProductRow(id, data) {
             const row = document.createElement('div');
             row.className = 'prod-row';
+            row.dataset.id = id;
 
             let badgeHtml = '';
             if (data.badge === 'PROMO') badgeHtml = '<span class="row-badge promo">PROMO</span>';
@@ -1133,6 +1354,8 @@
                 ? `<span style="text-decoration:line-through;color:var(--text-muted);font-size:0.75rem;">${data.ancienPrix.toLocaleString('fr-FR')}</span> ${data.prix.toLocaleString('fr-FR')} F CFA`
                 : `${data.prix.toLocaleString('fr-FR')} F CFA`;
 
+            const stock = data.stock ?? 0;
+
             row.innerHTML = `
                 <img class="prod-row-thumb" src="${data.imageUrl || ''}" alt="${data.nom}" loading="lazy">
                 <div class="prod-row-info">
@@ -1140,10 +1363,15 @@
                     <div class="prod-row-meta">
                         <span>${data.categorie || '—'}</span>
                         ${badgeHtml}
-                        <span>Stock: ${data.stock ?? '—'}</span>
+                        ${getStockBadge(stock)}
                     </div>
                 </div>
                 <div class="prod-row-price">${price}</div>
+                <div class="stock-stepper" title="Ajuster le stock">
+                    <button class="minus" onclick="updateStock('${id}', ${stock}, -1)" title="Retirer 1">−</button>
+                    <span class="stock-val">${stock}</span>
+                    <button class="plus"  onclick="updateStock('${id}', ${stock}, +1)" title="Ajouter 1">+</button>
+                </div>
                 <div class="prod-row-actions">
                     <label class="toggle-switch" title="Promo">
                         <input type="checkbox" id="toggle-${id}" ${data.promo ? 'checked' : ''}
@@ -1166,13 +1394,47 @@
         };
         window.filterAdminList = renderAdminList;
 
-        // Toggle formulaire sur mobile
-        window.toggleMobileForm = () => {
-            const wrapper = document.getElementById('form-panel-wrapper');
-            const fab = document.getElementById('mobile-form-fab');
-            const isOpen = wrapper.classList.toggle('open');
-            fab.textContent = isOpen ? '✕ Fermer' : '+ Ajouter';
-            if (isOpen) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Filtre rapide : aller sur l'onglet rupture
+        window.filterByRupture = () => {
+            const ruptureTab = document.getElementById('tab-rupture');
+            if (ruptureTab) window.setAdminTab(ruptureTab);
+            ruptureTab?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        };
+
+        // Ajustement rapide du stock (+1 / -1) sans ouvrir le formulaire
+        window.updateStock = async (id, currentStock, delta) => {
+            const newStock = Math.max(0, (currentStock ?? 0) + delta);
+            try {
+                await updateDoc(doc(db, 'produits', id), { stock: newStock });
+                // Mise à jour optimiste de l'affichage local
+                const prod = allProducts.find(p => p.id === id);
+                if (prod) prod.stock = newStock;
+                renderAdminList();
+            } catch (err) {
+                console.error('Erreur mise à jour stock:', err);
+                alert('Erreur lors de la mise à jour du stock.');
+            }
+        };
+
+        // Drawer Formulaire
+        window.openDrawer = () => {
+            document.getElementById('drawer-overlay').classList.add('active');
+            document.getElementById('drawer-panel').classList.add('open');
+        };
+        window.closeDrawer = () => {
+            document.getElementById('drawer-overlay').classList.remove('active');
+            document.getElementById('drawer-panel').classList.remove('open');
+            editingId = null;
+            document.getElementById('add-product-form').reset();
+            formPanelTitle.textContent = 'Ajouter un Produit';
+            formSubmitBtn.textContent = 'Ajouter le Produit';
+            document.getElementById('image-preview').innerHTML = '<span>Aucune image</span>';
+            document.getElementById('prod-img-url').value = '';
+            document.getElementById('prod-cloud-id').value = '';
+            uploadWidgetBtn.textContent = 'Upload Image (Cloudinary)';
+            uploadWidgetBtn.style.borderColor = 'var(--primary)';
+            uploadWidgetBtn.style.color = 'var(--text-light)';
+            categoryPills.forEach(p => p.classList.remove('selected'));
         };
 
         // ==========================================
@@ -1181,10 +1443,10 @@
 
         // Suppression (Firestore uniquement, pas Cloudinary selon la consigne)
         window.supprimerProduit = async (id) => {
-            if(confirm("Voulez-vous vraiment supprimer ce produit de la base de données ?")) {
+            if (confirm("Voulez-vous vraiment supprimer ce produit de la base de données ?")) {
                 try {
                     await deleteDoc(doc(db, "produits", id));
-                } catch(error) {
+                } catch (error) {
                     console.error("Erreur suppression:", error);
                     alert("Erreur lors de la suppression.");
                 }
@@ -1195,7 +1457,7 @@
         window.modifierPrix = async (id, prixActuel) => {
             const nouveauPrixStr = prompt("Entrez le nouveau prix en € :", prixActuel);
             if (nouveauPrixStr === null) return; // Annulation
-            
+
             const nouveauPrix = parseFloat(nouveauPrixStr);
             if (isNaN(nouveauPrix) || nouveauPrix < 0) {
                 alert("Prix invalide.");
@@ -1207,7 +1469,7 @@
                 await updateDoc(doc(db, "produits", id), {
                     prix: nouveauPrix
                 });
-            } catch(error) {
+            } catch (error) {
                 console.error("Erreur modif prix:", error);
                 alert("Erreur lors de la modification du prix.");
             }
@@ -1221,29 +1483,29 @@
             try {
                 if (isPromo) {
                     const prixPromoStr = prompt(`Le produit passe en promo.\nPrix actuel: ${prixActuel.toLocaleString('fr-FR')} F CFA.\n\nEntrez le nouveau PRIX RÉDUIT en F CFA :`);
-                    
+
                     if (prixPromoStr === null) {
                         toggleElement.checked = false;
                         return;
                     }
-                    
+
                     const prixPromo = parseFloat(prixPromoStr);
                     if (isNaN(prixPromo) || prixPromo >= prixActuel || prixPromo < 0) {
                         alert("Le prix promo doit être un nombre valide et strictement inférieur au prix actuel.");
                         toggleElement.checked = false;
                         return;
                     }
-                    
+
                     await updateDoc(docRef, {
                         promo: true,
                         ancienPrix: prixActuel,
                         prix: prixPromo,
                         badge: 'PROMO'
                     });
-                    
+
                 } else {
                     const snap = await getDoc(docRef);
-                    if(snap.exists()) {
+                    if (snap.exists()) {
                         const data = snap.data();
                         const prixInitial = data.ancienPrix || data.prix;
                         await updateDoc(docRef, {
@@ -1297,16 +1559,7 @@
                     uploadWidgetBtn.style.color = 'var(--success)';
                 }
 
-                // Sur mobile : ouvrir le formulaire automatiquement
-                const wrapper = document.getElementById('form-panel-wrapper');
-                const fab = document.getElementById('mobile-form-fab');
-                if (wrapper && !wrapper.classList.contains('open')) {
-                    wrapper.classList.add('open');
-                    if (fab) fab.textContent = '✕ Fermer';
-                }
-
-                // Scroll vers le formulaire
-                document.getElementById('add-product-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                window.openDrawer();
 
             } catch (error) {
                 console.error('Erreur chargement produit:', error);
@@ -1315,4 +1568,5 @@
         };
     </script>
 </body>
+
 </html>
