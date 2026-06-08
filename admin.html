@@ -1003,6 +1003,7 @@
                 </div>
                 <button type="submit" id="form-submit-btn" class="btn" style="width:100%; margin-top:10px;">Ajouter le
                     Produit</button>
+                <button type="button" id="cancel-edit-btn" class="btn btn-outline hidden" style="width:100%; margin-top:10px;" onclick="cancelEdit()">Annuler la modification</button>
             </form>
         </div>
     </div>
@@ -1220,7 +1221,7 @@
             uploadWidgetBtn.style.color = 'var(--text-light)';
             formPanelTitle.textContent = 'Ajouter un Produit';
             formSubmitBtn.textContent = 'Ajouter le Produit';
-            cancelEditBtn.classList.add('hidden');
+            if (cancelEditBtn) cancelEditBtn.classList.add('hidden');
             window.closeDrawer();
         }
 
@@ -1555,7 +1556,7 @@
                 editingId = id;
                 formPanelTitle.textContent = '✏️ Modifier le Produit';
                 formSubmitBtn.textContent = 'Mettre à jour';
-                cancelEditBtn.classList.remove('hidden');
+                if (cancelEditBtn) cancelEditBtn.classList.remove('hidden');
 
                 // Pré-remplir les champs
                 document.getElementById('prod-name').value = d.nom || '';

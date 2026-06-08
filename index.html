@@ -69,6 +69,20 @@
     </div>
   </section>
 
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <div class="ticker-item">✦ Maillot du Sénégal arrive bientôt ✦</div>
+      <div class="ticker-item">✦ Maillot du Sénégal arrive bientôt ✦</div>
+      <div class="ticker-item">✦ Maillot du Sénégal arrive bientôt ✦</div>
+      <div class="ticker-item">✦ Maillot du Sénégal arrive bientôt ✦</div>
+      <div class="ticker-item">✦ Maillot du Sénégal arrive bientôt ✦</div>
+      <div class="ticker-item">✦ Maillot du Sénégal arrive bientôt ✦</div>
+      <div class="ticker-item">✦ Maillot du Sénégal arrive bientôt ✦</div>
+      <div class="ticker-item">✦ Maillot du Sénégal arrive bientôt ✦</div>
+    </div>
+  </div>
+
   <!-- STATS -->
   <!-- <div class="stats">
     <div class="stat">
@@ -98,19 +112,15 @@
     <div class="categories" id="cat-bar">
       <div class="cat-card active" onclick="filterCat('all',this)"><span class="cat-icon">🛍️</span>
         <div class="cat-name">Tout</div>
-        <div class="cat-count">20 produits</div>
       </div>
       <div class="cat-card" onclick="filterCat('Hygiène',this)"><span class="cat-icon">🪥</span>
         <div class="cat-name">Hygiène</div>
-        <div class="cat-count">8 produits</div>
       </div>
       <div class="cat-card" onclick="filterCat('Soins',this)"><span class="cat-icon">🧴</span>
         <div class="cat-name">Soins</div>
-        <div class="cat-count">6 produits</div>
       </div>
       <div class="cat-card" onclick="filterCat('Parfums',this)"><span class="cat-icon">🌹</span>
         <div class="cat-name">Parfums</div>
-        <div class="cat-count">6 produits</div>
       </div>
     </div>
   </section>
@@ -153,14 +163,15 @@
     </div>
   </div>
 
-  <!-- NEWSLETTER -->
+  <!-- WHATSAPP GROUP -->
   <div class="newsletter" id="contact">
     <div class="section-label">Restez informé</div>
-    <h2 class="nl-title">Offres exclusives & nouveautés</h2>
-    <p class="nl-sub">Inscrivez-vous pour recevoir nos meilleures offres directement sur WhatsApp.</p>
-    <div class="nl-form">
-      <input class="nl-input" type="tel" placeholder="Votre numéro WhatsApp" id="nl-input">
-      <button class="nl-btn" onclick="subscribe()">S'inscrire</button>
+    <h2 class="nl-title">Rejoignez notre communauté</h2>
+    <p class="nl-sub">Rejoignez notre groupe WhatsApp pour profiter d'offres exclusives et être informé de toutes nos nouveautés en avant-première.</p>
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="https://chat.whatsapp.com/CjcDh5n55QwEsRHE265cRg" target="_blank" class="btn-primary" style="text-decoration: none; border-radius: 8px;">
+        <span style="font-size: 1.2rem; margin-right: 8px;">💬</span> Rejoindre le groupe WhatsApp
+      </a>
     </div>
   </div>
 
@@ -468,12 +479,6 @@
       window.open(`https://wa.me/221771302297?text=${msg}`, '_blank');
     }
 
-    function subscribe() {
-      const v = document.getElementById('nl-input').value.trim();
-      if (!v) { showToast('Veuillez entrer votre numéro.'); return; }
-      showToast('Inscription réussie ! Bienvenue 🎉');
-      document.getElementById('nl-input').value = '';
-    }
 
     function showToast(msg) {
       const t = document.getElementById('toast');
@@ -524,7 +529,7 @@
     window.closePreview = closePreview;
     window.removeFromCart = removeFromCart;
     window.checkout = checkout;
-    window.subscribe = subscribe;
+
 
     // Charger les produits depuis Firestore en temps réel
     onSnapshot(produitsCol, (snapshot) => {

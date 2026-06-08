@@ -22,6 +22,39 @@
      overflow-x: hidden
  }
 
+ /* TICKER */
+ .ticker-wrap {
+     width: 100%;
+     overflow: hidden;
+     background: var(--accent);
+     color: var(--cream);
+     padding: 10px 0;
+     white-space: nowrap;
+     box-sizing: border-box;
+     border-bottom: 1px solid rgba(250, 247, 242, 0.2);
+     position: relative;
+ }
+
+ .ticker {
+     display: inline-block;
+     white-space: nowrap;
+     animation: ticker 25s linear infinite;
+     font-size: 0.85rem;
+     font-weight: 500;
+     letter-spacing: 0.15em;
+     text-transform: uppercase;
+ }
+
+ .ticker-item {
+     display: inline-block;
+     padding: 0 2rem;
+ }
+
+ @keyframes ticker {
+     0% { transform: translate3d(0, 0, 0); }
+     100% { transform: translate3d(-50%, 0, 0); }
+ }
+
  /* NAV */
  nav {
      position: sticky;
@@ -413,11 +446,7 @@
      color: var(--dark)
  }
 
- .cat-count {
-     font-size: 0.75rem;
-     color: var(--muted);
-     margin-top: 4px
- }
+
 
  /* PRODUCTS */
  .products-grid {
@@ -704,7 +733,7 @@
      display: none;
      position: fixed;
      inset: 0;
-     z-index: 200;
+    z-index: 2000;
      background: rgba(26, 23, 20, 0.7);
      animation: fadeIn 0.3s ease-out forwards;
  }
@@ -893,7 +922,7 @@
      padding: 0.85rem 2rem;
      font-size: 0.85rem;
      font-weight: 500;
-     z-index: 300;
+    z-index: 3000;
      transition: transform 0.3s;
      border-left: 3px solid var(--accent)
  }
@@ -942,7 +971,8 @@
      max-width: 700px;
      background: var(--cream);
      border-radius: 0;
-     overflow: hidden;
+     max-height: 85vh;
+     overflow-y: auto;
      display: flex;
      flex-direction: column;
      animation: scaleUp 0.3s ease-out forwards;
