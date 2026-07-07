@@ -41,7 +41,13 @@ async function generatePages() {
       try {
         const name = p.nom || 'Produit sans nom';
         const description = p.description || (p.prix ? `${p.prix} F CFA` : 'Découvrez ce produit sur THIAflow');
-        const imageUrl = p.imageUrl || 'https://thiaflow-a8c10.web.app/preview.jpg';
+        let imageUrl = p.imageUrl || 'https://thiaflow-a8c10.web.app/preview.jpg';
+        
+        // Optimisation Cloudinary pour WhatsApp (Taille < 300KB requise)
+        if (imageUrl.includes('cloudinary.com') && imageUrl.includes('/upload/')) {
+          imageUrl = imageUrl.replace('/upload/', '/upload/w_600,h_600,c_fill,q_auto/');
+        }
+        
         const url = `https://thiaflow-a8c10.web.app/produit/${id}/`;
 
         const htmlContent = `<!DOCTYPE html>
@@ -54,9 +60,13 @@ async function generatePages() {
   <!-- Open Graph / WhatsApp Preview -->
   <meta property="og:title" content="${name}">
   <meta property="og:description" content="${description}">
-  <meta property="og:image" content="${imageUrl}">
+  <meta property="og:image" itemprop="image" content="${imageUrl}">
+  <meta property="og:image:secure_url" itemprop="image" content="${imageUrl}">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
   <meta property="og:url" content="${url}">
-  <meta property="og:type" content="product">
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="THIAflow">
   
   <!-- Twitter Card -->
