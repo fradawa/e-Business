@@ -831,6 +831,291 @@
             height: 1px;
             background: var(--border-color);
         }
+
+        /* ════════════════════
+           CODES DE JEU
+        ════════════════════ */
+        .section-panel {
+            display: none;
+        }
+        .section-panel.active {
+            display: block;
+        }
+
+        .code-generator-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .code-generator-card h3 {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin: 0;
+            text-align: center;
+        }
+
+        .generated-code-display {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-surface);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px;
+            width: 100%;
+            animation: fadeSlideIn 0.3s ease;
+        }
+
+        .generated-code-display.visible {
+            display: flex;
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .generated-code-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            word-break: break-all;
+        }
+
+        .btn-copy {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .btn-copy:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-copy.copied {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .code-link-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .code-link-row input {
+            width: 100%;
+        }
+
+        .code-link-row .btn {
+            width: 100%;
+        }
+
+        /* Codes Table */
+        .codes-table-wrap {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .codes-table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            gap: 8px;
+        }
+
+        .codes-table-header h3 {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* ─── TABLE mode (desktop) ─── */
+        .codes-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            display: none; /* hidden on mobile by default */
+        }
+
+        .codes-table th {
+            text-align: left;
+            padding: 10px 16px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-surface);
+        }
+
+        .codes-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: middle;
+        }
+
+        .codes-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .codes-table tr:hover td {
+            background: rgba(94, 23, 235, 0.05);
+        }
+
+        /* ─── CARD mode (mobile default) ─── */
+        .codes-card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .code-card-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .code-card-item:last-child {
+            border-bottom: none;
+        }
+
+        .code-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .code-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .code-card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .code-card-actions .btn-copy {
+            width: auto;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+        }
+
+        .code-mono {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .status-badge.unused {
+            background: rgba(52,199,89,0.12);
+            color: var(--success);
+            border: 1px solid rgba(52,199,89,0.3);
+        }
+
+        .status-badge.used {
+            background: rgba(94,23,235,0.12);
+            color: #a78bfa;
+            border: 1px solid rgba(94,23,235,0.3);
+        }
+
+        .prize-chip {
+            background: rgba(255,13,141,0.12);
+            color: var(--secondary);
+            border: 1px solid rgba(255,13,141,0.3);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .empty-codes {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        /* On larger screens: switch to table, hide cards */
+        @media (min-width: 640px) {
+            .codes-table { display: table; }
+            .codes-card-list { display: none; }
+
+            .generated-code-display {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .btn-copy {
+                width: auto;
+            }
+
+            .code-link-row {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .code-link-row input {
+                flex: 1;
+                width: auto;
+                min-width: 200px;
+            }
+
+            .code-link-row .btn {
+                width: auto;
+            }
+
+            .generated-code-text {
+                font-size: 1.6rem;
+            }
+        }
     </style>
 </head>
 
@@ -911,20 +1196,64 @@
 
         <div
             style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; gap:15px; flex-wrap:wrap;">
-            <div class="admin-tabs" id="admin-tabs" style="margin-bottom:0; flex:1;">
-                <button class="admin-tab active" data-cat="" onclick="setAdminTab(this)">Tous</button>
-                <button class="admin-tab" data-cat="Hygiène" onclick="setAdminTab(this)">🪶 Hygiène</button>
-                <button class="admin-tab" data-cat="Soins" onclick="setAdminTab(this)">✨ Soins</button>
-                <button class="admin-tab" data-cat="Parfums" onclick="setAdminTab(this)">🌸 Parfums</button>
-                <button class="admin-tab" data-cat="__rupture__" id="tab-rupture" onclick="setAdminTab(this)">🔴
-                    Rupture</button>
+            <!-- Sélecteur de section principale -->
+            <div style="display:flex; gap:8px; margin-bottom:0; flex:1; flex-wrap:wrap; align-items:center;">
+                <button class="admin-tab active" id="nav-produits" onclick="showSection('produits')">📦 Produits</button>
+                <button class="admin-tab" id="nav-codes" onclick="showSection('codes')">🎟️ Codes Jeu</button>
             </div>
             <input type="text" id="admin-search" class="form-control" placeholder="🔍 Rechercher..."
                 style="max-width:250px; padding:10px 15px;" oninput="filterAdminList()">
         </div>
 
-        <div id="product-list">
-            <!-- Injecté via JS -->
+        <!-- Sous-onglets produits (affichés seulement dans la section produits) -->
+        <div class="admin-tabs" id="admin-tabs" style="margin-bottom:15px;">
+            <button class="admin-tab active" data-cat="" onclick="setAdminTab(this)">Tous</button>
+            <button class="admin-tab" data-cat="Hygiène" onclick="setAdminTab(this)">🪶 Hygiène</button>
+            <button class="admin-tab" data-cat="Soins" onclick="setAdminTab(this)">✨ Soins</button>
+            <button class="admin-tab" data-cat="Parfums" onclick="setAdminTab(this)">🌸 Parfums</button>
+            <button class="admin-tab" data-cat="__rupture__" id="tab-rupture" onclick="setAdminTab(this)">🔴 Rupture</button>
+        </div>
+
+        <!-- Section Produits -->
+        <div id="section-produits" class="section-panel active">
+            <div id="product-list">
+                <!-- Injecté via JS -->
+            </div>
+        </div>
+
+        <!-- Section Codes de Jeu -->
+        <div id="section-codes" class="section-panel">
+
+            <!-- Générateur -->
+            <div class="code-generator-card">
+                <h3>🎲 Générer un nouveau code de jeu</h3>
+
+                <!-- Champ optionnel : lien commande -->
+                <div class="code-link-row">
+                    <input type="text" id="code-order-ref" class="form-control"
+                        placeholder="📎 Réf. commande ou nom client (optionnel)">
+                    <button class="btn" id="btn-generate-code" onclick="generateCode()">
+                        ✨ Générer un Code
+                    </button>
+                </div>
+
+                <!-- Code généré affiché ici -->
+                <div class="generated-code-display" id="generated-code-display">
+                    <span class="generated-code-text" id="generated-code-text">THIA-00000</span>
+                    <button class="btn-copy" id="btn-copy-code" onclick="copyCode()">📋 Copier</button>
+                </div>
+            </div>
+
+            <!-- Tableau des codes -->
+            <div class="codes-table-wrap">
+                <div class="codes-table-header">
+                    <h3>📋 Tous les codes générés</h3>
+                    <span id="codes-count" style="font-size:0.85rem; color:var(--text-muted);">0 code(s)</span>
+                </div>
+                <div id="codes-table-body">
+                    <div class="empty-codes">⏳ Chargement...</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -934,14 +1263,14 @@
             <span class="b-nav-icon">🏠</span>
             <span>Store</span>
         </a>
-        <div class="b-nav-item active" onclick="setAdminTab(document.querySelector('.admin-tab[data-cat=\'\']'))">
+        <div class="b-nav-item active" id="mob-nav-produits" onclick="showSection('produits')">
             <span class="b-nav-icon">📦</span>
             <span>Produits</span>
         </div>
         <button class="b-nav-fab" onclick="openDrawer()">&#43;</button>
-        <div class="b-nav-item" onclick="filterByRupture()">
-            <span class="b-nav-icon">🔴</span>
-            <span>Ruptures</span>
+        <div class="b-nav-item" id="mob-nav-codes" onclick="showSection('codes')">
+            <span class="b-nav-icon">🎟️</span>
+            <span>Codes</span>
         </div>
         <div class="b-nav-item" id="logout-btn-mobile">
             <span class="b-nav-icon">🚪</span>
@@ -1013,7 +1342,7 @@
         // Import des modules Firebase v10
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, onSnapshot, serverTimestamp, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         import { ENV } from './env.js';
 
@@ -1064,6 +1393,7 @@
                 loginScreen.classList.add('hidden');
                 dashboard.classList.remove('hidden'); document.getElementById('admin-header').classList.remove('hidden'); document.getElementById('bottom-nav-admin').classList.remove('hidden');
                 loadProducts();
+                loadCodes();
             } else {
                 loginScreen.classList.remove('hidden');
                 dashboard.classList.add('hidden'); document.getElementById('admin-header').classList.add('hidden'); document.getElementById('bottom-nav-admin').classList.add('hidden');
@@ -1587,6 +1917,225 @@
                 console.error('Erreur chargement produit:', error);
                 alert('Impossible de charger ce produit.');
             }
+        };
+
+        // ==========================================
+        // 7. SECTION SWITCHER (Produits / Codes)
+        // ==========================================
+        let currentSection = 'produits';
+
+        window.showSection = (section) => {
+            currentSection = section;
+
+            // Panels
+            document.getElementById('section-produits').classList.toggle('active', section === 'produits');
+            document.getElementById('section-codes').classList.toggle('active', section === 'codes');
+
+            // Sous-onglets produits
+            document.getElementById('admin-tabs').style.display = section === 'produits' ? '' : 'none';
+            document.getElementById('admin-search').style.display = section === 'produits' ? '' : 'none';
+
+            // Nav desktop
+            document.getElementById('nav-produits').classList.toggle('active', section === 'produits');
+            document.getElementById('nav-codes').classList.toggle('active', section === 'codes');
+
+            // Nav mobile
+            const mobProd = document.getElementById('mob-nav-produits');
+            const mobCodes = document.getElementById('mob-nav-codes');
+            if (mobProd) mobProd.classList.toggle('active', section === 'produits');
+            if (mobCodes) mobCodes.classList.toggle('active', section === 'codes');
+        };
+
+        // ==========================================
+        // 8. CODES DE JEU
+        // ==========================================
+        const codesCol = collection(db, 'codes');
+        let allCodes = [];
+        let unsubCodes = null;
+
+        // Génère un ID aléatoire format THIA-XXXXX
+        function generateCodeId() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sans 0/O/I/1 pour lisibilité
+            let suffix = '';
+            for (let i = 0; i < 5; i++) {
+                suffix += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return 'THIA-' + suffix;
+        }
+
+        // Vérifie si un code existe déjà (collision très improbable mais gérée)
+        async function isCodeUnique(code) {
+            try {
+                const snap = await getDoc(doc(db, 'codes', code));
+                return !snap.exists();
+            } catch { return true; }
+        }
+
+        window.generateCode = async () => {
+            const btn = document.getElementById('btn-generate-code');
+            btn.disabled = true;
+            btn.textContent = '⏳ Génération...';
+
+            try {
+                // Générer un code unique
+                let code;
+                let attempts = 0;
+                do {
+                    code = generateCodeId();
+                    attempts++;
+                } while (!(await isCodeUnique(code)) && attempts < 10);
+
+                const orderRef = document.getElementById('code-order-ref').value.trim();
+
+                // Sauvegarder dans Firestore avec l'ID = le code lui-même
+                await setDoc(doc(db, 'codes', code), {
+                    code,
+                    used: false,
+                    prize: null,
+                    orderRef: orderRef || null,
+                    createdAt: serverTimestamp()
+                });
+
+                // Afficher le code généré
+                document.getElementById('generated-code-text').textContent = code;
+                const display = document.getElementById('generated-code-display');
+                display.classList.add('visible');
+
+                // Reset champ référence
+                document.getElementById('code-order-ref').value = '';
+
+                // Reset bouton copier
+                const copyBtn = document.getElementById('btn-copy-code');
+                copyBtn.textContent = '📋 Copier';
+                copyBtn.classList.remove('copied');
+
+            } catch (err) {
+                console.error('Erreur génération code:', err);
+                alert('Erreur lors de la génération du code.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '✨ Générer un Code';
+            }
+        };
+
+        window.copyCode = () => {
+            const code = document.getElementById('generated-code-text').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.getElementById('btn-copy-code');
+                btn.textContent = '✅ Copié !';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Copier';
+                    btn.classList.remove('copied');
+                }, 2500);
+            }).catch(() => {
+                // Fallback pour anciens navigateurs
+                const ta = document.createElement('textarea');
+                ta.value = code;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                const btn = document.getElementById('btn-copy-code');
+                btn.textContent = '✅ Copié !';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = '📋 Copier'; btn.classList.remove('copied'); }, 2500);
+            });
+        };
+
+        function loadCodes() {
+            if (unsubCodes) unsubCodes();
+            const q = query(codesCol, orderBy('createdAt', 'desc'));
+            unsubCodes = onSnapshot(q, (snapshot) => {
+                allCodes = [];
+                snapshot.forEach(d => allCodes.push({ id: d.id, ...d.data() }));
+                renderCodesTable();
+            }, (err) => {
+                console.error('Erreur lecture codes:', err);
+            });
+        }
+
+        function renderCodesTable() {
+            const container = document.getElementById('codes-table-body');
+            const countEl = document.getElementById('codes-count');
+            countEl.textContent = `${allCodes.length} code(s)`;
+
+            if (allCodes.length === 0) {
+                container.innerHTML = '<div class="empty-codes">🎟️ Aucun code généré pour l\'instant.</div>';
+                return;
+            }
+
+            // ── Card layout (mobile) ──
+            const cards = allCodes.map(c => {
+                const date = c.createdAt ? new Date(c.createdAt.toMillis()).toLocaleDateString('fr-FR', {
+                    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                }) : '—';
+                const statusBadge = c.used
+                    ? `<span class="status-badge used">🎯 Utilisé</span>`
+                    : `<span class="status-badge unused">✅ Dispo</span>`;
+                const prizeBadge = c.prize ? `<span class="prize-chip">🏆 ${c.prize}</span>` : '';
+                const ref = c.orderRef ? `<span>${c.orderRef}</span>` : '';
+
+                return `<div class="code-card-item">
+                    <div class="code-card-top">
+                        <span class="code-mono">${c.code}</span>
+                        ${statusBadge}
+                    </div>
+                    <div class="code-card-meta">
+                        ${prizeBadge}
+                        ${ref}
+                        <span>${date}</span>
+                    </div>
+                    <div class="code-card-actions">
+                        <button class="btn-copy" onclick="copyCodeDirect('${c.code}')">📋 Copier</button>
+                    </div>
+                </div>`;
+            }).join('');
+
+            // ── Table layout (desktop) ──
+            const rows = allCodes.map(c => {
+                const date = c.createdAt ? new Date(c.createdAt.toMillis()).toLocaleDateString('fr-FR', {
+                    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                }) : '—';
+                const statusBadge = c.used
+                    ? `<span class="status-badge used">🎯 Utilisé</span>`
+                    : `<span class="status-badge unused">✅ Disponible</span>`;
+                const prizeBadge = c.prize ? `<span class="prize-chip">🏆 ${c.prize}</span>` : `<span style="color:var(--text-muted)">—</span>`;
+                const ref = c.orderRef ? `<span style="font-size:0.82rem;color:var(--text-muted)">${c.orderRef}</span>` : `<span style="color:var(--text-muted)">—</span>`;
+
+                return `<tr>
+                    <td><span class="code-mono">${c.code}</span></td>
+                    <td>${statusBadge}</td>
+                    <td>${prizeBadge}</td>
+                    <td>${ref}</td>
+                    <td style="font-size:0.8rem;color:var(--text-muted);white-space:nowrap">${date}</td>
+                    <td><button class="btn-copy" style="font-size:0.75rem;padding:5px 10px" onclick="copyCodeDirect('${c.code}')">📋</button></td>
+                </tr>`;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="codes-card-list">${cards}</div>
+                <table class="codes-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Statut</th>
+                            <th>Prix gagné</th>
+                            <th>Réf. commande</th>
+                            <th>Date création</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>`;
+        }
+
+        window.copyCodeDirect = (code) => {
+            navigator.clipboard.writeText(code).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = code; document.body.appendChild(ta); ta.select();
+                document.execCommand('copy'); document.body.removeChild(ta);
+            });
         };
     </script>
 </body>

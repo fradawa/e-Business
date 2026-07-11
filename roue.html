@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎡 La Roue THIAflow</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+:root {
+  --cream: #FAF7F2;
+  --dark: #1A1714;
+  --accent: #C8956C;
+  --accent2: #8B5E3C;
+  --text: #3D3530;
+  --muted: #9A8F87;
+  --border: #E8E0D6;
+  --white: #FFFFFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
+}
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+/* Header style matching index.html */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  width: 100%;
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--dark);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.logo img {
+  height: 44px;
+  width: auto;
+}
+
+.back-btn {
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--border);
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  color: var(--dark);
+  border-color: var(--dark);
+}
+
+.mute-btn {
+  background: none;
+  border: 1px solid var(--border);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.mute-btn:hover {
+  border-color: var(--dark);
+  background: var(--white);
+}
+
+main {
+  width: 100%;
+  max-width: 800px;
+  padding: 40px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.title-wrap {
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--dark);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Elegant side-by-side or stacked container depending on viewport */
+.game-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 769px) {
+  .game-container {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+  }
+}
+
+/* Premium input card style */
+.code-section {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0; /* matches modular square look of the site */
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 12px 36px rgba(26, 23, 20, 0.03);
+}
+
+.code-section label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.code-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.code-input {
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  color: var(--dark);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  outline: none;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.code-input:focus {
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 4px 15px rgba(200, 149, 108, 0.1);
+}
+
+.btn-play {
+  width: 100%;
+  padding: 16px 28px;
+  background: var(--dark);
+  color: var(--white);
+  border: none;
+  border-radius: 0;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.btn-play:hover {
+  background: var(--accent);
+}
+
+.btn-play:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#code-error {
+  font-size: 0.85rem;
+  color: #c0392b;
+  display: none;
+  padding: 12px 16px;
+  background: #fdf2f0;
+  border: 1px solid #f5c6cb;
+}
+
+/* Beautiful responsive wheel wrapper */
+.wheel-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pointer overlapping gold rim */
+.wheel-pointer {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 40px solid var(--dark);
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
+  z-index: 10;
+  margin-bottom: -18px; /* pull down into the rim */
+}
+
+.canvas-ring {
+  position: relative;
+  border-radius: 50%;
+  padding: 12px;
+  background: var(--accent);
+  box-shadow: 0 25px 60px rgba(26,23,20,0.08);
+  width: 440px;
+  height: 440px;
+  max-width: 90vw;
+  max-height: 90vw;
+  transition: box-shadow 0.3s;
+}
+
+.canvas-ring.spinning {
+  box-shadow: 0 35px 80px rgba(200, 149, 108, 0.2);
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  border-radius: 50%;
+}
+
+/* Premium modal matching style */
+.result-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 23, 20, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.result-overlay.show {
+  display: flex;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.result-card {
+  background: var(--cream);
+  border-radius: 0;
+  padding: 48px 36px;
+  text-align: center;
+  max-width: 440px;
+  width: 100%;
+  border: 1px solid var(--border);
+  position: relative;
+  animation: scaleUp 0.3s ease-out forwards;
+  box-shadow: 0 24px 48px rgba(26, 23, 20, 0.15);
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.result-emoji {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  display: block;
+  animation: floatEmoji 2s ease-in-out infinite;
+}
+
+@keyframes floatEmoji {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.result-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+
+.result-prize {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent2);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.result-msg {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.btn-close-result {
+  width: 100%;
+  padding: 16px;
+  background: var(--dark);
+  color: var(--white);
+  border: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 0.2s;
+}
+
+.btn-close-result:hover {
+  background: var(--accent);
+}
+
+.btn-wa {
+  width: 100%;
+  padding: 16px;
+  background: #25D366;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-wa:hover {
+  background: #1ebe5a;
+}
+
+.confetti-burst {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <img src="logo.png" alt="THIAflow">
+    <div>THIA<span>flow</span></div>
+  </a>
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <button id="btn-mute" class="mute-btn" onclick="toggleMute()" title="Activer/Désactiver le son">
+      <span id="mute-icon">🔊</span>
+    </button>
+    <a href="index.html" class="back-btn">← Boutique</a>
+  </div>
+</nav>
+
+<main>
+  <div class="title-wrap">
+    <h1>La Roue des Surprises</h1>
+    <p class="subtitle">Profitez d'une surprise exclusive offerte avec votre commande en faisant tourner notre roue de la chance.</p>
+  </div>
+
+  <div class="game-container">
+    <div class="wheel-wrap">
+      <div class="wheel-pointer"></div>
+      <div class="canvas-ring" id="ring-container">
+        <canvas id="wheel" width="1000" height="1000"></canvas>
+      </div>
+    </div>
+
+    <div class="code-section">
+      <label>Votre code unique (format THIA-XXXXX)</label>
+      <div class="code-input-row">
+        <input type="text" id="code-input" class="code-input" placeholder="THIA-XXXXX" maxlength="10">
+        <button class="btn-play" id="btn-play" onclick="validerCode()">Lancer la Roue</button>
+      </div>
+      <div id="code-error"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Result modal -->
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🎉</span>
+    <div class="result-title" id="res-title">Félicitations !</div>
+    <div class="result-prize" id="res-prize"></div>
+    <div class="result-msg" id="res-msg"></div>
+    <button class="btn-close-result" onclick="closeResult()">Retour à la boutique</button>
+    <button class="btn-wa" id="btn-wa" style="display:none" onclick="contactWA()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.962-1.418A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.975 7.975 0 01-4.078-1.117l-.292-.174-3.035.893.916-2.98-.19-.307A7.974 7.974 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
+      Réclamer mon cadeau
+    </button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { ENV } from './env.js';
+
+const app = initializeApp({
+  apiKey: ENV.FIREBASE_API_KEY,
+  authDomain: ENV.FIREBASE_AUTH_DOMAIN,
+  projectId: ENV.FIREBASE_PROJECT_ID,
+  storageBucket: ENV.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: ENV.FIREBASE_MESSAGING_SENDER_ID,
+  appId: ENV.FIREBASE_APP_ID
+});
+const db = getFirestore(app);
+
+// ── SEGMENTS (Premium Color Palette) ──
+const SEGMENTS = [
+  { label: "Réduction 5%", emoji:"🏷️", weight:28, prize:"Réduction 5%", msg: "Profitez de 5% de réduction à valoir sur votre prochaine commande. Mentionnez votre code gagnant lors de votre prochain échange sur WhatsApp.", color:"#FAF7F2", textColor:"#1A1714", wa:true },
+  { label: "Rejouer", emoji:"🔄", weight:20, prize:"Rejoue la prochaine fois", msg:"Pas de chance pour cette fois ! Votre code a bien été enregistré. Tentez à nouveau votre chance lors de votre prochain achat chez nous.", color:"#9A8F87", textColor:"#FFFFFF", wa:false },
+  { label: "Réduction 10%", emoji:"💜", weight:22, prize:"Réduction 10%", msg:"Félicitations ! Vous remportez 10% de réduction à valoir sur votre prochaine commande chez nous.", color:"#C8956C", textColor:"#FFFFFF", wa:true },
+  { label: "Réduction 5%", emoji:"🏷️", weight:0,  prize:"Réduction 5%", msg: "Profitez de 5% de réduction à valoir sur votre prochaine commande. Mentionnez votre code gagnant lors de votre prochain échange sur WhatsApp.", color:"#FAF7F2", textColor:"#1A1714", wa:true },
+  { label: "Petit Cadeau", emoji:"🎁", weight:14, prize:"Petit cadeau", msg:"Merveilleux ! Un petit cadeau surprise (échantillon exclusif parfum ou savon artisanal) sera glissé dans votre prochain colis (valable lors de votre prochaine commande).", color:"#8B5E3C", textColor:"#FFFFFF", wa:true },
+  { label: "Rejouer", emoji:"🔄", weight:0,  prize:"Rejoue la prochaine fois", msg:"Pas de chance pour cette fois ! Votre code a bien été enregistré. Tentez à nouveau votre chance lors de votre prochain achat chez nous.", color:"#9A8F87", textColor:"#FFFFFF", wa:false },
+  { label: "Réduction 15%", emoji:"✨", weight:10, prize:"Réduction 15%", msg:"Exceptionnel ! Vous gagnez 15% de réduction à valoir sur votre prochaine commande. C'est le moment de vous faire plaisir !", color:"#1A1714", textColor:"#FAF7F2", wa:true },
+  { label: "Jackpot ! 🌟", emoji:"🌟", weight:6,  prize:"JACKPOT — Produit offert", msg:"INCROYABLE ! Vous remportez le grand prix de notre roue : un autre produit surprise entièrement offert en plus de celui que vous venez d'acheter sur votre commande en cours ! Contactez-nous vite pour le réclamer.", color:"#C8956C", textColor:"#FFFFFF", wa:true },
+];
+
+const canvas = document.getElementById('wheel');
+const ctx = canvas.getContext('2d');
+const N = SEGMENTS.length;
+const arc = (2 * Math.PI) / N;
+let rotation = 0;
+
+function drawWheel(rot) {
+  ctx.clearRect(0, 0, 1000, 1000);
+  const cx = 500, cy = 500, r = 480;
+  
+  SEGMENTS.forEach((seg, i) => {
+    const start = rot + i * arc - Math.PI / 2;
+    const end = start + arc;
+    
+    // Draw slice
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, end);
+    ctx.closePath();
+    ctx.fillStyle = seg.color;
+    ctx.fill();
+    ctx.strokeStyle = '#E8E0D6';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // Draw text and emoji inside segments
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rot + i * arc + arc / 2 - Math.PI / 2);
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = seg.textColor;
+    
+    // Draw Emoji closer to outer rim
+    ctx.font = "32px 'DM Sans', sans-serif";
+    ctx.fillText(seg.emoji, r - 35, 0);
+
+    // Draw Label text
+    ctx.font = "bold 30px 'Cormorant Garamond', serif";
+    ctx.fillText(seg.label, r - 95, 0);
+    
+    ctx.restore();
+  });
+
+  // Outer gold ring decoration
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#C8956C';
+  ctx.lineWidth = 14;
+  ctx.stroke();
+
+  // Draw elegant round light bulbs around the gold rim
+  const numBulbs = 32;
+  for (let j = 0; j < numBulbs; j++) {
+    const angle = rot + (j * 2 * Math.PI / numBulbs);
+    const bx = cx + (r - 1) * Math.cos(angle);
+    const by = cy + (r - 1) * Math.sin(angle);
+    ctx.beginPath();
+    ctx.arc(bx, by, 6, 0, 2 * Math.PI);
+    ctx.fillStyle = j % 2 === 0 ? '#FFFFFF' : '#FAF7F2';
+    ctx.shadowColor = '#C8956C';
+    ctx.shadowBlur = 6;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  // Draw premium custom integrated gold/dark center hub
+  ctx.beginPath();
+  ctx.arc(cx, cy, 75, 0, 2 * Math.PI);
+  ctx.fillStyle = '#1A1714';
+  ctx.strokeStyle = '#C8956C';
+  ctx.lineWidth = 6;
+  ctx.fill();
+  ctx.stroke();
+
+  // Hub text "THIAflow"
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#C8956C';
+  ctx.font = "bold 26px 'Cormorant Garamond', serif";
+  ctx.fillText("THIA", cx, cy - 12);
+  ctx.font = "14px 'DM Sans', sans-serif";
+  ctx.fillStyle = '#FAF7F2';
+  ctx.fillText("flow", cx, cy + 16);
+}
+
+drawWheel(0);
+
+// Weighted random selection
+function pickPrize() {
+  const pool = [];
+  SEGMENTS.forEach((s, i) => { for (let w = 0; w < s.weight; w++) pool.push(i); });
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+let spinning = false;
+window.validerCode = async () => {
+  if (spinning) return;
+  const raw = document.getElementById('code-input').value.trim().toUpperCase();
+  const errEl = document.getElementById('code-error');
+  errEl.style.display = 'none';
+
+  if (!/^THIA-[A-Z0-9]{5}$/.test(raw)) {
+    errEl.textContent = "Format invalide. Le code doit être au format THIA-XXXXX (5 caractères après le tiret).";
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('btn-play');
+  btn.disabled = true;
+  btn.textContent = 'Vérification...';
+
+  try {
+    const snap = await getDoc(doc(db, 'codes', raw));
+    if (!snap.exists()) {
+      errEl.textContent = "Ce code n'est pas répertorié. Veuillez vérifier le code envoyé par THIAflow.";
+      errEl.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Lancer la Roue'; return;
+    }
+    const data = snap.data();
+    if (data.used) {
+      errEl.textContent = "Ce code de jeu a déjà été utilisé pour tourner la roue.";
+      errEl.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Lancer la Roue'; return;
+    }
+
+    // Spin!
+    const winIdx = pickPrize();
+    const ring = document.getElementById('ring-container');
+    ring.classList.add('spinning');
+    await spinWheel(winIdx);
+    ring.classList.remove('spinning');
+
+    // Update Firebase
+    await updateDoc(doc(db, 'codes', raw), {
+      used: true,
+      prize: SEGMENTS[winIdx].prize,
+      usedAt: new Date().toISOString()
+    });
+
+    showResult(winIdx);
+
+  } catch(e) {
+    console.error(e);
+    errEl.textContent = "Une erreur réseau est survenue. Veuillez réessayer.";
+    errEl.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Lancer la Roue';
+  }
+};
+
+function spinWheel(targetIdx) {
+  return new Promise(resolve => {
+    spinning = true;
+    const targetAngle = -(targetIdx * arc + arc / 2);
+    const extraSpins = (6 + Math.floor(Math.random() * 4)) * 2 * Math.PI;
+    const finalRot = targetAngle - (rotation % (2 * Math.PI)) + extraSpins;
+    const duration = 5500;
+    const start = performance.now();
+    const startRot = rotation;
+
+    // Track which segment boundary we last crossed to trigger clicks
+    let lastSegmentIndex = Math.floor(rotation / arc);
+
+    function ease(t) { return 1 - Math.pow(1 - t, 5); }
+
+    function frame(now) {
+      const t = Math.min((now - start) / duration, 1);
+      rotation = startRot + finalRot * ease(t);
+      drawWheel(rotation);
+
+      // Fire a click each time the pointer crosses a segment boundary
+      const currentSegmentIndex = Math.floor(rotation / arc);
+      if (currentSegmentIndex !== lastSegmentIndex) {
+        playClick();
+        lastSegmentIndex = currentSegmentIndex;
+      }
+
+      if (t < 1) requestAnimationFrame(frame);
+      else {
+        spinning = false;
+        resolve();
+      }
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
+function showResult(idx) {
+  const seg = SEGMENTS[idx];
+  document.getElementById('res-emoji').textContent = seg.emoji;
+  document.getElementById('res-title').textContent =
+    seg.prize === 'Rejoue la prochaine fois' ? 'À bientôt !' :
+    seg.prize.includes('JACKPOT') ? '🌟 Jackpot !' : 'Magnifique !';
+  document.getElementById('res-prize').textContent = seg.prize;
+  document.getElementById('res-msg').textContent = seg.msg;
+  
+  const btnWa = document.getElementById('btn-wa');
+  btnWa.style.display = seg.wa ? 'flex' : 'none';
+
+  document.getElementById('result-overlay').classList.add('show');
+  
+  if (seg.prize !== 'Rejoue la prochaine fois') {
+    playVictory();
+    launchConfetti();
+  }
+}
+
+window.closeResult = () => {
+  document.getElementById('result-overlay').classList.remove('show');
+  window.location.href = "index.html";
+};
+
+window.contactWA = () => {
+  const prize = document.getElementById('res-prize').textContent;
+  const code = document.getElementById('code-input').value.trim().toUpperCase();
+  const msg = encodeURIComponent(`Bonjour THIAflow ! 🎡 J'ai tourné la roue de loterie avec mon code unique ${code} et j'ai remporté la surprise suivante : *${prize}*. Comment faire pour en profiter ?`);
+  window.open(`https://wa.me/221764287562?text=${msg}`, '_blank');
+};
+
+function launchConfetti() {
+  const colors = ['#C8956C','#8B5E3C','#1A1714','#FAF7F2','#E8E0D6'];
+  const canvas2 = document.createElement('canvas');
+  canvas2.className = 'confetti-burst';
+  canvas2.width = window.innerWidth;
+  canvas2.height = window.innerHeight;
+  document.body.appendChild(canvas2);
+  const c = canvas2.getContext('2d');
+  const pieces = Array.from({length:120}, () => ({
+    x: Math.random() * canvas2.width,
+    y: -20,
+    r: 4 + Math.random() * 6,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    vx: (Math.random() - 0.5) * 6,
+    vy: 2 + Math.random() * 5,
+    alpha: 1
+  }));
+  let af;
+  function draw() {
+    c.clearRect(0,0,canvas2.width,canvas2.height);
+    let alive = false;
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.alpha -= 0.007;
+      if (p.alpha > 0) { alive = true; c.globalAlpha = p.alpha; c.fillStyle = p.color; c.beginPath(); c.arc(p.x,p.y,p.r,0,Math.PI*2); c.fill(); }
+    });
+    c.globalAlpha = 1;
+    if (alive) af = requestAnimationFrame(draw);
+    else { cancelAnimationFrame(af); canvas2.remove(); }
+  }
+  draw();
+}
+
+document.getElementById('code-input').addEventListener('input', function() {
+  let v = this.value.toUpperCase().replace(/[^A-Z0-9-]/g,'');
+  if (v.length > 5 && !v.startsWith('THIA-')) {
+    v = 'THIA-' + v.replace('THIA','').replace('-','');
+  }
+  this.value = v;
+});
+
+document.getElementById('code-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') window.validerCode();
+});
+
+// ─── Web Audio Sound Engine ───────────────────────────────────────────────────
+let isMuted = false;
+let audioCtx = null;
+
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function playClick() {
+  if (isMuted) return;
+  const ctx = getCtx();
+  const buf = ctx.createBuffer(1, ctx.sampleRate * 0.025, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < data.length; i++) {
+    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.004));
+  }
+  const src = ctx.createBufferSource();
+  src.buffer = buf;
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.12, ctx.currentTime);
+  src.connect(gain);
+  gain.connect(ctx.destination);
+  src.start();
+}
+
+
+function playVictory() {
+  if (isMuted) return;
+  const ctx = getCtx();
+  // Bright fanfare arpeggio: C5 E5 G5 C6
+  const notes = [523.25, 659.25, 783.99, 1046.50];
+  notes.forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.12);
+    gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + i * 0.12 + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.5);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(ctx.currentTime + i * 0.12);
+    osc.stop(ctx.currentTime + i * 0.12 + 0.5);
+  });
+}
+
+window.toggleMute = () => {
+  isMuted = !isMuted;
+  document.getElementById('mute-icon').textContent = isMuted ? '🔇' : '🔊';
+  localStorage.setItem('wheel_muted', isMuted ? 'true' : 'false');
+};
+
+if (localStorage.getItem('wheel_muted') === 'true') {
+  window.toggleMute();
+}
+</script>
+</body>
+</html>

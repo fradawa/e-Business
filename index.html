@@ -37,6 +37,7 @@
     <ul class="nav-links">
       <li><a href="#" onclick="scrollTo(0,0)">Accueil</a></li>
       <li><a href="#produits">Produits</a></li>
+      <li><a href="roue.html">🎡 Jeu de la Roue</a></li>
       <li><a href="#avantages">Avantages</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -114,6 +115,18 @@
         <div class="cat-name">Parfums</div>
       </div>
     </div>
+  </section>
+
+  <!-- WHEEL GAME PROMO BANNER -->
+  <section class="wheel-banner">
+    <div class="wheel-banner-left">
+      <span class="wheel-banner-label">✦ Événement Spécial</span>
+      <h2 class="wheel-banner-title">Tournez la Roue des Surprises !</h2>
+      <p class="wheel-banner-text">Vous avez reçu un code de jeu THIAflow après votre commande ? Entrez-le pour tenter de gagner des réductions exclusives de 5% à 15%, des cadeaux ou le Jackpot !</p>
+    </div>
+    <a href="roue.html" class="btn-primary wheel-banner-btn" style="text-decoration: none;">
+      🎯 Lancer la Roue
+    </a>
   </section>
 
   <!-- PRODUCTS -->
@@ -221,6 +234,10 @@
       <span class="icon">🛍️</span>
       <span>Produits</span>
     </a>
+    <a href="roue.html" class="bottom-nav-item">
+      <span class="icon">🎡</span>
+      <span>Roue</span>
+    </a>
     <a href="#avantages" class="bottom-nav-item">
       <span class="icon">⭐</span>
       <span>Avantages</span>
@@ -314,7 +331,7 @@
       <button class="share-btn" onclick="shareProduct('${p.id}', event)" title="Partager sur WhatsApp" aria-label="Partager sur WhatsApp">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.002 2C6.478 2 2 6.477 2 12c0 1.86.505 3.679 1.462 5.267L2 22l4.865-1.428A9.955 9.955 0 0 0 12.002 22C17.523 22 22 17.523 22 12S17.523 2 12.002 2zm0 18.166a8.13 8.13 0 0 1-4.147-1.135l-.297-.176-3.077.904.923-3.03-.193-.31A8.135 8.135 0 0 1 3.834 12c0-4.51 3.66-8.166 8.168-8.166 4.507 0 8.166 3.656 8.166 8.166 0 4.51-3.659 8.166-8.166 8.166z"/></svg>
       </button>
-      <div class="product-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:140px;height:140px;object-fit:cover;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.1);border:4px solid #fff;">' : (p.emoji || '📦')}</div>
+      <div class="product-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:100%;height:100%;object-fit:cover;display:block;">' : (p.emoji || '📦')}</div>
       <div class="product-info">
         <div class="product-cat">${p.cat || ''}</div>
         <div class="product-name">${p.name}</div>
@@ -404,7 +421,7 @@
       const content = document.getElementById('preview-content');
       content.innerHTML = `
         <div class="preview-body">
-          <div class="preview-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:140px;height:140px;object-fit:cover;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.1);border:4px solid #fff;">' : (p.emoji || '📦')}</div>
+          <div class="preview-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;">' : (p.emoji || '📦')}</div>
           <div class="preview-info">
             <div class="preview-cat">${p.cat || ''}</div>
             <h2 class="preview-title">${p.name}</h2>
