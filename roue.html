@@ -593,6 +593,14 @@ function pickPrize() {
 let spinning = false;
 window.validerCode = async () => {
   if (spinning) return;
+
+  // Warm up the AudioContext synchronously inside the user click gesture
+  try {
+    getCtx();
+  } catch (e) {
+    console.warn("Audio Context warmup failed:", e);
+  }
+
   const raw = document.getElementById('code-input').value.trim().toUpperCase();
   const errEl = document.getElementById('code-error');
   errEl.style.display = 'none';
@@ -761,28 +769,42 @@ document.getElementById('code-input').addEventListener('keydown', function(e) {
 // ─── Web Audio Sound Engine ───────────────────────────────────────────────────
 let isMuted = false;
 let audioCtx = null;
+let clickBuffer = null;
 
 function getCtx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') audioCtx.resume();
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  if (!clickBuffer && audioCtx) {
+    const samples = Math.floor(audioCtx.sampleRate * 0.025);
+    clickBuffer = audioCtx.createBuffer(1, samples, audioCtx.sampleRate);
+    const data = clickBuffer.getChannelData(0);
+    const decay = audioCtx.sampleRate * 0.004;
+    for (let i = 0; i < samples; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / decay);
+    }
+  }
   return audioCtx;
 }
 
 function playClick() {
   if (isMuted) return;
-  const ctx = getCtx();
-  const buf = ctx.createBuffer(1, ctx.sampleRate * 0.025, ctx.sampleRate);
-  const data = buf.getChannelData(0);
-  for (let i = 0; i < data.length; i++) {
-    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.004));
+  try {
+    const ctx = getCtx();
+    if (!ctx || !clickBuffer) return;
+    const src = ctx.createBufferSource();
+    src.buffer = clickBuffer;
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+    src.connect(gain);
+    gain.connect(ctx.destination);
+    src.start();
+  } catch (e) {
+    console.warn("Click playback failed:", e);
   }
-  const src = ctx.createBufferSource();
-  src.buffer = buf;
-  const gain = ctx.createGain();
-  gain.gain.setValueAtTime(0.12, ctx.currentTime);
-  src.connect(gain);
-  gain.connect(ctx.destination);
-  src.start();
 }
 
 
