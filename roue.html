@@ -790,18 +790,29 @@ function getCtx() {
   return audioCtx;
 }
 
+let lastClickTime = 0;
+let clickGainNode = null;
+
 function playClick() {
   if (isMuted) return;
+  const now = performance.now();
+  if (now - lastClickTime < 50) return; // Limit to 1 click per 50ms to prevent mobile audio lag
+  lastClickTime = now;
+
   try {
     const ctx = getCtx();
     if (!ctx || !clickBuffer) return;
     const src = ctx.createBufferSource();
     src.buffer = clickBuffer;
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0.12, ctx.currentTime);
-    src.connect(gain);
-    gain.connect(ctx.destination);
-    src.start();
+    
+    if (!clickGainNode) {
+      clickGainNode = ctx.createGain();
+      clickGainNode.gain.setValueAtTime(0.12, ctx.currentTime);
+      clickGainNode.connect(ctx.destination);
+    }
+    
+    src.connect(clickGainNode);
+    src.start(ctx.currentTime);
   } catch (e) {
     console.warn("Click playback failed:", e);
   }
