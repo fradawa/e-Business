@@ -114,6 +114,12 @@
       <div class="cat-card" onclick="filterCat('Parfums',this)"><span class="cat-icon">🌹</span>
         <div class="cat-name">Parfums</div>
       </div>
+      <div class="cat-card" onclick="filterCat('Accessoires',this)"><span class="cat-icon">💍</span>
+        <div class="cat-name">Accessoires</div>
+      </div>
+      <div class="cat-card" onclick="filterCat('Vêtements',this)"><span class="cat-icon">👗</span>
+        <div class="cat-name">Vêtements</div>
+      </div>
     </div>
   </section>
 
@@ -131,12 +137,6 @@
 
   <!-- PRODUCTS -->
   <section class="section" id="produits" style="padding-top:2rem">
-    <div class="filter-bar" id="filter-bar">
-      <button class="filter-btn active" onclick="filterTag('all',this)">Tous</button>
-      <button class="filter-btn" onclick="filterTag('promo',this)">Promotions</button>
-      <button class="filter-btn" onclick="filterTag('new',this)">Nouveautés</button>
-      <button class="filter-btn" onclick="filterTag('bestseller',this)">Meilleures ventes</button>
-    </div>
     <div class="products-grid" id="products-grid"></div>
   </section>
 
@@ -354,12 +354,20 @@
       el.classList.add('active');
       renderProducts();
       // emoji change
-      const emojis = { all: 'logo.png', hygiene: 'logo.png', soin: 'logo.png', parfum: 'logo.png' };
+      const emojis = { 
+        all: 'logo.png', 
+        'hygiène': 'logo.png', 
+        'soins': 'logo.png', 
+        'parfums': 'logo.png',
+        'accessoires': 'logo.png',
+        'vêtements': 'logo.png'
+      };
+      const catKey = cat.toLowerCase();
       const heroEl = document.getElementById('hero-emoji');
       if (heroEl.tagName.toLowerCase() === 'img') {
-        heroEl.src = emojis[cat] || 'logo.png';
+        heroEl.src = emojis[catKey] || 'logo.png';
       } else {
-        heroEl.textContent = emojis[cat] || '🌸';
+        heroEl.textContent = emojis[catKey] || '🌸';
       }
     }
 
