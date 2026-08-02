@@ -10,8 +10,9 @@
   <link rel="stylesheet" href="index.css">
   <title>THIAflow</title>
   <!-- Social Preview Meta Tags -->
-  <meta property="og:title" content="THIAflow - In my flow era">
-  <meta property="og:description" content="Produits d'hygiène et de beauté soigneusement sélectionnés pour votre quotidien.">
+  <meta property="og:title" content="THIAflow - Parfums, Hygiène & Beauté à Ziguinchor">
+  <meta property="og:description"
+    content="Produits d'hygiène et de beauté soigneusement sélectionnés pour votre quotidien.">
   <meta property="og:image" itemprop="image" content="https://thiaflow-a8c10.web.app/preview.jpg">
   <meta property="og:image:secure_url" itemprop="image" content="https://thiaflow-a8c10.web.app/preview.jpg">
   <meta property="og:image:type" content="image/jpeg">
@@ -21,8 +22,9 @@
   <meta property="og:type" content="website">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="THIAflow - In my flow era">
-  <meta name="twitter:description" content="Produits d'hygiène et de beauté soigneusement sélectionnés pour votre quotidien.">
+  <meta name="twitter:title" content="THIAflow - Parfums, Hygiène & Beauté à Ziguinchor">
+  <meta name="twitter:description"
+    content="Produits d'hygiène et de beauté soigneusement sélectionnés pour votre quotidien.">
   <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
 </head>
 
@@ -128,7 +130,8 @@
     <div class="wheel-banner-left">
       <span class="wheel-banner-label">✦ Événement Spécial</span>
       <h2 class="wheel-banner-title">Tournez la Roue des Surprises !</h2>
-      <p class="wheel-banner-text">Vous avez reçu un code de jeu THIAflow après votre commande ? Entrez-le pour tenter de gagner des réductions exclusives de 5% à 15%, des cadeaux ou le Jackpot !</p>
+      <p class="wheel-banner-text">Vous avez reçu un code de jeu THIAflow après votre commande ? Entrez-le pour tenter
+        de gagner des réductions exclusives de 5% à 15%, des cadeaux ou le Jackpot !</p>
     </div>
     <a href="roue.html" class="btn-primary wheel-banner-btn" style="text-decoration: none;">
       🎯 Lancer la Roue
@@ -171,9 +174,11 @@
   <div class="newsletter" id="contact">
     <div class="section-label">Restez informé</div>
     <h2 class="nl-title">Rejoignez notre communauté</h2>
-    <p class="nl-sub">Rejoignez notre groupe WhatsApp pour profiter d'offres exclusives et être informé de toutes nos nouveautés en avant-première.</p>
+    <p class="nl-sub">Rejoignez notre groupe WhatsApp pour profiter d'offres exclusives et être informé de toutes nos
+      nouveautés en avant-première.</p>
     <div style="text-align: center; margin-top: 2rem;">
-      <a href="https://chat.whatsapp.com/CjcDh5n55QwEsRHE265cRg" target="_blank" class="btn-primary" style="text-decoration: none; border-radius: 8px;">
+      <a href="https://chat.whatsapp.com/CjcDh5n55QwEsRHE265cRg" target="_blank" class="btn-primary"
+        style="text-decoration: none; border-radius: 8px;">
         <span style="font-size: 1.2rem; margin-right: 8px;">💬</span> Rejoindre le groupe WhatsApp
       </a>
     </div>
@@ -204,7 +209,8 @@
         <div class="cart-total-row"><span>Sous-total</span><span id="subtotal-val"></span></div>
         <div class="cart-total-row"><span>Livraison</span><span>Gratuite</span></div>
         <div class="cart-total-main"><span>Total</span><span id="total-val"></span></div>
-        <div style="font-size: 0.85rem; color: #555; margin-bottom: 1rem; text-align: center; background: #f5f5f5; padding: 0.8rem; border-radius: 8px; border: 1px solid #eaeaea;">
+        <div
+          style="font-size: 0.85rem; color: #555; margin-bottom: 1rem; text-align: center; background: #f5f5f5; padding: 0.8rem; border-radius: 8px; border: 1px solid #eaeaea;">
           <p style="margin: 0; font-weight: 500;">✅ Paiement à la livraison</p>
           <p style="margin: 0.4rem 0 0 0;">📱 La commande s'effectue via WhatsApp</p>
         </div>
@@ -354,10 +360,10 @@
       el.classList.add('active');
       renderProducts();
       // emoji change
-      const emojis = { 
-        all: 'logo.png', 
-        'hygiène': 'logo.png', 
-        'soins': 'logo.png', 
+      const emojis = {
+        all: 'logo.png',
+        'hygiène': 'logo.png',
+        'soins': 'logo.png',
         'parfums': 'logo.png',
         'accessoires': 'logo.png',
         'vêtements': 'logo.png'
@@ -521,7 +527,7 @@
     let toastTimeout;
     function showToast(msg) {
       const t = document.getElementById('toast');
-      t.textContent = msg; 
+      t.textContent = msg;
       t.classList.add('show');
       if (toastTimeout) clearTimeout(toastTimeout);
       toastTimeout = setTimeout(() => {
@@ -580,8 +586,8 @@
       products = [];
       snapshot.forEach(docSnap => {
         const data = docSnap.data();
-        products.push({ 
-          id: docSnap.id, 
+        products.push({
+          id: docSnap.id,
           name: data.nom || "Produit",
           cat: data.categorie || "all",
           desc: data.description || "", // L'admin n'a pas encore de description
@@ -589,7 +595,7 @@
           oldPrice: data.ancienPrix || null,
           tag: data.badge ? data.badge.toLowerCase() : '',
           imageUrl: data.imageUrl || null,
-          ...data 
+          ...data
         });
       });
 
