@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boutique - THIAFlow Ziguinchor</title>
+  <meta name="description"
+    content="Explore le catalogue complet THIAFlow : parfums, brumes, cosmétiques, bijoux et prêt-à-porter pour les étudiants de l'UASZ à Ziguinchor.">
+    <!-- Favicon / App Icons (Google Search, Android, Apple, PWA) -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/logo/icon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/logo/icon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/apple-touch-icon.png">
+
+  <!-- Open Graph / WhatsApp / Facebook Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thiaflow-a8c10.web.app/shop.html">
+  <meta property="og:site_name" content="THIAflow">
+  <meta property="og:title" content="Boutique - THIAFlow Ziguinchor">
+  <meta property="og:description" content="Explore le catalogue complet THIAFlow : parfums, brumes, cosmétiques, bijoux et prêt-à-porter pour les étudiants de l'UASZ à Ziguinchor.">
+  <meta property="og:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+  <meta property="og:image:secure_url" content="https://thiaflow-a8c10.web.app/preview.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Boutique - THIAFlow Ziguinchor">
+  <meta name="twitter:description" content="Explore le catalogue complet THIAFlow : parfums, brumes, cosmétiques, bijoux et prêt-à-porter pour les étudiants de l'UASZ à Ziguinchor.">
+  <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+
+
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5CX2E8GG0P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-5CX2E8GG0P');
+  </script>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    .category-pill {
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .category-pill.active,
+    .category-pill:hover {
+      background-color: var(--accent-coral);
+      color: white;
+      border-color: var(--accent-coral);
+    }
+
+    .filter-sidebar {
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 1px solid var(--border-light);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+    <span>DISPONIBLE À ZIGUINCHOR :</span> Remise rapide en main propre sur le campus de l'UASZ !
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo/logo.svg" alt="THIAFlow Logo" height="42">
+      </a>
+
+      <nav>
+        <ul class="nav-desktop">
+          <li><a href="index.html" class="nav-link">Accueil</a></li>
+          <li><a href="shop.html" class="nav-link active">Boutique</a></li>
+          <li><a href="shop.html?category=parfums" class="nav-link">Parfums</a></li>
+          <li><a href="shop.html?category=beaute" class="nav-link">Beauté & Hygiène</a></li>
+          <li><a href="shop.html?category=accessoires" class="nav-link">Accessoires</a></li>
+          <li><a href="shop.html?category=vetements" class="nav-link">Vêtements</a></li>
+          <li><a href="roue.html" class="nav-link">🎡 Roue</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="cart.html" class="header-icon-btn" aria-label="Panier">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <span class="cart-badge-count" style="display:none;">0</span>
+        </a>
+        <button class="mobile-menu-trigger" aria-label="Menu Mobile">
+          <span class="burger-icon">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-drawer-overlay">
+    <div class="mobile-drawer">
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <img src="assets/logo/logo.svg" alt="THIAFlow" height="30">
+          <span class="drawer-campus-tag">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Campus UASZ • Ziguinchor
+          </span>
+        </div>
+        <button class="mobile-drawer-close" aria-label="Fermer le menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <div class="drawer-section">
+          <div class="drawer-section-title">Navigation</div>
+          <ul class="drawer-nav">
+            <li>
+              <a href="index.html" class="drawer-nav-item">
+                <span class="drawer-item-icon">🏠</span>
+                <span class="drawer-item-label">Accueil</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html" class="drawer-nav-item">
+                <span class="drawer-item-icon">🛍️</span>
+                <span class="drawer-item-label">Toute la Boutique</span>
+                <span class="drawer-item-badge">Explorer</span>
+              </a>
+            </li>
+            <li>
+              <a href="roue.html" class="drawer-nav-item drawer-nav-highlight">
+                <span class="drawer-item-icon">🎡</span>
+                <span class="drawer-item-label">Jeu de la Roue</span>
+                <span class="drawer-item-badge badge-gift">Cadeaux !</span>
+              </a>
+            </li>
+            <li>
+              <a href="cart.html" class="drawer-nav-item">
+                <span class="drawer-item-icon">🛒</span>
+                <span class="drawer-item-label">Mon Panier</span>
+                <span class="drawer-cart-badge cart-badge-count" style="display:none;">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="drawer-section">
+          <div class="drawer-section-title">Nos Collections</div>
+          <ul class="drawer-nav">
+            <li>
+              <a href="shop.html?category=parfums" class="drawer-nav-item">
+                <span class="drawer-item-icon">✨</span>
+                <span class="drawer-item-label">Parfums & Brumes</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html?category=beaute" class="drawer-nav-item">
+                <span class="drawer-item-icon">🧴</span>
+                <span class="drawer-item-label">Beauté & Hygiène</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html?category=accessoires" class="drawer-nav-item">
+                <span class="drawer-item-icon">🕶️</span>
+                <span class="drawer-item-label">Accessoires & Bijoux</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html?category=vetements" class="drawer-nav-item">
+                <span class="drawer-item-icon">👕</span>
+                <span class="drawer-item-label">Vêtements & Style</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <a href="https://wa.me/221764287562" target="_blank" class="btn btn-whatsapp drawer-whatsapp-btn">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="flex-shrink:0;">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+          </svg>
+          <span>Besoin d'aide ? WhatsApp Direct</span>
+        </a>
+        <div class="drawer-footer-note">
+          📍 Livraison & remise rapide sur le campus UASZ
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Shop Hero Header -->
+    <section
+      style="padding: 40px 0 20px; background-color: var(--bg-surface); border-bottom: 1px solid var(--border-light);">
+      <div class="container">
+        <h1 class="heading-xl">La Boutique THIAFlow</h1>
+        <p class="text-muted" style="margin-top:8px;">Trouve ton prochain coup de cœur parmi nos collections dédiées aux
+          étudiants.</p>
+
+        <!-- Live Search Bar -->
+        <div style="margin-top:24px; position:relative; max-width:600px;">
+          <input type="text" id="searchInput" placeholder="Rechercher une brume, un parfum, un sérum..."
+            style="width:100%; padding:14px 20px 14px 48px; border-radius:var(--radius-pill); border:1px solid var(--border-medium); background:var(--bg-primary); font-size:0.95rem; font-weight:500;" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"
+            style="position:absolute; left:18px; top:50%; transform:translateY(-50%);">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </div>
+
+        <!-- Category Pills Filter -->
+        <div style="display:flex; gap:10px; overflow-x:auto; padding:20px 0 8px; scrollbar-width:none;">
+          <button class="category-pill active" data-category="all">Tous les produits</button>
+          <button class="category-pill" data-category="parfums">Parfums & Brumes</button>
+          <button class="category-pill" data-category="beaute">Beauté & Hygiène</button>
+          <button class="category-pill" data-category="accessoires">Accessoires</button>
+          <button class="category-pill" data-category="vetements">Vêtements</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Catalog Section -->
+    <section style="padding: 40px 0 80px;">
+      <div class="container">
+        <div class="shop-layout-grid">
+
+          <!-- Left Sidebar Controls -->
+          <aside class="filter-sidebar">
+            <h3 class="heading-sm"
+              style="margin-bottom:20px; border-bottom:1px solid var(--border-light); padding-bottom:12px;">Filtres</h3>
+
+            <!-- Price Filter Slider -->
+            <div style="margin-bottom:28px;">
+              <label style="font-weight:600; font-size:0.9rem; display:block; margin-bottom:10px;">Budget Max
+                (FCFA)</label>
+              <input type="range" id="priceFilter" min="2000" max="15000" step="500" value="15000"
+                style="width:100%; accent-color:var(--accent-coral);" />
+              <div id="priceValueDisplay"
+                style="font-size:0.85rem; font-weight:700; color:var(--accent-coral); margin-top:6px;">Tous les prix
+              </div>
+            </div>
+
+            <!-- Sort By Selector -->
+            <div>
+              <label style="font-weight:600; font-size:0.9rem; display:block; margin-bottom:10px;">Trier par</label>
+              <select id="sortSelect"
+                style="width:100%; padding:10px 14px; border-radius:var(--radius-sm); border:1px solid var(--border-medium); background:var(--bg-primary); font-size:0.9rem;">
+                <option value="default">Recommandés</option>
+                <option value="price-asc">Prix croissant</option>
+                <option value="price-desc">Prix décroissant</option>
+                <option value="newest">Nouveautés d'abord</option>
+              </select>
+            </div>
+          </aside>
+
+          <!-- Right Product Grid -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+              <span id="productsCount" style="font-weight:600; color:var(--text-muted); font-size:0.95rem;">Chargement
+                des produits...</span>
+            </div>
+
+            <div class="products-grid" id="shopProductsGrid">
+              <!-- Dynamic rendering via app.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo/logo-white.svg" alt="THIAFlow Logo" height="40">
+          <p>Parfums, brumes, beauté, hygiène, accessoires & style pour la jeunesse vibrante de Ziguinchor.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="shop.html">La Boutique</a></li>
+            <li><a href="cart.html">Mon Panier</a></li>
+            <li><a href="checkout.html">Commander</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Catégories</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?category=parfums">Parfums & Brumes</a></li>
+            <li><a href="shop.html?category=beaute">Beauté & Hygiène</a></li>
+            <li><a href="shop.html?category=accessoires">Accessoires</a></li>
+            <li><a href="shop.html?category=vetements">Vêtements</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contact Local</h4>
+          <p style="color:var(--text-light); font-size:0.9rem; line-height:1.6; margin-bottom:12px;">
+            📍 Ziguinchor, Sénégal<br>
+            🏫 Campus UASZ (Université Assane Seck)
+          </p>
+          <a href="https://wa.me/221770000000" class="btn btn-whatsapp btn-sm" style="display:inline-flex;">
+            Contact WhatsApp Direct
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 THIAFlow. Tous droits réservés</div>
+        <div>Conçu avec passion à Ziguinchor 🇸🇳</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Sticky Bar -->
+  <div class="mobile-bottom-bar">
+    <a href="index.html" class="mobile-bar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+      <span>Accueil</span>
+    </a>
+    <a href="shop.html" class="mobile-bar-item active">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
+      </svg>
+      <span>Boutique</span>
+    </a>
+    <a href="cart.html" class="mobile-bar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
+      </svg>
+      <span>Panier</span>
+      <span class="mobile-bar-badge cart-badge-count" style="display:none;">0</span>
+    </a>
+  </div>
+
+  <script type="module" src="js/firebase-init.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

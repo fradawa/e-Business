@@ -4,623 +4,609 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="index.css">
-  <title>THIAflow</title>
-  <!-- Social Preview Meta Tags -->
-  <meta property="og:title" content="THIAflow - Parfums, Hygiène & Beauté à Ziguinchor">
-  <meta property="og:description"
-    content="Produits d'hygiène et de beauté soigneusement sélectionnés pour votre quotidien.">
-  <meta property="og:image" itemprop="image" content="https://thiaflow-a8c10.web.app/preview.jpg">
-  <meta property="og:image:secure_url" itemprop="image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+  <title>THIAFlow Parfums, Beauté & Accessoires | Campus UASZ Ziguinchor</title>
+  <meta name="description"
+    content="Découvre THIAFlow : parfums, brumes, produits de beauté, soins et accessoires pour étudiants et jeunes adultes à Ziguinchor (UASZ). Commande rapide sur WhatsApp.">
+    <!-- Favicon / App Icons (Google Search, Android, Apple, PWA) -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/logo/icon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/logo/icon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/apple-touch-icon.png">
+
+  <!-- Open Graph / WhatsApp / Facebook Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thiaflow-a8c10.web.app/">
+  <meta property="og:site_name" content="THIAflow">
+  <meta property="og:title" content="THIAFlow Parfums, Beauté & Accessoires | Campus UASZ Ziguinchor">
+  <meta property="og:description" content="Découvre THIAFlow : parfums, brumes, produits de beauté, soins et accessoires pour étudiants et jeunes adultes à Ziguinchor (UASZ). Commande rapide sur WhatsApp.">
+  <meta property="og:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+  <meta property="og:image:secure_url" content="https://thiaflow-a8c10.web.app/preview.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://thiaflow-a8c10.web.app/">
-  <meta property="og:type" content="website">
 
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="THIAflow - Parfums, Hygiène & Beauté à Ziguinchor">
-  <meta name="twitter:description"
-    content="Produits d'hygiène et de beauté soigneusement sélectionnés pour votre quotidien.">
+  <meta name="twitter:title" content="THIAFlow Parfums, Beauté & Accessoires | Campus UASZ Ziguinchor">
+  <meta name="twitter:description" content="Découvre THIAFlow : parfums, brumes, produits de beauté, soins et accessoires pour étudiants et jeunes adultes à Ziguinchor (UASZ). Commande rapide sur WhatsApp.">
   <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+
+  <!-- Google Search Structured Data (Logo & Organisation) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "OnlineStore",
+    "name": "THIAFlow",
+    "url": "https://thiaflow-a8c10.web.app/",
+    "logo": "https://thiaflow-a8c10.web.app/assets/logo/logo_icon.png",
+    "image": "https://thiaflow-a8c10.web.app/preview.jpg",
+    "description": "Boutique en ligne à Ziguinchor : parfums, brumes, cosmétiques, bijoux et accessoires pour les étudiants de l'UASZ.",
+    "telephone": "+221764287562",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Ziguinchor",
+      "addressRegion": "Casamance",
+      "addressCountry": "SN"
+    }
+  }
+  </script>
+
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5CX2E8GG0P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-5CX2E8GG0P');
+  </script>
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="logo" style="display: flex; align-items: center; gap: 0.8rem;">
-      <img src="logo.png" alt="Logo" style="height: 48px;">
-      <div>THIA<span>flow</span></div>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#" onclick="scrollTo(0,0)">Accueil</a></li>
-      <li><a href="#produits">Produits</a></li>
-      <li><a href="roue.html">🎡 Jeu de la Roue</a></li>
-      <li><a href="#avantages">Avantages</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-icons" style="gap: 1.5rem;">
-      <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="search-input" class="search-input" placeholder="" oninput="handleSearch(this.value)">
-      </div>
-      <button class="nav-icon" onclick="openCart()" title="Panier" style="position:relative">
-        🛒<span class="cart-badge" id="cart-count">0</span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-left">
-      <span class="hero-label">✦ Collection Bien-être & Beauté</span>
-      <h1 class="hero-title">
-        Prenez soin <img src="logo.png" class="hero-logo-mobile" alt="THIAflow Logo"><br>
-        de <em>vous</em>,<br>
-        chaque jour.
-      </h1>
-      <p class="hero-sub">Produits d'hygiène et de beauté soigneusement sélectionnés pour votre quotidien. Qualité
-        garantie, prix accessibles.</p>
-      <button class="btn-primary" onclick="document.getElementById('produits').scrollIntoView({behavior:'smooth'})">
-        Découvrir les produits →
-      </button>
-    </div>
-    <div class="hero-right">
-      <div class="hero-visual">
-        <img src="logo.png" class="hero-logo-3d" id="hero-emoji" alt="THIAflow Logo">
-      </div>
-    </div>
-  </section>
-
-
-  <!-- STATS -->
-  <!-- <div class="stats">
-    <div class="stat">
-      <div class="stat-n">200+</div>
-      <div class="stat-l">Produits</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n">4.9★</div>
-      <div class="stat-l">Note clients</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n">24h</div>
-      <div class="stat-l">Livraison</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n">100%</div>
-      <div class="stat-l">Satisfaction</div>
-    </div>
-  </div> -->
-
-  <!-- CATEGORIES -->
-  <section class="section" style="padding-bottom:2rem">
-    <div class="section-header">
-      <div class="section-label">Nos catégories</div>
-      <h2 class="section-title">Tout pour votre bien-être</h2>
-    </div>
-    <div class="categories" id="cat-bar">
-      <div class="cat-card active" onclick="filterCat('all',this)"><span class="cat-icon">🛍️</span>
-        <div class="cat-name">Tout</div>
-      </div>
-      <div class="cat-card" onclick="filterCat('Hygiène',this)"><span class="cat-icon">🪥</span>
-        <div class="cat-name">Hygiène</div>
-      </div>
-      <div class="cat-card" onclick="filterCat('Soins',this)"><span class="cat-icon">🧴</span>
-        <div class="cat-name">Soins</div>
-      </div>
-      <div class="cat-card" onclick="filterCat('Parfums',this)"><span class="cat-icon">🌹</span>
-        <div class="cat-name">Parfums</div>
-      </div>
-      <div class="cat-card" onclick="filterCat('Accessoires',this)"><span class="cat-icon">💍</span>
-        <div class="cat-name">Accessoires</div>
-      </div>
-      <div class="cat-card" onclick="filterCat('Vêtements',this)"><span class="cat-icon">👗</span>
-        <div class="cat-name">Vêtements</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHEEL GAME PROMO BANNER -->
-  <section class="wheel-banner">
-    <div class="wheel-banner-left">
-      <span class="wheel-banner-label">✦ Événement Spécial</span>
-      <h2 class="wheel-banner-title">Tournez la Roue des Surprises !</h2>
-      <p class="wheel-banner-text">Vous avez reçu un code de jeu THIAflow après votre commande ? Entrez-le pour tenter
-        de gagner des réductions exclusives de 5% à 15%, des cadeaux ou le Jackpot !</p>
-    </div>
-    <a href="roue.html" class="btn-primary wheel-banner-btn" style="text-decoration: none;">
-      🎯 Lancer la Roue
-    </a>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section class="section" id="produits" style="padding-top:2rem">
-    <div class="products-grid" id="products-grid"></div>
-  </section>
-
-  <!-- PROMO BANNER -->
-  <div class="promo" id="avantages">
-    <div>
-      <div class="promo-tag">✦ Pourquoi nous choisir</div>
-      <h2 class="promo-title">La qualité<br>à votre<br>portée.</h2>
-      <p class="promo-text">Chez THIAflow, chaque produit est sélectionné avec soin pour vous offrir le meilleur
-        rapport
-        qualité-prix. Votre satisfaction est notre priorité.</p>
-    </div>
-    <div class="promo-right">
-
-      <div class="promo-item"><span class="promo-item-icon">✅</span>
-        <div>
-          <div class="promo-item-title">Produits authentiques</div>
-          <div class="promo-item-desc">100% originaux, jamais de contrefaçon</div>
-        </div>
-      </div>
-      <div class="promo-item"><span class="promo-item-icon">💬</span>
-        <div>
-          <div class="promo-item-title">Support client</div>
-          <div class="promo-item-desc">WhatsApp disponible</div>
-        </div>
-      </div>
-
-    </div>
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+    <span>DISPONIBLE À ZIGUINCHOR :</span> Remise rapide en main propre sur le campus de l'UASZ !
   </div>
 
-  <!-- WHATSAPP GROUP -->
-  <div class="newsletter" id="contact">
-    <div class="section-label">Restez informé</div>
-    <h2 class="nl-title">Rejoignez notre communauté</h2>
-    <p class="nl-sub">Rejoignez notre groupe WhatsApp pour profiter d'offres exclusives et être informé de toutes nos
-      nouveautés en avant-première.</p>
-    <div style="text-align: center; margin-top: 2rem;">
-      <a href="https://chat.whatsapp.com/CjcDh5n55QwEsRHE265cRg" target="_blank" class="btn-primary"
-        style="text-decoration: none; border-radius: 8px;">
-        <span style="font-size: 1.2rem; margin-right: 8px;">💬</span> Rejoindre le groupe WhatsApp
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <!-- Logo -->
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo/logo.svg" alt="THIAFlow Logo" height="42">
       </a>
+
+      <!-- Desktop Navigation -->
+      <nav>
+        <ul class="nav-desktop">
+          <li><a href="index.html" class="nav-link active">Accueil</a></li>
+          <li><a href="shop.html" class="nav-link">Boutique</a></li>
+          <li><a href="shop.html?category=parfums" class="nav-link">Parfums</a></li>
+          <li><a href="shop.html?category=beaute" class="nav-link">Beauté & Hygiène</a></li>
+          <li><a href="shop.html?category=accessoires" class="nav-link">Accessoires</a></li>
+          <li><a href="shop.html?category=vetements" class="nav-link">Vêtements</a></li>
+          <li><a href="roue.html" class="nav-link">🎡 Roue</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a href="shop.html" class="header-icon-btn" aria-label="Recherche">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </a>
+
+        <a href="cart.html" class="header-icon-btn" aria-label="Panier">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <span class="cart-badge-count" style="display:none;">0</span>
+        </a>
+
+        <button class="mobile-menu-trigger" aria-label="Menu Mobile">
+          <span class="burger-icon">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-drawer-overlay">
+    <div class="mobile-drawer">
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <img src="assets/logo/logo.svg" alt="THIAFlow" height="30">
+          <span class="drawer-campus-tag">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Campus UASZ • Ziguinchor
+          </span>
+        </div>
+        <button class="mobile-drawer-close" aria-label="Fermer le menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <div class="drawer-section">
+          <div class="drawer-section-title">Navigation</div>
+          <ul class="drawer-nav">
+            <li>
+              <a href="index.html" class="drawer-nav-item">
+                <span class="drawer-item-icon">🏠</span>
+                <span class="drawer-item-label">Accueil</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html" class="drawer-nav-item">
+                <span class="drawer-item-icon">🛍️</span>
+                <span class="drawer-item-label">Toute la Boutique</span>
+                <span class="drawer-item-badge">Explorer</span>
+              </a>
+            </li>
+            <li>
+              <a href="roue.html" class="drawer-nav-item drawer-nav-highlight">
+                <span class="drawer-item-icon">🎡</span>
+                <span class="drawer-item-label">Jeu de la Roue</span>
+                <span class="drawer-item-badge badge-gift">Cadeaux !</span>
+              </a>
+            </li>
+            <li>
+              <a href="cart.html" class="drawer-nav-item">
+                <span class="drawer-item-icon">🛒</span>
+                <span class="drawer-item-label">Mon Panier</span>
+                <span class="drawer-cart-badge cart-badge-count" style="display:none;">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="drawer-section">
+          <div class="drawer-section-title">Nos Collections</div>
+          <ul class="drawer-nav">
+            <li>
+              <a href="shop.html?category=parfums" class="drawer-nav-item">
+                <span class="drawer-item-icon">✨</span>
+                <span class="drawer-item-label">Parfums & Brumes</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html?category=beaute" class="drawer-nav-item">
+                <span class="drawer-item-icon">🧴</span>
+                <span class="drawer-item-label">Beauté & Hygiène</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html?category=accessoires" class="drawer-nav-item">
+                <span class="drawer-item-icon">🕶️</span>
+                <span class="drawer-item-label">Accessoires & Bijoux</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html?category=vetements" class="drawer-nav-item">
+                <span class="drawer-item-icon">👕</span>
+                <span class="drawer-item-label">Vêtements & Style</span>
+                <span class="drawer-item-arrow">›</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <a href="https://wa.me/221764287562" target="_blank" class="btn btn-whatsapp drawer-whatsapp-btn">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="flex-shrink:0;">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+          </svg>
+          <span>Besoin d'aide ? WhatsApp Direct</span>
+        </a>
+        <div class="drawer-footer-note">
+          📍 Livraison & remise rapide sur le campus UASZ
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo" style="display: flex; align-items: center; gap: 0.8rem;">
-      <img src="logo.png" alt="Logo" style="height: 48px;">
-      <div>THIAflow</div>
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-content animate-slide-up">
+          <span class="hero-badge">✨ Collection Exclusive UASZ 2026</span>
+          <h1 class="hero-title">Ton style.<br>Ton parfum.<br><span class="text-accent">Ton flow.</span></h1>
+          <p class="hero-subtitle">
+            Beauté, parfums d'exception, accessoires et essentiels du quotidien, directement au campus de l’UASZ à
+            Ziguinchor.
+          </p>
+          <div class="hero-cta-group">
+            <a href="shop.html" class="btn btn-primary">Découvrir la boutique →</a>
+            <a href="#nouveautes" class="btn btn-secondary">Voir les nouveautés</a>
+          </div>
+        </div>
+        <div class="hero-image-card animate-fade-in">
+          <img src="assets/images/UASZ.jpg" alt="Étudiants UASZ THIAFlow Lifestyle">
+          <div class="hero-image-badge">
+            <strong>Campus Approved 🎓</strong>
+            <span>Des essentiels pensés pour le quotidien des étudiants</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION POURQUOI THIAFlow ? -->
+    <section style="padding: 60px 0; background-color: var(--bg-surface); border-y: 1px solid var(--border-light);">
+      <div class="container">
+        <div style="text-align:center; max-width:600px; margin:0 auto 48px;">
+          <h2 class="heading-lg">Pourquoi choisir THIAFlow ?</h2>
+          <p class="text-muted" style="margin-top:8px;">La marque locale pensée sur mesure pour la communauté étudiante
+            de Ziguinchor.</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:32px;">
+          <!-- Feature 1 -->
+          <div
+            style="padding:28px; background:var(--bg-primary); border-radius:var(--radius-md); border:1px solid var(--border-light);">
+            <div
+              style="width:48px; height:48px; background:var(--accent-coral-light); color:var(--accent-coral); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c3 3 9 3 12 0v-5" />
+              </svg>
+            </div>
+            <h3 class="heading-sm" style="margin-bottom:8px;">Pensé pour le campus</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted);">Des produits sélectionnés spécifiquement pour le
+              rythme et le quotidien des étudiants de l'UASZ.</p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div
+            style="padding:28px; background:var(--bg-primary); border-radius:var(--radius-md); border:1px solid var(--border-light);">
+            <div
+              style="width:48px; height:48px; background:var(--whatsapp-light); color:var(--whatsapp-green); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+              </svg>
+            </div>
+            <h3 class="heading-sm" style="margin-bottom:8px;">Commande simple</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted);">Choisis tes pépites sur le site et valide
+              instantanément ton panier sur WhatsApp sans tracas.</p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div
+            style="padding:28px; background:var(--bg-primary); border-radius:var(--radius-md); border:1px solid var(--border-light);">
+            <div
+              style="width:48px; height:48px; background:var(--accent-gold-light); color:var(--accent-gold); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <h3 class="heading-sm" style="margin-bottom:8px;">Proche de toi</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted);">THIAFlow est basé à Ziguinchor. Remise directe en main
+              propre sur le campus ou en ville.</p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div
+            style="padding:28px; background:var(--bg-primary); border-radius:var(--radius-md); border:1px solid var(--border-light);">
+            <div
+              style="width:48px; height:48px; background:var(--accent-sage-light); color:var(--accent-sage); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+            </div>
+            <h3 class="heading-sm" style="margin-bottom:8px;">Style & Qualité</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted);">Des senteurs durables et des articles soigneusement
+              sélectionnés à des prix très accessibles.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION CATÉGORIES ASYMMÉTRIQUES -->
+    <section style="padding: 80px 0;">
+      <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;">
+          <div>
+            <span class="badge-tag badge-new">Explore par Univers</span>
+            <h2 class="heading-lg" style="margin-top:8px;">Nos Catégories Vedettes</h2>
+          </div>
+          <a href="shop.html" class="nav-link" style="font-weight:700;">Voir tout le catalogue →</a>
+        </div>
+
+        <div class="categories-grid">
+          <!-- Parfums (7 cols) -->
+          <div class="category-card category-card-lg animate-fade-in">
+            <img src="assets/images/cat_parfums.jpg" alt="Catégorie Parfums">
+            <div class="category-card-overlay">
+              <h3 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Parfums & Brumes</h3>
+              <p style="font-size:0.95rem; opacity:0.9; margin-bottom:16px;">Trouve ton parfum signature pour marquer
+                les esprits.</p>
+              <a href="shop.html?category=parfums" class="btn btn-secondary btn-sm" style="border:none;">Découvrir →</a>
+            </div>
+          </div>
+
+          <!-- Beauté (5 cols) -->
+          <div class="category-card category-card-sm animate-fade-in">
+            <img src="assets/images/cat_beaute.jpg" alt="Catégorie Beauté">
+            <div class="category-card-overlay">
+              <h3 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Beauté & Hygiène</h3>
+              <p style="font-size:0.95rem; opacity:0.9; margin-bottom:16px;">Les essentiels soin pour une peau radieuse.
+              </p>
+              <a href="shop.html?category=beaute" class="btn btn-secondary btn-sm" style="border:none;">Découvrir →</a>
+            </div>
+          </div>
+
+          <!-- Accessoires (5 cols) -->
+          <div class="category-card category-card-sm animate-fade-in">
+            <img src="assets/images/cat_accessoires.jpg" alt="Catégorie Accessoires">
+            <div class="category-card-overlay">
+              <h3 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Accessoires</h3>
+              <p style="font-size:0.95rem; opacity:0.9; margin-bottom:16px;">Les détails qui sublimeront ta tenue.</p>
+              <a href="shop.html?category=accessoires" class="btn btn-secondary btn-sm" style="border:none;">Découvrir
+                →</a>
+            </div>
+          </div>
+
+          <!-- Vêtements (7 cols) -->
+          <div class="category-card category-card-lg animate-fade-in">
+            <img src="assets/images/cat_vetements.jpg" alt="Catégorie Vêtements">
+            <div class="category-card-overlay">
+              <h3 style="font-size:1.6rem; font-weight:800; margin-bottom:4px;">Vêtements</h3>
+              <p style="font-size:0.95rem; opacity:0.9; margin-bottom:16px;">Des pièces chill et tendance créées pour le
+                campus.</p>
+              <a href="shop.html?category=vetements" class="btn btn-secondary btn-sm" style="border:none;">Découvrir
+                →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION PRODUITS FAVORIS -->
+    <section style="padding: 60px 0; background-color: var(--bg-surface);">
+      <div class="container">
+        <div style="text-align:center; max-width:600px; margin:0 auto 48px;">
+          <span class="badge-tag badge-populaire">Best-Sellers</span>
+          <h2 class="heading-lg" style="margin-top:8px;">Les favoris du moment</h2>
+          <p class="text-muted">Les articles les plus plébiscités par la communauté de l'UASZ.</p>
+        </div>
+
+        <div class="products-grid" id="featuredProductsGrid">
+          <!-- Dynamic rendering via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION LIFESTYLE THIAFLOW POUR TOI -->
+    <section style="padding: 80px 0; background: var(--bg-dark); color: white;">
+      <div class="container">
+        <div class="lifestyle-grid">
+          <div>
+            <span
+              style="color:var(--accent-coral); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; font-size:0.85rem;">Lifestyle
+              Campus</span>
+            <h2 class="heading-xl" style="margin: 12px 0 20px; color:white;">Ton quotidien mérite mieux.</h2>
+            <p style="color:var(--text-light); font-size:1.1rem; line-height:1.7; margin-bottom:28px;">
+              En amphi, lors d'un rdv express après les TD, ou pour chill avec tes potes au campus : THIAFlow
+              t'accompagne avec des senteurs captivantes et des accessoires faits pour rehausser ta confiance en toutes
+              circonstances.
+            </p>
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span
+                  style="width:28px; height:28px; background:var(--accent-coral); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; flex-shrink:0;">✓</span>
+                <span style="font-size:1rem; font-weight:500;">Flacons pratiques faciles à emporter dans ton sac</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span
+                  style="width:28px; height:28px; background:var(--accent-coral); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; flex-shrink:0;">✓</span>
+                <span style="font-size:1rem; font-weight:500;">Tenue longue durée adaptée au climat chaud de
+                  Ziguinchor</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span
+                  style="width:28px; height:28px; background:var(--accent-coral); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; flex-shrink:0;">✓</span>
+                <span style="font-size:1rem; font-weight:500;">Rapport qualité-prix imbattable pour le budget
+                  étudiant</span>
+              </div>
+            </div>
+          </div>
+          <div class="lifestyle-image-col hide-on-mobile animate-fade-in">
+            <img src="assets/images/hero.jpg" alt="THIAFlow Lifestyle">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION PROMOTIONS -->
+    <section style="padding: 80px 0;">
+      <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+          <div>
+            <span class="badge-tag badge-promo">Bons Plans</span>
+            <h2 class="heading-lg" style="margin-top:8px;">Les bonnes affaires du moment</h2>
+          </div>
+          <a href="shop.html" class="btn btn-secondary btn-sm">Tout voir</a>
+        </div>
+
+        <div class="products-grid" id="promoProductsGrid">
+          <!-- Dynamic rendering via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION NOUVEAUTÉS -->
+    <section style="padding: 60px 0; background-color: var(--bg-surface);" id="nouveautes">
+      <div class="container">
+        <div style="text-align:center; max-width:600px; margin:0 auto 48px;">
+          <span class="badge-tag badge-new">Fraîchement Arrivés</span>
+          <h2 class="heading-lg" style="margin-top:8px;">Les Nouveautés THIAFlow</h2>
+        </div>
+
+        <div class="products-grid" id="newArrivalsGrid">
+          <!-- Dynamic rendering via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION WHATSAPP STEP-BY-STEP -->
+    <section style="padding: 80px 0; background: var(--bg-secondary);">
+      <div class="container" style="text-align:center;">
+        <span class="badge-tag badge-campus">Super Simple</span>
+        <h2 class="heading-lg" style="margin: 12px 0 16px;">Une commande, quelques clics.</h2>
+        <p class="text-muted" style="max-width:560px; margin: 0 auto 48px;">Voici comment récupérer tes produits
+          directement sur le campus de l'UASZ.</p>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:24px;">
+          <div
+            style="background:var(--bg-surface); padding:32px 24px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm);">
+            <div style="font-size:2rem; font-weight:800; color:var(--accent-coral); margin-bottom:12px;">01</div>
+            <h4 style="font-weight:700; margin-bottom:8px;">Choisis tes produits</h4>
+            <p style="font-size:0.875rem; color:var(--text-muted);">Parcours la boutique et sélectionne tes fragrances
+              ou accessoires préférés.</p>
+          </div>
+
+          <div
+            style="background:var(--bg-surface); padding:32px 24px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm);">
+            <div style="font-size:2rem; font-weight:800; color:var(--accent-coral); margin-bottom:12px;">02</div>
+            <h4 style="font-weight:700; margin-bottom:8px;">Ajoute au panier</h4>
+            <p style="font-size:0.875rem; color:var(--text-muted);">Ajuste tes quantités en un instant depuis ton
+              smartphone.</p>
+          </div>
+
+          <div
+            style="background:var(--bg-surface); padding:32px 24px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm);">
+            <div style="font-size:2rem; font-weight:800; color:var(--whatsapp-green); margin-bottom:12px;">03</div>
+            <h4 style="font-weight:700; margin-bottom:8px;">Valide sur WhatsApp</h4>
+            <p style="font-size:0.875rem; color:var(--text-muted);">Un récapitulatif clair pré-rempli est généré
+              automatiquement.</p>
+          </div>
+
+          <div
+            style="background:var(--bg-surface); padding:32px 24px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm);">
+            <div style="font-size:2rem; font-weight:800; color:var(--accent-gold); margin-bottom:12px;">04</div>
+            <h4 style="font-weight:700; margin-bottom:8px;">Remise au campus</h4>
+            <p style="font-size:0.875rem; color:var(--text-muted);">On te remet ta commande en main propre à l'UASZ !
+            </p>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo/logo-white.svg" alt="THIAFlow Logo" height="40">
+          <p>Parfums, brumes, beauté, hygiène, accessoires & style pour la jeunesse vibrante de Ziguinchor.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="shop.html">La Boutique</a></li>
+            <li><a href="cart.html">Mon Panier</a></li>
+            <li><a href="checkout.html">Commander</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Catégories</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?category=parfums">Parfums & Brumes</a></li>
+            <li><a href="shop.html?category=beaute">Beauté & Hygiène</a></li>
+            <li><a href="shop.html?category=accessoires">Accessoires</a></li>
+            <li><a href="shop.html?category=vetements">Vêtements</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contact Local</h4>
+          <p style="color:var(--text-light); font-size:0.9rem; line-height:1.6; margin-bottom:12px;">
+            📍 Ziguinchor, Sénégal<br>
+            🏫 Campus UASZ (Université Assane Seck)
+          </p>
+
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 THIAFlow. Tous droits réservés</div>
+        <div>Conçu avec passion à Ziguinchor 🇸🇳</div>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="#">Accueil</a>
-      <a href="#produits">Produits</a>
-      <a href="#avantages">À propos</a>
-      <a href="#contact">Contact</a>
-      <a href="#">Politique de confidentialité</a>
-    </div>
-    <div style="font-size:0.78rem">© 2026 THIAflow. Tous droits réservés.</div>
   </footer>
 
-  <!-- CART MODAL -->
-  <div class="cart-modal" id="cart-modal" onclick="e=>e.target===this&&closeCart()">
-    <div class="cart-panel">
-      <div class="cart-title">Mon panier <button class="close-btn" onclick="closeCart()">✕</button></div>
-      <div id="cart-content"></div>
-      <div class="cart-total" id="cart-total" style="display:none">
-        <div class="cart-total-row"><span>Sous-total</span><span id="subtotal-val"></span></div>
-        <div class="cart-total-row"><span>Livraison</span><span>Gratuite</span></div>
-        <div class="cart-total-main"><span>Total</span><span id="total-val"></span></div>
-        <div
-          style="font-size: 0.85rem; color: #555; margin-bottom: 1rem; text-align: center; background: #f5f5f5; padding: 0.8rem; border-radius: 8px; border: 1px solid #eaeaea;">
-          <p style="margin: 0; font-weight: 500;">✅ Paiement à la livraison</p>
-          <p style="margin: 0.4rem 0 0 0;">📱 La commande s'effectue via WhatsApp</p>
-        </div>
-        <button class="btn-checkout" onclick="checkout()">Commander via WhatsApp →</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- PREVIEW MODAL -->
-  <div class="cart-modal" id="preview-modal" style="display: none;">
-    <div class="preview-panel">
-      <button class="preview-close" onclick="closePreview()">✕</button>
-      <div id="preview-content"></div>
-    </div>
-  </div>
 
-  <!-- TOAST -->
-  <div class="toast" id="toast"></div>
-
-  <!-- BOTTOM NAV MOBILE -->
-  <div class="bottom-nav">
-    <a href="#" class="bottom-nav-item active" onclick="scrollTo(0,0)">
-      <span class="icon">🏠</span>
+  <!-- Mobile Bottom Sticky Bar -->
+  <div class="mobile-bottom-bar">
+    <a href="index.html" class="mobile-bar-item active">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
       <span>Accueil</span>
     </a>
-    <a href="#produits" class="bottom-nav-item">
-      <span class="icon">🛍️</span>
-      <span>Produits</span>
+    <a href="shop.html" class="mobile-bar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
+      </svg>
+      <span>Boutique</span>
     </a>
-    <a href="roue.html" class="bottom-nav-item">
-      <span class="icon">🎡</span>
-      <span>Roue</span>
+    <a href="cart.html" class="mobile-bar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
+      </svg>
+      <span>Panier</span>
+      <span class="mobile-bar-badge cart-badge-count" style="display:none;">0</span>
     </a>
-    <a href="#avantages" class="bottom-nav-item">
-      <span class="icon">⭐</span>
-      <span>Avantages</span>
-    </a>
-    <a href="#contact" class="bottom-nav-item">
-      <span class="icon">✉️</span>
-      <span>Contact</span>
-    </a>
+
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-    import { ENV } from './env.js';
-
-    const firebaseConfig = {
-      apiKey: ENV.FIREBASE_API_KEY,
-      authDomain: ENV.FIREBASE_AUTH_DOMAIN,
-      projectId: ENV.FIREBASE_PROJECT_ID,
-      storageBucket: ENV.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: ENV.FIREBASE_MESSAGING_SENDER_ID,
-      appId: ENV.FIREBASE_APP_ID,
-      measurementId: ENV.FIREBASE_MEASUREMENT_ID
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const produitsCol = collection(db, 'produits');
-
-    let products = [];
-
-    let cart = [];
-    let activeTag = 'all';
-    let activeCat = 'all';
-    let searchQuery = '';
-    let sharedProductOpened = false;
-
-    const searchPlaceholders = ["Brosse à dents...", "Savon artisanal...", "Parfum...", "Crème visage...", "Sérum éclat..."];
-    let placeholderIdx = 0;
-    let charIdx = 0;
-    let isDeleting = false;
-
-    function typeWriter() {
-      const input = document.getElementById('search-input');
-      if (!input) return;
-
-      const currentText = searchPlaceholders[placeholderIdx];
-
-      if (isDeleting) {
-        input.placeholder = currentText.substring(0, charIdx - 1);
-        charIdx--;
-      } else {
-        input.placeholder = currentText.substring(0, charIdx + 1);
-        charIdx++;
-      }
-
-      let speed = isDeleting ? 40 : 120;
-
-      if (!isDeleting && charIdx === currentText.length) {
-        speed = 2000;
-        isDeleting = true;
-      } else if (isDeleting && charIdx === 0) {
-        isDeleting = false;
-        placeholderIdx = (placeholderIdx + 1) % searchPlaceholders.length;
-        speed = 500;
-      }
-
-      setTimeout(typeWriter, speed);
-    }
-
-    setTimeout(typeWriter, 1000);
-
-    function handleSearch(val) {
-      searchQuery = val.trim();
-      renderProducts();
-    }
-
-    function renderProducts() {
-      const grid = document.getElementById('products-grid');
-      let filtered = products.filter(p => {
-        const catOk = activeCat === 'all' || p.cat === activeCat;
-        const tagOk = activeTag === 'all' || p.tag === activeTag;
-        const searchOk = searchQuery === '' || p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.desc.toLowerCase().includes(searchQuery.toLowerCase());
-        return catOk && tagOk && searchOk;
-      });
-      if (filtered.length === 0) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">Aucun produit dans cette catégorie.</div>'; return; }
-      grid.innerHTML = filtered.map(p => `
-    <div class="product-card" onclick="openPreview('${p.id}')">
-      ${p.tag === 'promo' ? '<span class="product-badge">Promo</span>' : ''}
-      ${p.tag === 'new' ? '<span class="product-badge new">Nouveau</span>' : ''}
-      <button class="share-btn" onclick="shareProduct('${p.id}', event)" title="Partager sur WhatsApp" aria-label="Partager sur WhatsApp">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.002 2C6.478 2 2 6.477 2 12c0 1.86.505 3.679 1.462 5.267L2 22l4.865-1.428A9.955 9.955 0 0 0 12.002 22C17.523 22 22 17.523 22 12S17.523 2 12.002 2zm0 18.166a8.13 8.13 0 0 1-4.147-1.135l-.297-.176-3.077.904.923-3.03-.193-.31A8.135 8.135 0 0 1 3.834 12c0-4.51 3.66-8.166 8.168-8.166 4.507 0 8.166 3.656 8.166 8.166 0 4.51-3.659 8.166-8.166 8.166z"/></svg>
-      </button>
-      <div class="product-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:100%;height:100%;object-fit:cover;display:block;">' : (p.emoji || '📦')}</div>
-      <div class="product-info">
-        <div class="product-cat">${p.cat || ''}</div>
-        <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.desc}</div>
-        <div class="product-footer">
-          <div class="product-price">
-            ${p.oldPrice ? `<span class="old">${p.oldPrice.toLocaleString()} F</span>` : ''}
-            ${p.price.toLocaleString()} F CFA
-          </div>
-          <button class="add-btn" onclick="addToCart('${p.id}',event)">+ Ajouter</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-    }
-
-    function filterCat(cat, el) {
-      activeCat = cat;
-      document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-      renderProducts();
-      // emoji change
-      const emojis = {
-        all: 'logo.png',
-        'hygiène': 'logo.png',
-        'soins': 'logo.png',
-        'parfums': 'logo.png',
-        'accessoires': 'logo.png',
-        'vêtements': 'logo.png'
-      };
-      const catKey = cat.toLowerCase();
-      const heroEl = document.getElementById('hero-emoji');
-      if (heroEl.tagName.toLowerCase() === 'img') {
-        heroEl.src = emojis[catKey] || 'logo.png';
-      } else {
-        heroEl.textContent = emojis[catKey] || '🌸';
-      }
-    }
-
-    function filterTag(tag, el) {
-      activeTag = tag;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      el.classList.add('active');
-      renderProducts();
-    }
-
-    function addToCart(id, e) {
-      e.stopPropagation();
-      const p = products.find(x => x.id === id);
-      const existing = cart.find(x => x.id === id);
-      if (existing) existing.qty++;
-      else cart.push({ ...p, qty: 1 });
-      updateCartCount();
-
-      const btn = e.target;
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '✓ Ajouté';
-      btn.style.background = 'var(--accent2)';
-      setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.style.background = '';
-      }, 1000);
-
-      showToast(`"${p.name}" ajouté au panier ✓`);
-    }
-
-    function updateCartCount() {
-      const total = cart.reduce((s, x) => s + x.qty, 0);
-      const badge = document.getElementById('cart-count');
-      badge.textContent = total;
-      badge.classList.remove('bump');
-      void badge.offsetWidth; // trigger reflow
-      badge.classList.add('bump');
-    }
-
-    function openCart() {
-      const modal = document.getElementById('cart-modal');
-      modal.classList.remove('closing');
-      modal.style.display = 'block';
-      renderCart();
-    }
-
-    function closeCart() {
-      const modal = document.getElementById('cart-modal');
-      modal.classList.add('closing');
-      setTimeout(() => {
-        modal.style.display = 'none';
-        modal.classList.remove('closing');
-      }, 290);
-    }
-
-    function openPreview(id) {
-      const p = products.find(x => x.id === id);
-      if (!p) return;
-      const content = document.getElementById('preview-content');
-      content.innerHTML = `
-        <div class="preview-body">
-          <div class="preview-img">${p.imageUrl ? '<img src="' + p.imageUrl + '" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;">' : (p.emoji || '📦')}</div>
-          <div class="preview-info">
-            <div class="preview-cat">${p.cat || ''}</div>
-            <h2 class="preview-title">${p.name}</h2>
-            <div class="preview-desc">${p.desc}</div>
-            <div class="preview-price">
-              ${p.oldPrice ? `<span class="old">${p.oldPrice.toLocaleString()} F</span>` : ''}
-              ${p.price.toLocaleString()} F CFA
-            </div>
-            <div class="preview-actions">
-              <button class="preview-add-btn" onclick="addToCart('${p.id}', event); closePreview()">+ Ajouter au panier</button>
-              <button class="preview-share-btn" onclick="shareProduct('${p.id}', event)">💬 Partager</button>
-            </div>
-          </div>
-        </div>
-      `;
-      const modal = document.getElementById('preview-modal');
-      modal.classList.remove('closing');
-      modal.style.display = 'block';
-    }
-
-    function closePreview() {
-      const modal = document.getElementById('preview-modal');
-      modal.classList.add('closing');
-      setTimeout(() => {
-        modal.style.display = 'none';
-        modal.classList.remove('closing');
-      }, 290);
-    }
-
-    function renderCart() {
-      const content = document.getElementById('cart-content');
-      const totalEl = document.getElementById('cart-total');
-      if (cart.length === 0) {
-        content.innerHTML = '<div class="empty-cart"><span class="empty-icon">🛒</span><p>Votre panier est vide</p></div>';
-        totalEl.style.display = 'none'; return;
-      }
-      content.innerHTML = cart.map(item => `
-    <div class="cart-item" id="cart-item-${item.id}">
-      <div class="cart-item-icon">${item.imageUrl ? '<img src="' + item.imageUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">' : (item.emoji || '📦')}</div>
-      <div>
-        <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-price">${item.price.toLocaleString()} F CFA</div>
-        <div class="cart-item-qty">Qté: ${item.qty}</div>
-      </div>
-      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">✕</button>
-    </div>
-  `).join('');
-      const sub = cart.reduce((s, x) => s + (x.price * x.qty), 0);
-      document.getElementById('subtotal-val').textContent = sub.toLocaleString() + ' F CFA';
-      document.getElementById('total-val').textContent = sub.toLocaleString() + ' F CFA';
-      totalEl.style.display = 'block';
-    }
-
-    function removeFromCart(id) {
-      const itemEl = document.getElementById(`cart-item-${id}`);
-      if (itemEl) {
-        itemEl.classList.add('removing');
-        setTimeout(() => {
-          cart = cart.filter(x => x.id !== id);
-          updateCartCount();
-          renderCart();
-        }, 300);
-      } else {
-        cart = cart.filter(x => x.id !== id);
-        updateCartCount();
-        renderCart();
-      }
-    }
-
-    function shareProduct(id, e) {
-      if (e) e.stopPropagation();
-      const p = products.find(x => x.id === id);
-      if (!p) return;
-      const link = `https://thiaflow-a8c10.web.app/produit/${encodeURIComponent(id)}/`;
-      const msg = encodeURIComponent(
-        `Regarde ce produit sur THIAflow 👇\n\n*${p.name}*\n${p.price.toLocaleString()} F CFA\n\n${link}`
-      );
-      window.open(`https://wa.me/?text=${msg}`, '_blank');
-    }
-
-    function checkout() {
-      const lines = cart.map(x => `- ${x.name} x${x.qty} = ${(x.price * x.qty).toLocaleString()} F CFA`).join('\n');
-      const total = cart.reduce((s, x) => s + (x.price * x.qty), 0);
-      const msg = encodeURIComponent(`Bonjour, je voudrais commander :\n${lines}\n\nTotal : ${total.toLocaleString()} F CFA`);
-      window.open(`https://wa.me/221764287562?text=${msg}`, '_blank');
-    }
-
-
-    let toastTimeout;
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      if (toastTimeout) clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
-        t.classList.remove('show');
-      }, 3000);
-    }
-
-    // Click outside cart modal
-    document.getElementById('cart-modal').addEventListener('click', function (e) {
-      if (e.target === this) closeCart();
-    });
-
-    // Click outside preview modal
-    document.getElementById('preview-modal').addEventListener('click', function (e) {
-      if (e.target === this) closePreview();
-    });
-
-    // Code secret : Taper "admin" n'importe où sur la page redirige vers le panel
-    let adminKeys = [];
-    const secretCode = "admin";
-
-    document.addEventListener('keydown', (e) => {
-      // On ignore si l'utilisateur tape dans la barre de recherche
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-      adminKeys.push(e.key.toLowerCase());
-
-      // On garde uniquement les 5 dernières touches
-      if (adminKeys.length > secretCode.length) {
-        adminKeys.shift();
-      }
-
-      // Si la séquence est complète
-      if (adminKeys.join('') === secretCode) {
-        adminKeys = []; // On réinitialise
-        window.location.href = "admin.html"; // Redirection vers la page qui demande le mot de passe
-      }
-    });
-
-    // Exposer les fonctions au window pour les événements inline HTML
-    window.handleSearch = handleSearch;
-    window.filterCat = filterCat;
-    window.filterTag = filterTag;
-    window.addToCart = addToCart;
-    window.openCart = openCart;
-    window.closeCart = closeCart;
-    window.openPreview = openPreview;
-    window.closePreview = closePreview;
-    window.removeFromCart = removeFromCart;
-    window.checkout = checkout;
-    window.shareProduct = shareProduct;
-
-
-    // Charger les produits depuis Firestore en temps réel
-    onSnapshot(produitsCol, (snapshot) => {
-      products = [];
-      snapshot.forEach(docSnap => {
-        const data = docSnap.data();
-        products.push({
-          id: docSnap.id,
-          name: data.nom || "Produit",
-          cat: data.categorie || "all",
-          desc: data.description || "", // L'admin n'a pas encore de description
-          price: data.prix || 0,
-          oldPrice: data.ancienPrix || null,
-          tag: data.badge ? data.badge.toLowerCase() : '',
-          imageUrl: data.imageUrl || null,
-          ...data
-        });
-      });
-
-      // Tri par date de création
-      products.sort((a, b) => {
-        const timeA = a.createdAt ? a.createdAt.toMillis() : 0;
-        const timeB = b.createdAt ? b.createdAt.toMillis() : 0;
-        return timeB - timeA;
-      });
-
-      renderProducts();
-
-      // Si le lien contient ?produit=ID (partagé via WhatsApp), on ouvre directement la fiche produit
-      if (!sharedProductOpened) {
-        const params = new URLSearchParams(window.location.search);
-        const sharedId = params.get('produit');
-        if (sharedId && products.some(p => p.id === sharedId)) {
-          sharedProductOpened = true;
-          openPreview(sharedId);
-        }
-      }
-    }, (error) => {
-      console.error("Erreur de chargement des produits:", error);
-    });
-  </script>
+  <!-- JavaScript Files -->
+  <script type="module" src="js/firebase-init.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
 </body>
 
 </html>

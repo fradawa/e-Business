@@ -4,17 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🎡 La Roue THIAflow</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Favicon / App Icons (Google Search, Android, Apple, PWA) -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/logo/icon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/logo/icon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/logo/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/apple-touch-icon.png">
+
+  <!-- Open Graph / WhatsApp / Facebook Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thiaflow-a8c10.web.app/roue.html">
+  <meta property="og:site_name" content="THIAflow">
+  <meta property="og:title" content="🎡 La Roue de la Chance - THIAFlow">
+  <meta property="og:description" content="Tourne la roue THIAflow et gagne des réductions et cadeaux exclusifs sur le campus UASZ !">
+  <meta property="og:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+  <meta property="og:image:secure_url" content="https://thiaflow-a8c10.web.app/preview.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="🎡 La Roue de la Chance - THIAFlow">
+  <meta name="twitter:description" content="Tourne la roue THIAflow et gagne des réductions et cadeaux exclusifs sur le campus UASZ !">
+  <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+
+<!-- Google Analytics (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5CX2E8GG0P"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5CX2E8GG0P');
+</script>
 <style>
 :root {
-  --cream: #FAF7F2;
-  --dark: #1A1714;
-  --accent: #C8956C;
-  --accent2: #8B5E3C;
-  --text: #3D3530;
-  --muted: #9A8F87;
-  --border: #E8E0D6;
+  --cream: #FAF7F3;
+  --dark: #1A1615;
+  --accent: #D9583B;
+  --accent2: #2E7D5E;
+  --text: #1A1615;
+  --muted: #6E655F;
+  --border: #EBE5DF;
   --white: #FFFFFF;
 }
 
@@ -22,7 +56,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
@@ -51,7 +85,7 @@ nav {
 }
 
 .logo {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -124,7 +158,7 @@ main {
 }
 
 h1 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 3.5rem;
   font-weight: 300;
   color: var(--dark);
@@ -338,7 +372,7 @@ canvas {
 }
 
 .result-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 2.8rem;
   font-weight: 300;
   color: var(--dark);
@@ -417,7 +451,7 @@ canvas {
 
 <nav>
   <a href="index.html" class="logo">
-    <img src="logo.png" alt="THIAflow">
+    <img src="assets/logo/logo_transparent.png" alt="THIAflow">
     <div>THIA<span>flow</span></div>
   </a>
   <div style="display: flex; align-items: center; gap: 12px;">
@@ -533,7 +567,7 @@ function drawWheel(rot) {
     ctx.fillText(seg.emoji, r - 35, 0);
 
     // Draw Label text
-    ctx.font = "bold 30px 'Cormorant Garamond', serif";
+    ctx.font = "bold 30px 'Playfair Display', Georgia, serif";
     ctx.fillText(seg.label, r - 95, 0);
     
     ctx.restore();
@@ -574,7 +608,7 @@ function drawWheel(rot) {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#C8956C';
-  ctx.font = "bold 26px 'Cormorant Garamond', serif";
+  ctx.font = "bold 26px 'Playfair Display', Georgia, serif";
   ctx.fillText("THIA", cx, cy - 12);
   ctx.font = "14px 'DM Sans', sans-serif";
   ctx.fillStyle = '#FAF7F2';

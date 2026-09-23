@@ -16,32 +16,46 @@
     <meta name="twitter:title" content="THIAflow Admin">
     <meta name="twitter:description" content="Panel d'administration THIAflow.">
     <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
-    <!-- Font Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <!-- Fonts THIAflow (Outfit + Playfair Display) -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap"
         rel="stylesheet">
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="logo.png">
+        <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/logo/icon-48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/logo/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/apple-touch-icon.png">
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5CX2E8GG0P"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-5CX2E8GG0P');
+    </script>
     <!-- Cloudinary Upload Widget Script -->
     <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
     <style>
-        /* CSS reset & variables */
+        /* CSS reset & variables — palette THIAflow (coral / sage) sur fond sombre pour l'admin */
         :root {
-            --primary: #5E17EB;
-            /* Violet */
-            --secondary: #FF0D8D;
-            /* Magenta */
-            --bg-dark: #121212;
-            --bg-panel: #1E1E1E;
-            --bg-surface: #252525;
-            --glass-bg: rgba(30, 30, 30, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-light: #F5F5F5;
-            --text-muted: #A0A0A0;
-            --border-color: #333;
-            --danger: #FF3B30;
-            --success: #34C759;
-            --warning: #FF9F0A;
-            --font-family: 'Poppins', sans-serif;
+            --primary: #D9583B;
+            /* Corail THIAflow */
+            --secondary: #2E7D5E;
+            /* Sauge THIAflow */
+            --bg-dark: #14100E;
+            --bg-panel: #1F1916;
+            --bg-surface: #29221E;
+            --glass-bg: rgba(31, 25, 22, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-light: #FAF7F3;
+            --text-muted: #B8ADA5;
+            --border-color: #3A322C;
+            --danger: #E05A47;
+            --success: #2E7D5E;
+            --warning: #C89B3C;
+            --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
         }
 
         * {
@@ -96,7 +110,7 @@
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(94, 23, 235, 0.4);
+            box-shadow: 0 4px 15px rgba(217, 88, 59, 0.4);
         }
 
         .btn-danger {
@@ -104,7 +118,7 @@
         }
 
         .btn-danger:hover {
-            box-shadow: 0 4px 15px rgba(255, 59, 48, 0.4);
+            box-shadow: 0 4px 15px rgba(224, 90, 71, 0.4);
         }
 
         .btn-outline {
@@ -116,7 +130,7 @@
         .btn-outline:hover {
             background: var(--primary);
             color: white;
-            box-shadow: 0 4px 15px rgba(94, 23, 235, 0.2);
+            box-shadow: 0 4px 15px rgba(217, 88, 59, 0.2);
         }
 
         /* Forms */
@@ -307,7 +321,7 @@
             background: var(--primary);
             border-color: transparent;
             color: #fff;
-            box-shadow: 0 4px 10px rgba(94, 23, 235, 0.3);
+            box-shadow: 0 4px 10px rgba(217, 88, 59, 0.3);
         }
 
         /* Admin Tabs */
@@ -442,9 +456,9 @@
         }
 
         .stock-badge.rupture {
-            background: rgba(255, 59, 48, 0.15);
+            background: rgba(224, 90, 71, 0.15);
             color: var(--danger);
-            border: 1px solid rgba(255, 59, 48, 0.35);
+            border: 1px solid rgba(224, 90, 71, 0.35);
         }
 
         .stock-stepper {
@@ -470,12 +484,12 @@
 
         .stock-stepper button:hover {
             border-color: var(--primary);
-            background: rgba(94, 23, 235, 0.2);
+            background: rgba(217, 88, 59, 0.2);
         }
 
         .stock-stepper button.minus:hover {
             border-color: var(--danger);
-            background: rgba(255, 59, 48, 0.2);
+            background: rgba(224, 90, 71, 0.2);
         }
 
         .stock-val {
@@ -489,8 +503,8 @@
             display: none;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 59, 48, 0.12);
-            border: 1px solid rgba(255, 59, 48, 0.4);
+            background: rgba(224, 90, 71, 0.12);
+            border: 1px solid rgba(224, 90, 71, 0.4);
             border-radius: 10px;
             padding: 12px 16px;
             margin-bottom: 20px;
@@ -505,8 +519,8 @@
 
         #stock-alert-banner .alert-link {
             margin-left: auto;
-            background: rgba(255, 59, 48, 0.2);
-            border: 1px solid rgba(255, 59, 48, 0.5);
+            background: rgba(224, 90, 71, 0.2);
+            border: 1px solid rgba(224, 90, 71, 0.5);
             color: var(--danger);
             border-radius: 6px;
             padding: 4px 12px;
@@ -754,7 +768,7 @@
                 color: white;
                 font-size: 1.5rem;
                 margin-top: -25px;
-                box-shadow: 0 4px 15px rgba(94, 23, 235, 0.4);
+                box-shadow: 0 4px 15px rgba(217, 88, 59, 0.4);
                 border: none;
                 cursor: pointer;
             }
@@ -986,7 +1000,7 @@
         }
 
         .codes-table tr:hover td {
-            background: rgba(94, 23, 235, 0.05);
+            background: rgba(217, 88, 59, 0.05);
         }
 
         /* ─── CARD mode (mobile default) ─── */
@@ -1158,7 +1172,7 @@
     <!-- Header Sticky (Desktop & Mobile) -->
     <header id="admin-header" class="header-sticky hidden">
         <div class="header-brand">
-            <img src="logo.png" alt="THIAflow" style="height: 32px;">
+            <img src="assets/logo/logo_transparent.png" alt="THIAflow" style="height: 32px;">
             <span class="text-gradient">THIAflow Admin</span>
         </div>
         <div class="desktop-actions">
@@ -1496,15 +1510,15 @@
                 palette: {
                     window: "#1E1E1E",
                     windowBorder: "#333333",
-                    tabIcon: "#5E17EB",
+                    tabIcon: "#D9583B",
                     menuIcons: "#A0A0A0",
                     textDark: "#F5F5F5",
                     textLight: "#FFFFFF",
-                    link: "#FF0D8D",
-                    action: "#5E17EB",
+                    link: "#2E7D5E",
+                    action: "#D9583B",
                     inactiveTabIcon: "#A0A0A0",
                     error: "#FF3B30",
-                    inProgress: "#5E17EB",
+                    inProgress: "#D9583B",
                     complete: "#34C759",
                     sourceBg: "#121212"
                 }

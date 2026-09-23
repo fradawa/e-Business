@@ -49,6 +49,7 @@ async function generatePages() {
         }
         
         const url = `https://thiaflow-a8c10.web.app/produit/${id}/`;
+        const spaUrl = `/product.html?id=${id}`;
 
         const htmlContent = `<!DOCTYPE html>
 <html lang="fr">
@@ -56,6 +57,23 @@ async function generatePages() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${name} - THIAflow</title>
+  
+  <!-- Favicon / App Icons (Google Search, Android, Apple, PWA) -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/logo/icon-48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/logo/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-touch-icon.png">
+  
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5CX2E8GG0P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-5CX2E8GG0P');
+  </script>
   
   <!-- Open Graph / WhatsApp Preview -->
   <meta property="og:title" content="${name}">
@@ -76,15 +94,15 @@ async function generatePages() {
   <meta name="twitter:image" content="${imageUrl}">
   
   <!-- Redirection vers la SPA -->
-  <meta http-equiv="refresh" content="0;url=/?produit=${id}">
+  <meta http-equiv="refresh" content="0;url=${spaUrl}">
   
   <script>
     // Redirection immédiate pour les utilisateurs avec JS activé
-    window.location.replace('/?produit=${id}');
+    window.location.replace('${spaUrl}');
   </script>
 </head>
 <body>
-  <p>Redirection en cours vers le produit ${name}... Si vous n'êtes pas redirigé, <a href="/?produit=${id}">cliquez ici</a>.</p>
+  <p>Redirection en cours vers le produit ${name}... Si vous n'êtes pas redirigé, <a href="${spaUrl}">cliquez ici</a>.</p>
 </body>
 </html>`;
 

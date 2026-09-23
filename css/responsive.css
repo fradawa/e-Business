@@ -1,0 +1,483 @@
+/* ==========================================================================
+   THIAFlow Responsive Breakpoints & Mobile Optimization
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   Product Detail Page Layout
+   ------------------------------------------------------------------------- */
+
+/* Desktop: 2-column side-by-side */
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Product detail image: fills column, natural aspect ratio */
+.product-detail-main-img {
+  width: 100%;
+  height: 540px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Product detail section wrapper */
+.product-detail-section {
+  padding: 60px 0 80px;
+}
+
+/* Mobile Bottom Sticky Bar */
+.mobile-bottom-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 64px;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-light);
+  z-index: 800;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mobile-bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  position: relative;
+  width: 25%;
+}
+
+.mobile-bar-item.active {
+  color: var(--accent-coral);
+}
+
+.mobile-bar-badge {
+  position: absolute;
+  top: -2px;
+  right: 22px;
+  background-color: var(--accent-coral);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Media Query Breakpoints */
+
+/* Desktop Large (>= 1440px) */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1360px;
+  }
+}
+
+/* Desktop Standard / Tablet Landscape (<= 1024px) */
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .hero-content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    max-width: 100%;
+  }
+
+  .hero-image-card img {
+    height: 400px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+/* Medium Tablets & Mobile Landscape (<= 992px) */
+@media (max-width: 992px) {
+  .checkout-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .cart-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .shop-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Product Detail: balanced 2-col at tablet */
+  .product-detail-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .product-detail-main-img {
+    height: 400px;
+  }
+
+  /* Lifestyle Campus Section Mobile Optimization (<= 992px) */
+  .lifestyle-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .lifestyle-image-col,
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+/* Tablet Portrait & Mobile Devices (<= 768px) */
+@media (max-width: 768px) {
+  /* Product Detail: single column stack on mobile */
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .product-detail-main-img {
+    height: 300px;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Product detail section: reduce vertical padding on mobile */
+  .product-detail-section {
+    padding: 28px 0 40px;
+  }
+
+  /* Product detail text adjustments */
+  #productDetailContainer h1.heading-lg {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  #productDetailContainer [style*="font-size:2rem"] {
+    font-size: 1.5rem !important;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .mobile-menu-trigger {
+    display: flex;
+  }
+
+  .mobile-bottom-bar {
+    display: flex;
+  }
+
+  /* Leave space for mobile bottom bar */
+  body {
+    padding-bottom: 64px;
+  }
+
+  .floating-whatsapp {
+    bottom: 80px;
+    right: 16px;
+    padding: 12px 18px;
+    font-size: 0.85rem;
+  }
+
+  .floating-whatsapp span {
+    display: none;
+  }
+
+  .heading-xl {
+    font-size: 2.2rem;
+  }
+
+  .heading-lg {
+    font-size: 1.75rem;
+  }
+
+  .hero-title {
+    font-size: 2.4rem;
+  }
+
+  .hero-section {
+    padding: 40px 0 50px;
+  }
+
+  /* Category Grid Mobile Optimization */
+  .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .category-card,
+  .category-card-lg,
+  .category-card-sm {
+    grid-column: span 1;
+    height: 220px;
+  }
+
+  .category-card-overlay {
+    padding: 20px 16px;
+  }
+
+  .category-card-overlay h3 {
+    font-size: 1.35rem !important;
+  }
+
+  .category-card-overlay p {
+    font-size: 0.85rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Lifestyle Campus Section Mobile Optimization */
+  .lifestyle-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* User requirement: Masquer la photo de la section Lifestyle Campus sur mobile */
+  .lifestyle-image-col {
+    display: none !important;
+  }
+
+  /* Checkout & Form Mobile Optimization */
+  .checkout-card {
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+    min-width: 0;
+  }
+
+  .form-row-2col {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .btn-whatsapp {
+    padding: 14px 16px;
+    font-size: 0.95rem;
+  }
+
+  /* Cart Mobile Optimization */
+  .cart-card {
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .cart-item {
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "img info remove"
+      "img qty  total";
+    gap: 12px 14px;
+    align-items: center;
+    padding: 16px 0;
+  }
+
+  .cart-item-image {
+    width: 72px;
+    height: 72px;
+    grid-row: span 2;
+    align-self: center;
+  }
+
+  .cart-item-info {
+    align-self: start;
+  }
+
+  .cart-item-remove-btn {
+    align-self: start;
+    justify-self: end;
+    padding: 4px;
+  }
+
+  .cart-item-qty {
+    align-self: end;
+    justify-self: start;
+  }
+
+  .cart-item-total {
+    align-self: end;
+    justify-self: end;
+    text-align: right;
+    min-width: auto;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .product-card-content {
+    padding: 14px;
+  }
+
+  .product-card-title {
+    font-size: 0.95rem;
+  }
+
+  .product-card-price {
+    font-size: 1rem;
+  }
+
+  .quick-view-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 24px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* Small Mobile Devices (<= 414px & 375px & 320px) */
+@media (max-width: 414px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .product-card-actions {
+    position: static;
+    opacity: 1;
+    transform: none;
+    margin-top: 10px;
+  }
+
+  .product-card-actions .btn {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    width: 100%;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  /* Product Detail: extra compact on small phones */
+  .product-detail-main-img {
+    height: 240px;
+  }
+
+  #productDetailContainer .btn {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Quantity row: wrap on small screens */
+  #productDetailContainer [style*="display:flex; align-items:center; gap:16px; margin-bottom:32px"] {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .cart-item {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    gap: 10px 12px;
+  }
+
+  .cart-item-image {
+    width: 64px;
+    height: 64px;
+  }
+
+  .cart-item-name {
+    font-size: 0.95rem;
+  }
+
+  .cart-item-total {
+    font-size: 1rem;
+  }
+
+  .checkout-card {
+    padding: 18px 14px;
+  }
+
+  .btn-whatsapp {
+    padding: 13px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .checkout-card {
+    padding: 16px 10px;
+  }
+
+  .btn-whatsapp {
+    padding: 12px 10px;
+    font-size: 0.85rem;
+  }
+
+  .cart-card {
+    padding: 16px 12px;
+  }
+
+  .cart-item {
+    grid-template-columns: 54px minmax(0, 1fr) auto;
+    gap: 8px 10px;
+  }
+
+  .cart-item-image {
+    width: 54px;
+    height: 54px;
+  }
+
+  .cart-item-qty {
+    padding: 2px 6px;
+    gap: 4px;
+  }
+
+  .cart-item-qty-btn {
+    padding: 2px 6px;
+    font-size: 0.85rem;
+  }
+
+  .cart-item-name {
+    font-size: 0.88rem;
+  }
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+}
+
