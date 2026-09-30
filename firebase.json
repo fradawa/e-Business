@@ -4,6 +4,28 @@
   },
   "hosting": {
     "public": ".",
+    "redirects": [
+      {
+        "source": "/preview.jpg",
+        "destination": "/assets/images/preview.jpg",
+        "type": 301
+      },
+      {
+        "source": "/preview.png",
+        "destination": "/assets/images/preview.png",
+        "type": 301
+      },
+      {
+        "source": "/logo.jpg",
+        "destination": "/assets/logo/logo.jpg",
+        "type": 301
+      },
+      {
+        "source": "/logo.png",
+        "destination": "/assets/logo/logo.png",
+        "type": 301
+      }
+    ],
     "headers": [
       {
         "source": "**/*.html",

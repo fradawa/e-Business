@@ -62,11 +62,19 @@ function renderHomePage() {
   }
 
   const newArrivalsGrid = document.getElementById('newArrivalsGrid');
+  const nouveautesSection = document.getElementById('nouveautes');
+  const heroNouveautesBtn = document.querySelector('a[href="#nouveautes"]');
   if (newArrivalsGrid && ProductsAPI.isReady()) {
-    const newItems = ProductsAPI.getAllProducts().filter(p => p.badge === 'Nouveau' || p.badge === 'Populaire').slice(0, 4);
-    newArrivalsGrid.innerHTML = newItems.length
-      ? newItems.map(p => UI.renderProductCard(p)).join('')
-      : ProductsAPI.getAllProducts().slice(0, 4).map(p => UI.renderProductCard(p)).join('');
+    const newItems = ProductsAPI.getAllProducts().filter(p => p.badge === 'Nouveau' || p.badge === 'NEW');
+    if (newItems.length > 0) {
+      if (nouveautesSection) nouveautesSection.style.display = '';
+      if (heroNouveautesBtn) heroNouveautesBtn.style.display = '';
+      newArrivalsGrid.innerHTML = newItems.map(p => UI.renderProductCard(p)).join('');
+    } else {
+      if (nouveautesSection) nouveautesSection.style.display = 'none';
+      if (heroNouveautesBtn) heroNouveautesBtn.style.display = 'none';
+      newArrivalsGrid.innerHTML = '';
+    }
   }
 
   const promoGrid = document.getElementById('promoProductsGrid');

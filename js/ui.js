@@ -242,27 +242,17 @@ const UI = {
     const outOfStock = product.stock !== null && product.stock <= 0;
 
     return `
-      <div class="product-card animate-fade-in">
+      <div class="product-card animate-fade-in" onclick="UI.openQuickView('${product.id}')" role="button" tabindex="0" aria-label="Voir les détails de ${product.name}">
         <div class="product-card-img-wrapper">
           <img src="${product.image}" alt="${product.name}" class="product-card-img" loading="lazy" />
           <div class="product-card-badges">
             ${product.badge ? `<span class="badge-tag ${badgeClass}">${product.badge}</span>` : ''}
             ${outOfStock ? `<span class="badge-tag badge-promo">Rupture</span>` : ''}
           </div>
-          <div class="product-card-actions">
-            <button class="btn btn-secondary btn-sm" onclick="UI.openQuickView('${product.id}')" style="flex:1;">
-              Aperçu rapide
-            </button>
-            <button class="btn btn-primary btn-sm btn-icon" onclick="UI.handleAddToCart('${product.id}')" aria-label="Ajouter au panier" ${outOfStock ? 'disabled' : ''}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            </button>
-          </div>
         </div>
         <div class="product-card-content">
           <div class="product-card-category">${product.categoryLabel}</div>
-          <a href="product.html?id=${encodeURIComponent(product.id)}">
-            <h3 class="product-card-title">${product.name}</h3>
-          </a>
+          <h3 class="product-card-title">${product.name}</h3>
           <div class="product-card-price-row">
             <span class="product-card-price">${ProductsAPI.formatPrice(product.price)}</span>
             ${isDiscounted ? `<span class="product-card-old-price">${ProductsAPI.formatPrice(product.oldPrice)}</span>` : ''}

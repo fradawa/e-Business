@@ -19,8 +19,8 @@
   <meta property="og:site_name" content="THIAflow">
   <meta property="og:title" content="🎡 La Roue de la Chance - THIAFlow">
   <meta property="og:description" content="Tourne la roue THIAflow et gagne des réductions et cadeaux exclusifs sur le campus UASZ !">
-  <meta property="og:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
-  <meta property="og:image:secure_url" content="https://thiaflow-a8c10.web.app/preview.jpg">
+  <meta property="og:image" content="https://thiaflow-a8c10.web.app/assets/images/preview.jpg">
+  <meta property="og:image:secure_url" content="https://thiaflow-a8c10.web.app/assets/images/preview.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -29,7 +29,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="🎡 La Roue de la Chance - THIAFlow">
   <meta name="twitter:description" content="Tourne la roue THIAflow et gagne des réductions et cadeaux exclusifs sur le campus UASZ !">
-  <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+  <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/assets/images/preview.jpg">
 
 <!-- Google Analytics (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5CX2E8GG0P"></script>
@@ -519,14 +519,14 @@ const db = getFirestore(app);
 
 // ── SEGMENTS (Premium Color Palette) ──
 const SEGMENTS = [
-  { label: "Réduction 5%", emoji:"🏷️", weight:28, prize:"Réduction 5%", msg: "Profitez de 5% de réduction à valoir sur votre prochaine commande. Mentionnez votre code gagnant lors de votre prochain échange sur WhatsApp.", color:"#FAF7F2", textColor:"#1A1714", wa:true },
-  { label: "Rejouer", emoji:"🔄", weight:20, prize:"Rejoue la prochaine fois", msg:"Pas de chance pour cette fois ! Votre code a bien été enregistré. Tentez à nouveau votre chance lors de votre prochain achat chez nous.", color:"#9A8F87", textColor:"#FFFFFF", wa:false },
-  { label: "Réduction 10%", emoji:"💜", weight:22, prize:"Réduction 10%", msg:"Félicitations ! Vous remportez 10% de réduction à valoir sur votre prochaine commande chez nous.", color:"#C8956C", textColor:"#FFFFFF", wa:true },
-  { label: "Réduction 5%", emoji:"🏷️", weight:0,  prize:"Réduction 5%", msg: "Profitez de 5% de réduction à valoir sur votre prochaine commande. Mentionnez votre code gagnant lors de votre prochain échange sur WhatsApp.", color:"#FAF7F2", textColor:"#1A1714", wa:true },
-  { label: "Petit Cadeau", emoji:"🎁", weight:14, prize:"Petit cadeau", msg:"Merveilleux ! Un petit cadeau surprise (échantillon exclusif parfum ou savon artisanal) sera glissé dans votre prochain colis (valable lors de votre prochaine commande).", color:"#8B5E3C", textColor:"#FFFFFF", wa:true },
-  { label: "Rejouer", emoji:"🔄", weight:0,  prize:"Rejoue la prochaine fois", msg:"Pas de chance pour cette fois ! Votre code a bien été enregistré. Tentez à nouveau votre chance lors de votre prochain achat chez nous.", color:"#9A8F87", textColor:"#FFFFFF", wa:false },
-  { label: "Réduction 15%", emoji:"✨", weight:10, prize:"Réduction 15%", msg:"Exceptionnel ! Vous gagnez 15% de réduction à valoir sur votre prochaine commande. C'est le moment de vous faire plaisir !", color:"#1A1714", textColor:"#FAF7F2", wa:true },
-  { label: "Jackpot ! 🌟", emoji:"🌟", weight:6,  prize:"JACKPOT — Produit offert", msg:"INCROYABLE ! Vous remportez le grand prix de notre roue : un autre produit surprise entièrement offert en plus de celui que vous venez d'acheter sur votre commande en cours ! Contactez-nous vite pour le réclamer.", color:"#C8956C", textColor:"#FFFFFF", wa:true },
+  { label: "Réduction 5%", emoji:"🏷️", weight:28, prize:"Réduction 5%", msg: "Profitez de 5% de réduction appliquée immédiatement sur votre commande en cours ! Mentionnez votre code gagnant lors de votre échange sur WhatsApp.", color:"#FAF7F2", textColor:"#1A1714", wa:true },
+  { label: "Rejouer", emoji:"🔄", weight:20, prize:"Rejoue la prochaine fois", msg:"Pas de chance pour cette fois ! Votre code a bien été enregistré. Tentez à nouveau votre chance lors d'un prochain achat chez nous.", color:"#9A8F87", textColor:"#FFFFFF", wa:false },
+  { label: "Réduction 10%", emoji:"💜", weight:22, prize:"Réduction 10%", msg:"Félicitations ! Vous remportez 10% de réduction appliquée immédiatement sur votre commande en cours !", color:"#C8956C", textColor:"#FFFFFF", wa:true },
+  { label: "Réduction 5%", emoji:"🏷️", weight:0,  prize:"Réduction 5%", msg: "Profitez de 5% de réduction appliquée immédiatement sur votre commande en cours ! Mentionnez votre code gagnant lors de votre échange sur WhatsApp.", color:"#FAF7F2", textColor:"#1A1714", wa:true },
+  { label: "Petit Cadeau", emoji:"🎁", weight:14, prize:"Petit cadeau", msg:"Merveilleux ! Un petit cadeau surprise (échantillon exclusif parfum ou savon artisanal) sera glissé directement dans votre colis en cours !", color:"#8B5E3C", textColor:"#FFFFFF", wa:true },
+  { label: "Rejouer", emoji:"🔄", weight:0,  prize:"Rejoue la prochaine fois", msg:"Pas de chance pour cette fois ! Votre code a bien été enregistré. Tentez à nouveau votre chance lors d'un prochain achat chez nous.", color:"#9A8F87", textColor:"#FFFFFF", wa:false },
+  { label: "Réduction 15%", emoji:"✨", weight:10, prize:"Réduction 15%", msg:"Exceptionnel ! Vous gagnez 15% de réduction appliquée immédiatement sur votre commande en cours. C'est le moment d'en profiter !", color:"#1A1714", textColor:"#FAF7F2", wa:true },
+  { label: "Jackpot ! 🌟", emoji:"🌟", weight:6,  prize:"JACKPOT — Produit offert", msg:"INCROYABLE ! Vous remportez le grand prix de notre roue : un produit surprise entièrement offert ajouté directement à votre commande en cours ! Contactez-nous vite pour le recevoir.", color:"#C8956C", textColor:"#FFFFFF", wa:true },
 ];
 
 const canvas = document.getElementById('wheel');
@@ -752,7 +752,7 @@ window.closeResult = () => {
 window.contactWA = () => {
   const prize = document.getElementById('res-prize').textContent;
   const code = document.getElementById('code-input').value.trim().toUpperCase();
-  const msg = encodeURIComponent(`Bonjour THIAflow ! 🎡 J'ai tourné la roue de loterie avec mon code unique ${code} et j'ai remporté la surprise suivante : *${prize}*. Comment faire pour en profiter ?`);
+  const msg = encodeURIComponent(`Bonjour THIAflow ! 🎡 J'ai tourné la roue de la chance avec mon code unique ${code} et j'ai remporté : *${prize}*. Je souhaite en bénéficier directement sur ma commande en cours !`);
   window.open(`https://wa.me/221764287562?text=${msg}`, '_blank');
 };
 

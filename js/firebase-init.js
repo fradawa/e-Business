@@ -61,7 +61,7 @@ onSnapshot(produitsCol, (snapshot) => {
       stock: typeof data.stock === 'number' ? data.stock : null,
       description: data.description || '',
       details: [],
-      featured: data.badge === 'NEW' || data.badge === 'PROMO',
+      featured: Boolean(data.featured),
       createdAt: data.createdAt || null
     });
   });

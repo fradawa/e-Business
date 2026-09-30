@@ -719,6 +719,7 @@ button {
   transform: translateY(-6px);
   box-shadow: var(--shadow-md);
   border-color: var(--border-medium);
+  cursor: pointer;
 }
 
 .product-card-img-wrapper {
@@ -753,23 +754,6 @@ button {
   z-index: 2;
 }
 
-.product-card-actions {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  gap: 8px;
-  opacity: 0;
-  transform: translateY(12px);
-  transition: all var(--transition-normal);
-  z-index: 3;
-}
-
-.product-card:hover .product-card-actions {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 .product-card-content {
   padding: 20px;

@@ -8,14 +8,14 @@
     <!-- Social Preview Meta Tags -->
     <meta property="og:title" content="THIAflow Admin">
     <meta property="og:description" content="Panel d'administration THIAflow.">
-    <meta property="og:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+    <meta property="og:image" content="https://thiaflow-a8c10.web.app/assets/images/preview.jpg">
     <meta property="og:url" content="https://thiaflow-a8c10.web.app/admin.html">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="THIAflow Admin">
     <meta name="twitter:description" content="Panel d'administration THIAflow.">
-    <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/preview.jpg">
+    <meta name="twitter:image" content="https://thiaflow-a8c10.web.app/assets/images/preview.jpg">
     <!-- Fonts THIAflow (Outfit + Playfair Display) -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap"
         rel="stylesheet">
@@ -568,8 +568,8 @@
         }
 
         input:checked+.slider {
-            background-color: var(--primary);
-            border-color: var(--primary);
+            background-color: var(--slider-on, var(--primary));
+            border-color: var(--slider-on, var(--primary));
         }
 
         input:checked+.slider:before {
@@ -1348,6 +1348,16 @@
                         <input type="number" id="prod-stock" class="form-control" value="10" required>
                     </div>
                 </div>
+                <div class="form-group" style="display:flex; align-items:center; gap:12px; padding:12px 0; border-top:1px solid var(--border-color); margin-top:4px;">
+                    <label class="toggle-switch" title="Best-seller" style="margin:0;">
+                        <input type="checkbox" id="prod-featured">
+                        <span class="slider"></span>
+                    </label>
+                    <div>
+                        <div style="font-weight:600; font-size:0.9rem;">⭐ Best-seller</div>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">Afficher dans la section Best-Sellers de la page d'accueil</div>
+                    </div>
+                </div>
                 <button type="submit" id="form-submit-btn" class="btn" style="width:100%; margin-top:10px;">Ajouter le
                     Produit</button>
                 <button type="button" id="cancel-edit-btn" class="btn btn-outline hidden" style="width:100%; margin-top:10px;" onclick="cancelEdit()">Annuler la modification</button>
@@ -1609,7 +1619,8 @@
                         promo: badge === 'PROMO',
                         imageUrl,
                         cloudinaryId,
-                        stock
+                        stock,
+                        featured: document.getElementById('prod-featured').checked
                     });
                 } else {
                     // ── MODE AJOUT : addDoc ──
@@ -1624,6 +1635,7 @@
                         imageUrl,
                         cloudinaryId,
                         stock,
+                        featured: document.getElementById('prod-featured').checked,
                         createdAt: serverTimestamp()
                     });
                 }
@@ -1719,6 +1731,7 @@
             let badgeHtml = '';
             if (data.badge === 'PROMO') badgeHtml = '<span class="row-badge promo">PROMO</span>';
             else if (data.badge === 'NEW') badgeHtml = '<span class="row-badge new">NEW</span>';
+            const featuredBadge = data.featured ? '<span class="row-badge" style="background:rgba(234,179,8,0.2);color:#ca8a04;border:1px solid rgba(234,179,8,0.3);">⭐ Best</span>' : '';
 
             const price = data.promo && data.ancienPrix
                 ? `<span style="text-decoration:line-through;color:var(--text-muted);font-size:0.75rem;">${data.ancienPrix.toLocaleString('fr-FR')}</span> ${data.prix.toLocaleString('fr-FR')} F CFA`
@@ -1733,6 +1746,7 @@
                     <div class="prod-row-meta">
                         <span>${data.categorie || '—'}</span>
                         ${badgeHtml}
+                        ${featuredBadge}
                         ${getStockBadge(stock)}
                     </div>
                 </div>
@@ -1743,6 +1757,11 @@
                     <button class="plus"  onclick="updateStock('${id}', ${stock}, +1)" title="Ajouter 1">+</button>
                 </div>
                 <div class="prod-row-actions">
+                    <label class="toggle-switch" title="Best-seller">
+                        <input type="checkbox" id="featured-${id}" ${data.featured ? 'checked' : ''}
+                            onchange="toggleFeatured('${id}', this.checked)">
+                        <span class="slider" style="--slider-on: #ca8a04;"></span>
+                    </label>
                     <label class="toggle-switch" title="Promo">
                         <input type="checkbox" id="toggle-${id}" ${data.promo ? 'checked' : ''}
                             onchange="togglePromo('${id}', this.checked, ${data.prix})">
@@ -1845,6 +1864,21 @@
             }
         };
 
+        // Gestion du toggle Best-seller
+        window.toggleFeatured = async (id, isFeatured) => {
+            try {
+                await updateDoc(doc(db, 'produits', id), { featured: isFeatured });
+                const prod = allProducts.find(p => p.id === id);
+                if (prod) prod.featured = isFeatured;
+                renderAdminList();
+            } catch (error) {
+                console.error('Erreur toggle best-seller:', error);
+                alert('Erreur lors de la mise à jour.');
+                const el = document.getElementById(`featured-${id}`);
+                if (el) el.checked = !isFeatured;
+            }
+        };
+
         // Gestion du toggle de promotion
         window.togglePromo = async (id, isPromo, prixActuel) => {
             const docRef = doc(db, "produits", id);
@@ -1928,6 +1962,9 @@
                     uploadWidgetBtn.style.borderColor = 'var(--success)';
                     uploadWidgetBtn.style.color = 'var(--success)';
                 }
+
+                // featured
+                document.getElementById('prod-featured').checked = !!d.featured;
 
                 window.openDrawer();
 
