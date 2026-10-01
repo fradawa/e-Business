@@ -8,7 +8,7 @@ const THIAFLOW_CONFIG = {
   whatsappNumber: "221764287562",
   brandName: "THIAflow",
   campusLocation: "Université Assane Seck de Ziguinchor (UASZ)",
-  siteUrl: "https://thiaflow-a8c10.web.app"
+  siteUrl: "https://thiaflow.com"
 };
 
 const CartAPI = {

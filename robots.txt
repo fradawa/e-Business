@@ -7,4 +7,4 @@ Disallow: /env.js
 Disallow: /serviceAccountKey.json
 
 # Sitemap
-Sitemap: https://thiaflow-a8c10.web.app/sitemap.xml
+Sitemap: https://thiaflow.com/sitemap.xml

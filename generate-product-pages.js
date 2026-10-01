@@ -41,14 +41,14 @@ async function generatePages() {
       try {
         const name = p.nom || 'Produit sans nom';
         const description = p.description || (p.prix ? `${p.prix} F CFA` : 'Découvrez ce produit sur THIAflow');
-        let imageUrl = p.imageUrl || 'https://thiaflow-a8c10.web.app/preview.jpg';
+        let imageUrl = p.imageUrl || 'https://thiaflow.com/preview.jpg';
         
         // Optimisation Cloudinary pour WhatsApp (Taille < 300KB requise)
         if (imageUrl.includes('cloudinary.com') && imageUrl.includes('/upload/')) {
           imageUrl = imageUrl.replace('/upload/', '/upload/w_600,h_600,c_fill,q_auto/');
         }
         
-        const url = `https://thiaflow-a8c10.web.app/produit/${id}/`;
+        const url = `https://thiaflow.com/produit/${id}/`;
         const spaUrl = `/product.html?id=${id}`;
 
         const htmlContent = `<!DOCTYPE html>
