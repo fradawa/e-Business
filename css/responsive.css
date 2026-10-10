@@ -355,15 +355,23 @@
   }
 
   .quick-view-media {
-    max-height: 250px;
-    min-height: auto;
-    aspect-ratio: 16 / 10;
+    max-height: none;
+    min-height: 260px;
     width: 100%;
+    background-color: #F4EFEA;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .quick-view-img {
-    max-height: 250px;
-    object-position: center top;
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    max-height: 60dvh;
+    object-fit: contain;
+    display: block;
   }
 
   .quick-view-title {
@@ -468,12 +476,16 @@
   }
 
   .quick-view-media {
-    max-height: 200px;
-    aspect-ratio: 16 / 10;
+    max-height: none;
+    min-height: 240px;
   }
 
   .quick-view-img {
-    max-height: 200px;
+    width: 100%;
+    height: auto;
+    max-height: 58vh;
+    max-height: 58dvh;
+    object-fit: contain;
   }
 
   .quick-view-actions {
