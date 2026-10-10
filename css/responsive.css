@@ -338,10 +338,68 @@
     font-size: 1rem;
   }
 
+  .modal-overlay {
+    padding: 14px 12px;
+  }
+
+  .modal-container {
+    max-height: 92vh;
+    max-height: 92dvh;
+    border-radius: var(--radius-md);
+  }
+
   .quick-view-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 24px;
+    gap: 16px;
+    padding: 20px 18px 24px;
+  }
+
+  .quick-view-media {
+    max-height: 250px;
+    min-height: auto;
+    aspect-ratio: 16 / 10;
+    width: 100%;
+  }
+
+  .quick-view-img {
+    max-height: 250px;
+    object-position: center top;
+  }
+
+  .quick-view-title {
+    font-size: 1.35rem;
+    margin-bottom: 8px;
+  }
+
+  .quick-view-pricing {
+    margin-bottom: 10px;
+  }
+
+  .quick-view-price {
+    font-size: 1.35rem;
+  }
+
+  .quick-view-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  .quick-view-badge-uasz {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    margin-bottom: 16px;
+  }
+
+  .quick-view-actions {
+    position: sticky;
+    bottom: 0;
+    background: var(--bg-surface);
+    margin: 12px -18px -24px -18px;
+    padding: 12px 18px 16px;
+    border-top: 1px solid var(--border-light);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+    z-index: 10;
   }
 
   .footer-grid {
@@ -392,6 +450,36 @@
   /* Product Detail: extra compact on small phones */
   .product-detail-main-img {
     height: 240px;
+  }
+
+  /* Quick View Modal: extra compact on small phones */
+  .modal-overlay {
+    padding: 10px 8px;
+  }
+
+  .modal-container {
+    max-height: 94vh;
+    max-height: 94dvh;
+  }
+
+  .quick-view-grid {
+    padding: 14px 12px 18px;
+    gap: 12px;
+  }
+
+  .quick-view-media {
+    max-height: 200px;
+    aspect-ratio: 16 / 10;
+  }
+
+  .quick-view-img {
+    max-height: 200px;
+  }
+
+  .quick-view-actions {
+    margin: 10px -12px -18px -12px;
+    padding: 10px 12px 14px;
+    gap: 8px;
   }
 
   #productDetailContainer .btn {

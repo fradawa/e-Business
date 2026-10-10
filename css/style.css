@@ -806,8 +806,10 @@ button {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(20, 17, 16, 0.7);
+  height: 100dvh;
+  background-color: rgba(20, 17, 16, 0.72);
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 2000;
   display: flex;
   align-items: center;
@@ -815,7 +817,8 @@ button {
   padding: 20px;
   opacity: 0;
   visibility: hidden;
-  transition: all var(--transition-normal);
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+  overscroll-behavior: contain;
 }
 
 .modal-overlay.active {
@@ -828,12 +831,16 @@ button {
   border-radius: var(--radius-lg);
   max-width: 900px;
   width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
+  max-height: min(90vh, 680px);
+  max-height: min(90dvh, 680px);
   position: relative;
-  box-shadow: var(--shadow-lg);
-  transform: scale(0.95);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  transform: scale(0.96);
   transition: transform var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: auto;
 }
 
 .modal-overlay.active .modal-container {
@@ -842,21 +849,56 @@ button {
 
 .modal-close-btn {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 40px;
-  height: 40px;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  transition: background-color var(--transition-fast);
+  z-index: 30;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
 }
 
 .modal-close-btn:hover {
-  background-color: var(--border-medium);
+  background-color: var(--bg-secondary);
+  border-color: var(--border-medium);
+  transform: scale(1.06);
+}
+
+.modal-body-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+
+/* Custom scrollbar for quick view modal */
+.modal-body-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-body-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 999px;
+}
+
+.modal-body-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--text-light);
 }
 
 .quick-view-grid {
@@ -864,6 +906,104 @@ button {
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   padding: 32px;
+  align-items: start;
+}
+
+.quick-view-media {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: #F4EFEA;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  max-height: 480px;
+  height: 100%;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-view-img {
+  width: 100%;
+  height: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.quick-view-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.quick-view-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin: 4px 0 12px;
+  color: var(--text-primary);
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.quick-view-pricing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.quick-view-price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-coral);
+}
+
+.quick-view-old-price {
+  text-decoration: line-through;
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+.quick-view-description {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 18px;
+  word-break: break-word;
+}
+
+.quick-view-badge-uasz {
+  background: var(--accent-sage-light);
+  color: var(--accent-sage);
+  border: 1px solid rgba(46, 125, 94, 0.2);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  width: fit-content;
+}
+
+.quick-view-badge-uasz.out-of-stock {
+  background: var(--accent-coral-light);
+  color: var(--accent-coral);
+  border-color: rgba(217, 88, 59, 0.2);
+}
+
+.quick-view-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: auto;
 }
 
 /* Floating WhatsApp Button */

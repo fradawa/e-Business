@@ -21,6 +21,15 @@ try {
 
 const db = admin.firestore();
 
+function escapeAttr(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 async function generatePages() {
   console.log("⏳ Récupération des produits depuis Firestore...");
   try {
@@ -33,10 +42,12 @@ async function generatePages() {
 
     let count = 0;
     const errors = [];
+    const productIds = [];
 
     productsSnapshot.forEach(doc => {
       const id = doc.id;
       const p = doc.data();
+      productIds.push(id);
       
       try {
         const name = p.nom || 'Produit sans nom';
@@ -51,12 +62,18 @@ async function generatePages() {
         const url = `https://thiaflow.com/produit/${id}/`;
         const spaUrl = `/product.html?id=${id}`;
 
+        const safeName = escapeAttr(name);
+        const safeDesc = escapeAttr(description);
+        const safeImageUrl = escapeAttr(imageUrl);
+        const safeUrl = escapeAttr(url);
+        const safeSpaUrl = escapeAttr(spaUrl);
+
         const htmlContent = `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${name} - THIAflow</title>
+  <title>${safeName} - THIAflow</title>
   
   <!-- Favicon / App Icons (Google Search, Android, Apple, PWA) -->
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -76,33 +93,32 @@ async function generatePages() {
   </script>
   
   <!-- Open Graph / WhatsApp Preview -->
-  <meta property="og:title" content="${name}">
-  <meta property="og:description" content="${description}">
-  <meta property="og:image" itemprop="image" content="${imageUrl}">
-  <meta property="og:image:secure_url" itemprop="image" content="${imageUrl}">
+  <meta property="og:title" content="${safeName}">
+  <meta property="og:description" content="${safeDesc}">
+  <meta property="og:image" itemprop="image" content="${safeImageUrl}">
+  <meta property="og:image:secure_url" itemprop="image" content="${safeImageUrl}">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="600">
   <meta property="og:image:height" content="600">
-  <meta property="og:url" content="${url}">
-  <meta property="og:type" content="website">
+  <meta property="og:url" content="${safeUrl}">
   <meta property="og:site_name" content="THIAflow">
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${name}">
-  <meta name="twitter:description" content="${description}">
-  <meta name="twitter:image" content="${imageUrl}">
+  <meta name="twitter:title" content="${safeName}">
+  <meta name="twitter:description" content="${safeDesc}">
+  <meta name="twitter:image" content="${safeImageUrl}">
   
   <!-- Redirection vers la SPA -->
-  <meta http-equiv="refresh" content="0;url=${spaUrl}">
+  <meta http-equiv="refresh" content="0;url=${safeSpaUrl}">
   
   <script>
     // Redirection immédiate pour les utilisateurs avec JS activé
-    window.location.replace('${spaUrl}');
+    window.location.replace('${safeSpaUrl}');
   </script>
 </head>
 <body>
-  <p>Redirection en cours vers le produit ${name}... Si vous n'êtes pas redirigé, <a href="${spaUrl}">cliquez ici</a>.</p>
+  <p>Redirection en cours vers le produit ${safeName}... Si vous n'êtes pas redirigé, <a href="${safeSpaUrl}">cliquez ici</a>.</p>
 </body>
 </html>`;
 
@@ -127,6 +143,48 @@ async function generatePages() {
       console.log(`❌ ${errors.length} erreurs rencontrées :`);
       errors.forEach(e => console.log(`   - ${e}`));
     }
+
+    // Mise à jour automatique de sitemap.xml
+    const today = new Date().toISOString().split('T')[0];
+    const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Page d'accueil -->
+  <url>
+    <loc>https://thiaflow.com/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Boutique -->
+  <url>
+    <loc>https://thiaflow.com/shop.html</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Jeu de la Roue -->
+  <url>
+    <loc>https://thiaflow.com/roue.html</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Pages produit -->
+${productIds.map(pid => `  <url>
+    <loc>https://thiaflow.com/produit/${pid}/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`).join('\n')}
+
+</urlset>
+`;
+    fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemapContent);
+    console.log(`🗺️ sitemap.xml mis à jour avec ${productIds.length} produits.`);
     
   } catch (error) {
     console.error("❌ Erreur lors de la récupération des produits :", error);
