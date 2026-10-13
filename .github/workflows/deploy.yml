@@ -9,8 +9,6 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
     steps:
       - uses: actions/checkout@v4
 
@@ -24,7 +22,9 @@ jobs:
       - name: Écrire la clé de service
         env:
           SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: printf '%s' "$SA" > "$RUNNER_TEMP/sa.json"
+        run: |
+          printf '%s' "$SA" > "$RUNNER_TEMP/sa.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/sa.json" >> "$GITHUB_ENV"
 
       - name: Générer les pages produits
         run: npm run generate:seo
