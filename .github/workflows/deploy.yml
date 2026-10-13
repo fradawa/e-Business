@@ -1,0 +1,40 @@
+name: Générer les pages produits et déployer
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Écrire la clé de service
+        env:
+          SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: printf '%s' "$SA" > "$RUNNER_TEMP/sa.json"
+
+      - name: Générer les pages produits
+        run: npm run generate:seo
+
+      - name: Déployer sur Firebase Hosting
+        run: npx firebase deploy --only hosting
+
+      - name: Enregistrer les pages générées dans le dépôt
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A produit sitemap.xml
+          git diff --cached --quiet || (git commit -m "Pages produits générées" && git push)
