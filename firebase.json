@@ -42,7 +42,10 @@
       "**/.*",
       "**/node_modules/**",
       "package.json",
-      "package-lock.json"
+      "package-lock.json",
+      "serviceAccountKey.json",
+      "generate-product-pages.js",
+      "firestore.rules"
     ]
   }
 }
