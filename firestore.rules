@@ -2,19 +2,26 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Produits rules
-    match /produits/{productId} {
-      allow read: if true;
-      allow write: if request.auth != null;
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'sambouezechiel837@gmail.com' ||
+        request.auth.token.email == 'fadilouseck9@gmail.com' ||
+        request.auth.token.email == 'malangdiallo635@gmail.com'
+      );
     }
 
-    // Codes rules
-    match /codes/{codeId} {
-      // Admins can do anything
-      allow read, write: if request.auth != null;
+    // Produits : lecture publique, modifications réservées aux administrateurs
+    match /produits/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
 
-      // Public (unauthenticated) users can verify a code (get it) and update it (mark as used)
-      // but they cannot list all codes, nor delete/create them.
+    // Codes de jeu pour la roue
+    match /codes/{codeId} {
+      // Les admins ont un accès complet (lecture, création, suppression, modification)
+      allow read, write: if isAdmin();
+
+      // Les clients (non connectés) peuvent vérifier leur code unique et l'utiliser une seule fois
       allow get: if true;
       allow update: if resource.data.used == false;
     }
