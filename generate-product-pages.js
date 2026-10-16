@@ -4,18 +4,35 @@ const path = require('path');
 
 // Initialize Firebase Admin SDK
 try {
-  const serviceAccountPath = path.join(__dirname, 'serviceAccountKey.json');
-  if (!fs.existsSync(serviceAccountPath)) {
-    console.error("❌ Erreur: Le fichier serviceAccountKey.json est introuvable.");
-    console.error("Veuillez le télécharger depuis Firebase Console > Paramètres du projet > Comptes de service et le placer à la racine du projet.");
-    process.exit(1);
+  let serviceAccount = null;
+
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    try {
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    } catch (e) {
+      try {
+        const decoded = Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT, 'base64').toString('utf8');
+        serviceAccount = JSON.parse(decoded);
+      } catch (e2) {
+        console.error("❌ Erreur: FIREBASE_SERVICE_ACCOUNT n'est pas un JSON valide.");
+        process.exit(1);
+      }
+    }
+  } else {
+    const serviceAccountPath = path.join(__dirname, 'serviceAccountKey.json');
+    if (!fs.existsSync(serviceAccountPath)) {
+      console.error("❌ Erreur: Le fichier serviceAccountKey.json est introuvable et FIREBASE_SERVICE_ACCOUNT n'est pas défini.");
+      console.error("Veuillez le télécharger depuis Firebase Console > Paramètres du projet > Comptes de service ou définir la variable FIREBASE_SERVICE_ACCOUNT.");
+      process.exit(1);
+    }
+    serviceAccount = require('./serviceAccountKey.json');
   }
-  const serviceAccount = require('./serviceAccountKey.json');
+
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
   });
 } catch (error) {
-  console.error("❌ Erreur: Impossible de charger serviceAccountKey.json.", error.message);
+  console.error("❌ Erreur: Impossible d'initialiser Firebase Admin SDK.", error.message);
   process.exit(1);
 }
 

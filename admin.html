@@ -200,7 +200,7 @@
         /* Stats Bar */
         .stats-bar {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
             margin-bottom: 25px;
         }
@@ -430,7 +430,118 @@
         }
 
         .row-badge.new {
-            background: var(--primary);
+            background: linear-gradient(135deg, #9333ea, #5e17eb);
+        }
+
+        .btn-nouveau {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 9px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px dashed rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .btn-nouveau:hover {
+            border-color: #a855f7;
+            color: #ffffff;
+            background: rgba(168, 85, 247, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .btn-nouveau.active {
+            background: linear-gradient(135deg, #9333ea, #6366f1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 2px 10px rgba(147, 51, 234, 0.4);
+        }
+
+        .btn-deploy-action {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-deploy-action:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45) !important;
+        }
+
+        /* Modal Déploiement */
+        .deploy-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .deploy-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .deploy-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            width: 90%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .deploy-modal.open {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+        .deploy-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .deploy-modal-body {
+            padding: 20px;
+        }
+        .deploy-card-info {
+            background: rgba(94, 23, 235, 0.1);
+            border: 1px solid rgba(94, 23, 235, 0.25);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 15px;
+        }
+        .deploy-section-box {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
         }
 
         .stock-badge {
@@ -630,6 +741,7 @@
             }
 
             .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
                 margin-bottom: 15px;
             }
@@ -1176,6 +1288,7 @@
             <span class="text-gradient">THIAflow Admin</span>
         </div>
         <div class="desktop-actions">
+            <button class="btn btn-deploy-action" onclick="openDeployModal()" title="Générer les pages statiques & Déployer sur Firebase">🚀 Déployer SEO</button>
             <button class="btn" onclick="openDrawer()">&#43; Ajouter Produit</button>
             <a href="index.html" class="btn btn-outline">🏠 Accueil</a>
             <button id="logout-btn" class="btn btn-outline">Déconnexion</button>
@@ -1190,6 +1303,10 @@
             <div class="stat-card">
                 <div class="value" id="stat-total">0</div>
                 <div class="label">Produits</div>
+            </div>
+            <div class="stat-card" onclick="filterByNouveau()" style="cursor:pointer;" title="Filtrer les nouveautés">
+                <div class="value" id="stat-nouveau" style="color:#a855f7;">0</div>
+                <div class="label">✨ Nouveautés</div>
             </div>
             <div class="stat-card stat-rupture" onclick="filterByRupture()" style="cursor:pointer;">
                 <div class="value" id="stat-rupture">0</div>
@@ -1214,6 +1331,9 @@
             <div style="display:flex; gap:8px; margin-bottom:0; flex:1; flex-wrap:wrap; align-items:center;">
                 <button class="admin-tab active" id="nav-produits" onclick="showSection('produits')">📦 Produits</button>
                 <button class="admin-tab" id="nav-codes" onclick="showSection('codes')">🎟️ Codes Jeu</button>
+                <button class="btn btn-deploy-action" onclick="openDeployModal()" style="padding:7px 12px; font-size:0.8rem; margin-left:4px;" title="Générer les pages statiques & Déployer">
+                    🚀 Déployer SEO
+                </button>
             </div>
             <input type="text" id="admin-search" class="form-control" placeholder="🔍 Rechercher..."
                 style="max-width:250px; padding:10px 15px;" oninput="filterAdminList()">
@@ -1222,6 +1342,7 @@
         <!-- Sous-onglets produits (affichés seulement dans la section produits) -->
         <div class="admin-tabs" id="admin-tabs" style="margin-bottom:15px;">
             <button class="admin-tab active" data-cat="" onclick="setAdminTab(this)">Tous</button>
+            <button class="admin-tab" data-cat="__nouveau__" id="tab-nouveau" onclick="setAdminTab(this)">✨ Nouveautés</button>
             <button class="admin-tab" data-cat="Hygiène" onclick="setAdminTab(this)">🪶 Hygiène</button>
             <button class="admin-tab" data-cat="Soins" onclick="setAdminTab(this)">✨ Soins</button>
             <button class="admin-tab" data-cat="Parfums" onclick="setAdminTab(this)">🌸 Parfums</button>
@@ -1339,7 +1460,7 @@
                         <label>Badge</label>
                         <select id="prod-badge" class="form-control">
                             <option value="">Aucun</option>
-                            <option value="NEW">NEW</option>
+                            <option value="NEW">✨ NEW (Nouveau)</option>
                             <option value="PROMO">PROMO</option>
                         </select>
                     </div>
@@ -1362,6 +1483,61 @@
                     Produit</button>
                 <button type="button" id="cancel-edit-btn" class="btn btn-outline hidden" style="width:100%; margin-top:10px;" onclick="cancelEdit()">Annuler la modification</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal Déploiement & Pages Statiques -->
+    <div class="deploy-modal-overlay" id="deploy-modal-overlay" onclick="closeDeployModal()"></div>
+    <div class="deploy-modal" id="deploy-modal">
+        <div class="deploy-modal-header">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.4rem;">🚀</span>
+                <div>
+                    <h3 style="margin:0; font-size:1.15rem; color:var(--text-light);">Génération SEO & Déploiement</h3>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">Pages statiques WhatsApp/SEO + Firebase Hosting</div>
+                </div>
+            </div>
+            <button class="btn-outline" style="border:none; padding:4px 10px; font-size:1.1rem; cursor:pointer;" onclick="closeDeployModal()">✕</button>
+        </div>
+        <div class="deploy-modal-body">
+            <div class="deploy-card-info">
+                <p style="margin:0 0 8px 0; font-size:0.85rem; line-height:1.4;">
+                    Cette action exécute le script <code>generate-product-pages.js</code> pour générer les pages produits individuelles (aperçus WhatsApp/Facebook) et met à jour <code>sitemap.xml</code>, puis déploie l'ensemble du site sur <strong>Firebase Hosting</strong>.
+                </p>
+            </div>
+
+            <!-- Déclenchement 1-Clic via GitHub API -->
+            <div class="deploy-section-box">
+                <div style="font-weight:600; font-size:0.9rem; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                    <span>⚡</span> <span>Déclencheur 1-Clic (depuis ce téléphone / PC)</span>
+                </div>
+                <p style="font-size:0.78rem; color:var(--text-muted); margin:0 0 10px 0;">
+                    Déclenche le workflow GitHub Actions à distance. Entrez votre GitHub Personal Access Token une seule fois (enregistré uniquement sur votre appareil).
+                </p>
+                <div style="display:flex; gap:8px; margin-bottom:10px;">
+                    <input type="password" id="gh-token-input" class="form-control" placeholder="Token GitHub (ghp_... ou github_pat_...)" style="font-size:0.8rem; padding:8px 12px;">
+                    <button class="btn btn-outline" onclick="saveGhToken()" style="white-space:nowrap; padding:8px 12px; font-size:0.8rem;">💾 Sauver</button>
+                </div>
+                <button id="btn-trigger-workflow" class="btn btn-deploy-action" onclick="triggerWorkflowDeploy()" style="width:100%; justify-content:center; padding:12px; font-size:0.95rem;">
+                    🚀 Lancer la Génération & le Déploiement
+                </button>
+                <div id="deploy-status" style="margin-top:10px; font-size:0.82rem; display:none;"></div>
+            </div>
+
+            <!-- Liens directs & Options alternatives -->
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:15px;">
+                <a href="https://github.com/fradawa/e-Business/actions" target="_blank" rel="noopener" class="btn btn-outline" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; padding:10px; font-size:0.85rem;">
+                    <span>📱</span> <span>Ouvrir GitHub Actions sur Smartphone (Bouton Run)</span>
+                </a>
+                <details style="font-size:0.8rem; color:var(--text-muted); background:var(--bg-dark); padding:10px; border-radius:8px; border:1px solid var(--border-color);">
+                    <summary style="cursor:pointer; font-weight:600; color:var(--text-light);">ℹ️ Comment lancer via Git depuis son téléphone ?</summary>
+                    <div style="margin-top:8px; line-height:1.5;">
+                        <p style="margin:4px 0;">1. Dans votre appli Git mobile (Termux, Working Copy) ou GitHub mobile :</p>
+                        <pre style="background:#111; padding:8px; border-radius:6px; overflow-x:auto; margin:4px 0; color:#34c759;">git commit --allow-empty -m "deploy" &#10;git push origin main</pre>
+                        <p style="margin:4px 0;">2. Le workflow GitHub Actions se lance automatiquement, génère les pages statiques, les enregistre sur le dépôt et déploie sur Firebase !</p>
+                    </div>
+                </details>
+            </div>
         </div>
     </div>
 
@@ -1680,12 +1856,16 @@
 
         function renderAdminList() {
             const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
+            const isRuptureTab = adminCatFilter === '__rupture__';
+            const isNouveauTab = adminCatFilter === '__nouveau__';
+            const isSpecialTab = isRuptureTab || isNouveauTab;
+
             let filtered = allProducts.filter(p => {
-                const isRuptureTab = adminCatFilter === '__rupture__';
-                const catOk = !adminCatFilter || isRuptureTab || p.categorie === adminCatFilter;
+                const catOk = !adminCatFilter || isSpecialTab || p.categorie === adminCatFilter;
                 const rupOk = !isRuptureTab || (p.stock ?? 0) <= 0;
+                const newOk = !isNouveauTab || (p.badge === 'NEW' || p.badge === 'Nouveau');
                 const searchOk = !search || (p.nom || '').toLowerCase().includes(search);
-                return catOk && rupOk && searchOk;
+                return catOk && rupOk && newOk && searchOk;
             });
 
             productListEl.innerHTML = '';
@@ -1695,6 +1875,11 @@
             const ruptureCount = allProducts.filter(p => (p.stock ?? 0) <= 0).length;
             document.getElementById('stat-rupture').textContent = ruptureCount;
             document.getElementById('stat-promo').textContent = allProducts.filter(p => p.promo).length;
+            const nouveauCount = allProducts.filter(p => p.badge === 'NEW' || p.badge === 'Nouveau').length;
+            const statNouveauEl = document.getElementById('stat-nouveau');
+            if (statNouveauEl) statNouveauEl.textContent = nouveauCount;
+            const tabNouveauEl = document.getElementById('tab-nouveau');
+            if (tabNouveauEl) tabNouveauEl.textContent = `✨ Nouveautés (${nouveauCount})`;
 
             // Mise à jour de l'alerte rupture
             const alertBanner = document.getElementById('stock-alert-banner');
@@ -1728,9 +1913,10 @@
             row.className = 'prod-row';
             row.dataset.id = id;
 
+            const isNew = data.badge === 'NEW' || data.badge === 'Nouveau';
             let badgeHtml = '';
             if (data.badge === 'PROMO') badgeHtml = '<span class="row-badge promo">PROMO</span>';
-            else if (data.badge === 'NEW') badgeHtml = '<span class="row-badge new">NEW</span>';
+            else if (isNew) badgeHtml = '<span class="row-badge new">✨ NOUVEAU</span>';
             const featuredBadge = data.featured ? '<span class="row-badge" style="background:rgba(234,179,8,0.2);color:#ca8a04;border:1px solid rgba(234,179,8,0.3);">⭐ Best</span>' : '';
 
             const price = data.promo && data.ancienPrix
@@ -1757,6 +1943,11 @@
                     <button class="plus"  onclick="updateStock('${id}', ${stock}, +1)" title="Ajouter 1">+</button>
                 </div>
                 <div class="prod-row-actions">
+                    <button class="btn-nouveau ${isNew ? 'active' : ''}" 
+                        onclick="toggleNouveau('${id}', ${!isNew})" 
+                        title="${isNew ? 'Retirer la mention Nouveau' : 'Ajouter la mention Nouveau'}">
+                        ${isNew ? '✨ Nouveau' : '➕ Nouveau'}
+                    </button>
                     <label class="toggle-switch" title="Best-seller">
                         <input type="checkbox" id="featured-${id}" ${data.featured ? 'checked' : ''}
                             onchange="toggleFeatured('${id}', this.checked)">
@@ -1767,8 +1958,8 @@
                             onchange="togglePromo('${id}', this.checked, ${data.prix})">
                         <span class="slider"></span>
                     </label>
-                    <button class="btn btn-outline" onclick="editProduit('${id}')" style="background:rgba(94,23,235,0.15);">✏️</button>
-                    <button class="btn btn-danger" onclick="supprimerProduit('${id}')">🗑️</button>
+                    <button class="btn btn-outline" onclick="editProduit('${id}')" style="background:rgba(94,23,235,0.15);" title="Modifier">✏️</button>
+                    <button class="btn btn-danger" onclick="supprimerProduit('${id}')" title="Supprimer">🗑️</button>
                 </div>
             `;
             productListEl.appendChild(row);
@@ -1927,6 +2118,117 @@
             }
         };
 
+        // ── GESTION DE LA MENTION NOUVEAU ──
+        window.toggleNouveau = async (id, isNew) => {
+            const docRef = doc(db, 'produits', id);
+            try {
+                const newBadge = isNew ? 'NEW' : null;
+                await updateDoc(docRef, { badge: newBadge });
+                const prod = allProducts.find(p => p.id === id);
+                if (prod) prod.badge = newBadge;
+                renderAdminList();
+            } catch (error) {
+                console.error('Erreur toggle nouveau:', error);
+                alert('Erreur lors de la mise à jour de la mention Nouveau.');
+                renderAdminList();
+            }
+        };
+
+        window.filterByNouveau = () => {
+            const nouveauTab = document.getElementById('tab-nouveau');
+            if (nouveauTab) window.setAdminTab(nouveauTab);
+            nouveauTab?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        };
+
+        // ── GESTION DU DÉPLOIEMENT & GITHUB ACTIONS ──
+        window.openDeployModal = () => {
+            const token = localStorage.getItem('thiaflow_gh_token') || '';
+            const input = document.getElementById('gh-token-input');
+            if (input) input.value = token;
+            const statusEl = document.getElementById('deploy-status');
+            if (statusEl) statusEl.style.display = 'none';
+            document.getElementById('deploy-modal-overlay').classList.add('active');
+            document.getElementById('deploy-modal').classList.add('open');
+        };
+
+        window.closeDeployModal = () => {
+            document.getElementById('deploy-modal-overlay').classList.remove('active');
+            document.getElementById('deploy-modal').classList.remove('open');
+        };
+
+        window.saveGhToken = () => {
+            const input = document.getElementById('gh-token-input');
+            const token = (input?.value || '').trim();
+            if (token) {
+                localStorage.setItem('thiaflow_gh_token', token);
+                alert('Token GitHub sauvegardé sur cet appareil !');
+            } else {
+                localStorage.removeItem('thiaflow_gh_token');
+                alert('Token supprimé.');
+            }
+        };
+
+        window.triggerWorkflowDeploy = async () => {
+            const statusEl = document.getElementById('deploy-status');
+            const btn = document.getElementById('btn-trigger-workflow');
+            const token = (document.getElementById('gh-token-input')?.value || localStorage.getItem('thiaflow_gh_token') || '').trim();
+
+            if (!token) {
+                alert('Veuillez renseigner un Personal Access Token GitHub pour déclencher le déploiement en 1 clic.');
+                document.getElementById('gh-token-input')?.focus();
+                return;
+            }
+
+            localStorage.setItem('thiaflow_gh_token', token);
+
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Déclenchement en cours...';
+            statusEl.style.display = 'block';
+            statusEl.style.background = 'rgba(94, 23, 235, 0.15)';
+            statusEl.style.color = 'var(--text-light)';
+            statusEl.style.border = '1px solid rgba(94, 23, 235, 0.3)';
+            statusEl.style.padding = '10px';
+            statusEl.style.borderRadius = '8px';
+            statusEl.innerHTML = 'Envoi de la commande à GitHub Actions...';
+
+            try {
+                const response = await fetch('https://api.github.com/repos/fradawa/e-Business/actions/workflows/deploy.yml/dispatches', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/vnd.github+json',
+                        'Authorization': `Bearer ${token}`,
+                        'X-GitHub-Api-Version': '2022-11-28'
+                    },
+                    body: JSON.stringify({ ref: 'main' })
+                });
+
+                if (response.status === 204 || response.ok) {
+                    statusEl.style.background = 'rgba(16, 185, 129, 0.15)';
+                    statusEl.style.color = '#34d399';
+                    statusEl.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                    statusEl.innerHTML = `
+                        ✅ <strong>Déploiement déclenché avec succès !</strong><br>
+                        Le script génère les pages statiques et déploie sur Firebase.<br>
+                        <a href="https://github.com/fradawa/e-Business/actions" target="_blank" rel="noopener" style="color:#6ee7b7; font-weight:600; text-decoration:underline; display:inline-block; margin-top:5px;">
+                            Suivre l'avancement en direct sur GitHub →
+                        </a>
+                    `;
+                } else {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.message || `Erreur HTTP ${response.status}`);
+                }
+            } catch (err) {
+                console.error('Erreur déclenchement GitHub Actions:', err);
+                statusEl.style.background = 'rgba(239, 68, 68, 0.15)';
+                statusEl.style.color = '#f87171';
+                statusEl.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                statusEl.innerHTML = `❌ Erreur : ${err.message}. Vérifiez la validité de votre Token GitHub ou lancez directement depuis <a href="https://github.com/fradawa/e-Business/actions" target="_blank" style="color:#fff; text-decoration:underline;">GitHub Actions</a>.`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '🚀 Lancer la Génération & le Déploiement';
+            }
+        };
+
         // ── ÉDITION D'UN PRODUIT ──
         window.editProduit = async (id) => {
             try {
@@ -1945,7 +2247,7 @@
                 document.getElementById('prod-desc').value = d.description || '';
                 document.getElementById('prod-price').value = d.prix || '';
                 document.getElementById('prod-stock').value = d.stock || 0;
-                document.getElementById('prod-badge').value = d.badge || '';
+                document.getElementById('prod-badge').value = (d.badge === 'Nouveau' ? 'NEW' : (d.badge || ''));
 
                 // Catégorie : sélectionner le bon pill
                 categoryPills.forEach(p => {

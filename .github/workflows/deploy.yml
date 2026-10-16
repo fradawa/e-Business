@@ -1,40 +1,97 @@
-name: Générer les pages produits et déployer
+name: Génération SEO & Déploiement THIAflow
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Permet de lancer manuellement en 1 clic (depuis l'application GitHub sur smartphone ou le panel admin)
+  push:
+    branches:
+      - main
+    paths:
+      - 'admin.html'
+      - 'index.html'
+      - 'shop.html'
+      - 'product.html'
+      - 'cart.html'
+      - 'checkout.html'
+      - 'roue.html'
+      - 'css/**'
+      - 'js/**'
+      - 'assets/**'
+      - 'generate-product-pages.js'
+      - 'package.json'
+      - 'firebase.json'
 
 permissions:
   contents: write
 
 jobs:
-  deploy:
+  build-and-deploy:
+    name: Générer & Déployer
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Cloner le dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/setup-node@v4
+      - name: ⚙️ Configurer Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: 'npm'
 
-      - run: npm ci
+      - name: 📦 Installer les dépendances
+        run: npm ci || npm install
 
-      - name: Écrire la clé de service
+      - name: 🔑 Restaurer la clé Firebase Admin
         env:
-          SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
-          printf '%s' "$SA" > "$RUNNER_TEMP/sa.json"
-          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/sa.json" >> "$GITHUB_ENV"
+          if [ -n "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "$FIREBASE_SERVICE_ACCOUNT" > serviceAccountKey.json
+            echo "✅ Clé Firebase Admin restaurée avec succès."
+          elif [ -f serviceAccountKey.json ]; then
+            echo "ℹ️ Clé serviceAccountKey.json déjà présente dans le workspace."
+          else
+            echo "::error::Secret FIREBASE_SERVICE_ACCOUNT manquant dans les secrets GitHub !"
+            echo "Rendez-vous dans GitHub > Settings > Secrets and variables > Actions > New repository secret."
+            exit 1
+          fi
 
-      - name: Générer les pages produits
+      - name: 🌐 Restaurer env.js (Configuration Frontend)
+        env:
+          ENV_JS: ${{ secrets.ENV_JS }}
+        run: |
+          if [ -n "$ENV_JS" ]; then
+            echo "$ENV_JS" > env.js
+            echo "✅ env.js restauré avec succès."
+          elif [ -f env.js ]; then
+            echo "ℹ️ env.js déjà présent dans le workspace."
+          else
+            echo "::warning::env.js absent ! Le frontend pourrait ne pas fonctionner. Veuillez ajouter le secret ENV_JS."
+          fi
+
+      - name: ⚡ Génération des pages produits statiques & sitemap
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: npm run generate:seo
 
-      - name: Déployer sur Firebase Hosting
-        run: npx firebase deploy --only hosting
-
-      - name: Enregistrer les pages générées dans le dépôt
+      - name: 💾 Commit & Push des pages statiques vers GitHub
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add -A produit sitemap.xml
-          git diff --cached --quiet || (git commit -m "Pages produits générées" && git push)
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add produit/ sitemap.xml
+          if git status --porcelain | grep -E "(produit/|sitemap.xml)"; then
+            git commit -m "chore(seo): régénération pages statiques et sitemap [skip ci]"
+            git push origin main
+            echo "✅ Pages statiques et sitemap poussés sur le dépôt."
+          else
+            echo "ℹ️ Aucune modification de page statique à commiter."
+          fi
+
+      - name: 🚀 Déploiement sur Firebase Hosting
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/serviceAccountKey.json
+        run: |
+          npx firebase-tools deploy --only hosting --non-interactive --project thiaflow-a8c10
+          echo "🎉 Déploiement terminé avec succès sur https://thiaflow.com !"
