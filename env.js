@@ -20,6 +20,7 @@ export const ENV = {
     // Ajoute ici tous les emails qui doivent avoir accès
     ADMIN_EMAILS: [
         "sambouezechiel837@gmail.com",
-        "fadilouseck9@gmail.com"
+        "fadilouseck9@gmail.com",
+        "malangdiallo635@gmail.com"
     ]
 };
