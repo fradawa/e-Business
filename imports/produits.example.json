@@ -1,0 +1,24 @@
+[
+  {
+    "nom": "Parfum Oud Royal 100ml",
+    "categorie": "Parfums",
+    "description": "Une fragrance orientale boisée et raffinée, idéale pour les grandes occasions.",
+    "prix": 15000,
+    "ancienPrix": 18000,
+    "stock": 10,
+    "badge": "NEW",
+    "featured": true,
+    "image": "oud_royal.jpg"
+  },
+  {
+    "nom": "Sérum Visage Éclat Vitamine C",
+    "categorie": "Soins",
+    "description": "Hydrate en profondeur et illumine le teint naturellement dès la première application.",
+    "prix": 8500,
+    "ancienPrix": null,
+    "stock": 15,
+    "badge": "PROMO",
+    "featured": false,
+    "image": "serum_vitc.png"
+  }
+]
