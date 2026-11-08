@@ -142,14 +142,19 @@ const UI = {
 
     const whatsappDirectUrl = CartAPI.generateSingleProductWhatsAppUrl(product.id, 1);
     const outOfStock = product.stock !== null && product.stock <= 0;
+    const safeName = this.escapeHtml(product.name);
+    const safeCategory = this.escapeHtml(product.categoryLabel);
+    const safeDesc = this.escapeHtml(product.description);
+    const safeId = this.escapeHtml(product.id);
+    const safeImg = encodeURI(product.image || '');
 
     content.innerHTML = `
       <div class="quick-view-media">
-        <img src="${product.image}" alt="${product.name}" class="quick-view-img" loading="eager" />
+        <img src="${safeImg}" alt="${safeName}" class="quick-view-img" loading="eager" />
       </div>
       <div class="quick-view-info">
-        <div class="product-card-category">${product.categoryLabel}</div>
-        <h2 class="quick-view-title">${product.name}</h2>
+        <div class="product-card-category">${safeCategory}</div>
+        <h2 class="quick-view-title">${safeName}</h2>
 
         <div class="quick-view-pricing">
           <span class="quick-view-price">${ProductsAPI.formatPrice(product.price)}</span>
@@ -157,7 +162,7 @@ const UI = {
         </div>
 
         <p class="quick-view-description">
-          ${product.description}
+          ${safeDesc}
         </p>
 
         <div class="quick-view-badge-uasz ${outOfStock ? 'out-of-stock' : ''}">
@@ -166,7 +171,7 @@ const UI = {
         </div>
 
         <div class="quick-view-actions">
-          <button class="btn btn-primary" onclick="UI.handleAddToCart('${product.id}')" style="flex:1;" ${outOfStock ? 'disabled' : ''}>
+          <button class="btn btn-primary" onclick="UI.handleAddToCart('${safeId}')" style="flex:1;" ${outOfStock ? 'disabled' : ''}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
             ${outOfStock ? 'Épuisé' : 'Ajouter au panier'}
           </button>
@@ -174,7 +179,7 @@ const UI = {
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
             WhatsApp Direct
           </a>
-          <button class="btn btn-secondary btn-icon" onclick="UI.shareProduct('${product.id}')" title="Partager sur WhatsApp" aria-label="Partager sur WhatsApp">
+          <button class="btn btn-secondary btn-icon" onclick="UI.shareProduct('${safeId}')" title="Partager sur WhatsApp" aria-label="Partager sur WhatsApp">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           </button>
         </div>
@@ -239,6 +244,16 @@ const UI = {
     }, 3200);
   },
 
+  escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  },
+
   // Certains badges Firestore ("Nouveau", "Promo") n'ont pas de classe CSS dédiée
   // sous ce nom exact — on les fait correspondre aux classes existantes du design.
   getBadgeClass(badgeText) {
@@ -255,19 +270,24 @@ const UI = {
     const isDiscounted = !!product.oldPrice;
     const badgeClass = product.badge ? this.getBadgeClass(product.badge) : '';
     const outOfStock = product.stock !== null && product.stock <= 0;
+    const safeName = this.escapeHtml(product.name);
+    const safeCategory = this.escapeHtml(product.categoryLabel);
+    const safeId = this.escapeHtml(product.id);
+    const safeBadge = this.escapeHtml(product.badge);
+    const safeImg = encodeURI(product.image || '');
 
     return `
-      <div class="product-card animate-fade-in" onclick="UI.openQuickView('${product.id}')" role="button" tabindex="0" aria-label="Voir les détails de ${product.name}">
+      <div class="product-card animate-fade-in" onclick="UI.openQuickView('${safeId}')" role="button" tabindex="0" aria-label="Voir les détails de ${safeName}">
         <div class="product-card-img-wrapper">
-          <img src="${product.image}" alt="${product.name}" class="product-card-img" loading="lazy" />
+          <img src="${safeImg}" alt="${safeName}" class="product-card-img" loading="lazy" />
           <div class="product-card-badges">
-            ${product.badge ? `<span class="badge-tag ${badgeClass}">${product.badge}</span>` : ''}
+            ${product.badge ? `<span class="badge-tag ${badgeClass}">${safeBadge}</span>` : ''}
             ${outOfStock ? `<span class="badge-tag badge-promo">Rupture</span>` : ''}
           </div>
         </div>
         <div class="product-card-content">
-          <div class="product-card-category">${product.categoryLabel}</div>
-          <h3 class="product-card-title">${product.name}</h3>
+          <div class="product-card-category">${safeCategory}</div>
+          <h3 class="product-card-title">${safeName}</h3>
           <div class="product-card-price-row">
             <span class="product-card-price">${ProductsAPI.formatPrice(product.price)}</span>
             ${isDiscounted ? `<span class="product-card-old-price">${ProductsAPI.formatPrice(product.oldPrice)}</span>` : ''}

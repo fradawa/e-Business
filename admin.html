@@ -1550,6 +1550,17 @@
 
         import { ENV } from './env.js';
 
+        // Sécurisation anti-XSS
+        function escapeHtml(str) {
+            if (str == null) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
         // ==========================================
         // 1. CONFIGURATION (DANS ENV.JS)
         // ==========================================
@@ -1925,12 +1936,16 @@
 
             const stock = data.stock ?? 0;
 
+            const safeName = escapeHtml(data.nom);
+            const safeCat = escapeHtml(data.categorie || '—');
+            const safeImg = encodeURI(data.imageUrl || '');
+
             row.innerHTML = `
-                <img class="prod-row-thumb" src="${data.imageUrl || ''}" alt="${data.nom}" loading="lazy">
+                <img class="prod-row-thumb" src="${safeImg}" alt="${safeName}" loading="lazy">
                 <div class="prod-row-info">
-                    <div class="prod-row-name">${data.nom}</div>
+                    <div class="prod-row-name">${safeName}</div>
                     <div class="prod-row-meta">
-                        <span>${data.categorie || '—'}</span>
+                        <span>${safeCat}</span>
                         ${badgeHtml}
                         ${featuredBadge}
                         ${getStockBadge(stock)}
@@ -2430,12 +2445,13 @@
                 const statusBadge = c.used
                     ? `<span class="status-badge used">🎯 Utilisé</span>`
                     : `<span class="status-badge unused">✅ Dispo</span>`;
-                const prizeBadge = c.prize ? `<span class="prize-chip">🏆 ${c.prize}</span>` : '';
-                const ref = c.orderRef ? `<span>${c.orderRef}</span>` : '';
+                const prizeBadge = c.prize ? `<span class="prize-chip">🏆 ${escapeHtml(c.prize)}</span>` : '';
+                const ref = c.orderRef ? `<span>${escapeHtml(c.orderRef)}</span>` : '';
+                const safeCode = escapeHtml(c.code);
 
                 return `<div class="code-card-item">
                     <div class="code-card-top">
-                        <span class="code-mono">${c.code}</span>
+                        <span class="code-mono">${safeCode}</span>
                         ${statusBadge}
                     </div>
                     <div class="code-card-meta">
@@ -2444,7 +2460,7 @@
                         <span>${date}</span>
                     </div>
                     <div class="code-card-actions">
-                        <button class="btn-copy" onclick="copyCodeDirect('${c.code}')">📋 Copier</button>
+                        <button class="btn-copy" onclick="copyCodeDirect('${safeCode}')">📋 Copier</button>
                     </div>
                 </div>`;
             }).join('');
@@ -2457,16 +2473,17 @@
                 const statusBadge = c.used
                     ? `<span class="status-badge used">🎯 Utilisé</span>`
                     : `<span class="status-badge unused">✅ Disponible</span>`;
-                const prizeBadge = c.prize ? `<span class="prize-chip">🏆 ${c.prize}</span>` : `<span style="color:var(--text-muted)">—</span>`;
-                const ref = c.orderRef ? `<span style="font-size:0.82rem;color:var(--text-muted)">${c.orderRef}</span>` : `<span style="color:var(--text-muted)">—</span>`;
+                const prizeBadge = c.prize ? `<span class="prize-chip">🏆 ${escapeHtml(c.prize)}</span>` : `<span style="color:var(--text-muted)">—</span>`;
+                const ref = c.orderRef ? `<span style="font-size:0.82rem;color:var(--text-muted)">${escapeHtml(c.orderRef)}</span>` : `<span style="color:var(--text-muted)">—</span>`;
+                const safeCode = escapeHtml(c.code);
 
                 return `<tr>
-                    <td><span class="code-mono">${c.code}</span></td>
+                    <td><span class="code-mono">${safeCode}</span></td>
                     <td>${statusBadge}</td>
                     <td>${prizeBadge}</td>
                     <td>${ref}</td>
                     <td style="font-size:0.8rem;color:var(--text-muted);white-space:nowrap">${date}</td>
-                    <td><button class="btn-copy" style="font-size:0.75rem;padding:5px 10px" onclick="copyCodeDirect('${c.code}')">📋</button></td>
+                    <td><button class="btn-copy" style="font-size:0.75rem;padding:5px 10px" onclick="copyCodeDirect('${safeCode}')">📋</button></td>
                 </tr>`;
             }).join('');
 

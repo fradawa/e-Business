@@ -21,9 +21,22 @@ service cloud.firestore {
       // Les admins ont un accès complet (lecture, création, suppression, modification)
       allow read, write: if isAdmin();
 
-      // Les clients (non connectés) peuvent vérifier leur code unique et l'utiliser une seule fois
+      // Les clients (non connectés) peuvent vérifier leur code unique
       allow get: if true;
-      allow update: if resource.data.used == false;
+
+      // Utilisation unique du code : seuls les champs 'used', 'prize' et 'usedAt' peuvent être modifiés,
+      // 'used' doit impérativement passer à true, et 'prize' doit appartenir aux gains officiels autorisés.
+      allow update: if resource.data.used == false
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['used', 'prize', 'usedAt'])
+        && request.resource.data.used == true
+        && request.resource.data.prize in [
+          'Réduction 5%',
+          'Rejoue la prochaine fois',
+          'Réduction 10%',
+          'Petit cadeau',
+          'Réduction 15%',
+          'JACKPOT — Produit offert'
+        ];
     }
   }
 }

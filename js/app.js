@@ -215,22 +215,27 @@ function renderProductDetailPage() {
     const whatsappUrl = CartAPI.generateSingleProductWhatsAppUrl(product.id, 1);
     const shareUrl = CartAPI.generateProductShareUrl(product.id);
     const outOfStock = product.stock !== null && product.stock <= 0;
+    const safeName = UI.escapeHtml(product.name);
+    const safeCategory = UI.escapeHtml(product.categoryLabel);
+    const safeDesc = UI.escapeHtml(product.description);
+    const safeBadge = UI.escapeHtml(product.badge);
+    const safeImg = encodeURI(product.image || '');
 
     container.innerHTML = `
       <div class="product-detail-grid">
         <!-- Left: Image Showcase -->
         <div style="border-radius:var(--radius-lg); overflow:hidden; background-color:var(--bg-secondary); box-shadow:var(--shadow-md);">
-          <img src="${product.image}" alt="${product.name}" class="product-detail-main-img" id="mainProductImg" />
+          <img src="${safeImg}" alt="${safeName}" class="product-detail-main-img" id="mainProductImg" />
         </div>
 
         <!-- Right: Specs & Actions -->
         <div>
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
-            <span class="product-card-category">${product.categoryLabel}</span>
-            ${product.badge ? `<span class="badge-tag ${UI.getBadgeClass(product.badge)}">${product.badge}</span>` : ''}
+            <span class="product-card-category">${safeCategory}</span>
+            ${product.badge ? `<span class="badge-tag ${UI.getBadgeClass(product.badge)}">${safeBadge}</span>` : ''}
           </div>
 
-          <h1 class="heading-lg" style="margin-bottom:16px;">${product.name}</h1>
+          <h1 class="heading-lg" style="margin-bottom:16px;">${safeName}</h1>
 
           <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
             <span style="font-size:2rem; font-weight:800; color:var(--accent-coral);">${ProductsAPI.formatPrice(product.price)}</span>
@@ -238,7 +243,7 @@ function renderProductDetailPage() {
           </div>
 
           <p style="color:var(--text-muted); font-size:1.05rem; line-height:1.7; margin-bottom:28px;">
-            ${product.description}
+            ${safeDesc}
           </p>
 
           <!-- UASZ Availability Box -->
@@ -337,27 +342,33 @@ function renderCartView() {
   if (emptyState) emptyState.style.display = 'none';
   if (cartContent) cartContent.style.display = '';
 
-  container.innerHTML = cart.map(item => `
+  container.innerHTML = cart.map(item => {
+    const safeName = UI.escapeHtml(item.name);
+    const safeCat = UI.escapeHtml(item.category || '');
+    const safeId = UI.escapeHtml(item.id);
+    const safeImg = encodeURI(item.image || '');
+    return `
     <div class="cart-item">
-      <img src="${item.image}" alt="${item.name}" class="cart-item-image" loading="lazy" />
+      <img src="${safeImg}" alt="${safeName}" class="cart-item-image" loading="lazy" />
       <div class="cart-item-info">
-        <h4 class="cart-item-name">${item.name}</h4>
-        <div class="cart-item-category">${item.category || ''}</div>
+        <h4 class="cart-item-name">${safeName}</h4>
+        <div class="cart-item-category">${safeCat}</div>
         <div class="cart-item-unit-price">${ProductsAPI.formatPrice(item.price)}</div>
       </div>
       <div class="cart-item-qty">
-        <button class="cart-item-qty-btn" onclick="CartAPI.updateQuantity('${item.id}', ${item.quantity - 1})" aria-label="Diminuer la quantité">-</button>
+        <button class="cart-item-qty-btn" onclick="CartAPI.updateQuantity('${safeId}', ${item.quantity - 1})" aria-label="Diminuer la quantité">-</button>
         <span class="cart-item-qty-val">${item.quantity}</span>
-        <button class="cart-item-qty-btn" onclick="CartAPI.updateQuantity('${item.id}', ${item.quantity + 1})" aria-label="Augmenter la quantité">+</button>
+        <button class="cart-item-qty-btn" onclick="CartAPI.updateQuantity('${safeId}', ${item.quantity + 1})" aria-label="Augmenter la quantité">+</button>
       </div>
       <div class="cart-item-total">
         ${ProductsAPI.formatPrice(item.price * item.quantity)}
       </div>
-      <button class="cart-item-remove-btn" onclick="CartAPI.removeFromCart('${item.id}')" aria-label="Supprimer ${item.name} du panier" title="Supprimer">
+      <button class="cart-item-remove-btn" onclick="CartAPI.removeFromCart('${safeId}')" aria-label="Supprimer ${safeName} du panier" title="Supprimer">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
       </button>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   if (totalEl) {
     totalEl.textContent = ProductsAPI.formatPrice(CartAPI.getCartTotal());
@@ -379,7 +390,7 @@ function initCheckoutPage() {
     const cart = CartAPI.getCart();
     summaryContainer.innerHTML = cart.map(item => `
       <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:12px; font-size:0.95rem;">
-        <span style="min-width:0; word-break:break-word;">${item.name} x ${item.quantity}</span>
+        <span style="min-width:0; word-break:break-word;">${UI.escapeHtml(item.name)} x ${item.quantity}</span>
         <strong style="color:var(--text-primary); white-space:nowrap; flex-shrink:0;">${ProductsAPI.formatPrice(item.price * item.quantity)}</strong>
       </div>
     `).join('');
