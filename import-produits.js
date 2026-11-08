@@ -97,11 +97,18 @@ async function runImport() {
     }
   }
 
-  // Si imports n'a pas de produits.json mais thiaflow_produits_v2 existe à côté
+  // Si imports n'a pas de produits.json, vérifier les dossiers voisins
   if (!fs.existsSync(path.join(targetDir, 'produits.json'))) {
-    const altDir = path.join(__dirname, '..', 'thiaflow_produits_v2');
-    if (fs.existsSync(path.join(altDir, 'produits.json'))) {
-      targetDir = altDir;
+    const candidateDirs = [
+      path.join(__dirname, '..', 'thiaflow_vetements'),
+      path.join(__dirname, '..', 'thiaflow_nouveaux_produits'),
+      path.join(__dirname, '..', 'thiaflow_produits_v2')
+    ];
+    for (const cand of candidateDirs) {
+      if (fs.existsSync(path.join(cand, 'produits.json'))) {
+        targetDir = cand;
+        break;
+      }
     }
   }
 
